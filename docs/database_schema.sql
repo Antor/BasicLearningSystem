@@ -1,21 +1,14 @@
+CREATE DATABASE `BasicLearningSystem`;
+
+USE `BasicLearningSystem`;
+
 CREATE TABLE `users` (
   `id` int PRIMARY KEY,
   `username` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
   `first_name` varchar(255),
-  `last_name` varchar(255)
-);
-
-CREATE TABLE `roles` (
-  `id` varchar(255) PRIMARY KEY
-);
-
-CREATE TABLE `users_roles` (
-  `user_id` int,
-  `role_id` varchar(255),
-  PRIMARY KEY (`user_id`, `role_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+  `last_name` varchar(255),
+  `user_role` varchar(255)
 );
 
 CREATE TABLE `courses` (
@@ -45,15 +38,25 @@ CREATE TABLE `lessons` (
   `id` int PRIMARY KEY,
   `title` varchar(255),
   `description` varchar(255),
-  `content` varchar(255), -- text in markdown format for basic implementation
   `unit_id` int,
   FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`)
 );
 
-CREATE TABLE `users_completed_lessons` (
-  `user_id` int,
+CREATE TABLE `lesson_items` (
+  `id` int PRIMARY KEY,
+  `content` varchar(255),
   `lesson_id` int,
-  PRIMARY KEY (`user_id`, `lesson_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   FOREIGN KEY (`lesson_id`) REFERENCES `lessons` (`id`)
 );
+
+CREATE TABLE `users_completed_lesson_items` (
+  `user_id` int,
+  `lesson_item_id` int,
+  PRIMARY KEY (`user_id`, `lesson_item_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  FOREIGN KEY (`lesson_item_id`) REFERENCES `lesson_items` (`id`)
+);
+
+
+
+
