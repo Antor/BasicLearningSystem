@@ -30,6 +30,7 @@ CREATE TABLE `units` (
   `id` int PRIMARY KEY,
   `title` varchar(255),
   `description` varchar(255),
+  `ordinal` int,
   `course_id` int,
   FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
 );
@@ -38,6 +39,7 @@ CREATE TABLE `lessons` (
   `id` int PRIMARY KEY,
   `title` varchar(255),
   `description` varchar(255),
+  `ordinal` int,
   `unit_id` int,
   FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`)
 );
@@ -45,6 +47,7 @@ CREATE TABLE `lessons` (
 CREATE TABLE `lesson_items` (
   `id` int PRIMARY KEY,
   `content` varchar(255),
+  `ordinal` int,
   `lesson_id` int,
   FOREIGN KEY (`lesson_id`) REFERENCES `lessons` (`id`)
 );

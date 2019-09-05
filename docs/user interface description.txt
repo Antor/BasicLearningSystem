@@ -1,0 +1,758 @@
+User Interface Description
+
+This document provides broad overview of pages available within application
+with short description of each. Description of each page is given in pseudo XML.
+
+
+1. Main Page
+
+URL: "/"
+
+Description: 
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	<body>
+		Welcome to Basic Learning System. 
+		You can view list of available course <link ref="/courses">here</a>.
+	</body>
+</page>
+
+
+2. Login Page
+
+URL: "/login"
+
+Description:
+
+<page>
+	<body>
+		Please enter your credentials to login
+		Email: <text_field id="email"/>
+		Password: <text_field id="password"/>
+		<button action="POST" ref="/login">Login</button>
+	</body>
+</page>
+
+
+3. Registration Page
+
+URL: "/register"
+
+Description:
+
+<page>
+	<body>
+		Please fill and submit the form below to create account
+		First Name: <text_field id="first_name"/>
+		Last Name: <text_field id="last_name"/>
+		Email: <text_field id="email"/>
+		Password: <text_field id="password"/>
+		<button action="POST" ref="/register">Register</button>
+	</body>
+</page>
+
+4. User Profile Page
+
+URL: "/profile"
+
+Description:
+
+<page>
+	<body>
+	Profile information
+	Name: $FirstName $LastName
+	Email: $Email
+	<button text="Edit profile" ref="/profile/edit"/>
+	<button text="My Courses" ref="/profile/courses"/>
+	<button text="Delete profile" ref="/profile/delete"/>
+	<button text="Logout" ref="/logout"/>
+	</body>
+</page>
+
+
+5. Edit Profile Page
+
+URL: "/profile/edit"
+
+Description:
+
+<page>
+	<body>
+		Edit Profile
+		First Name: <text_field id="first_name"/>
+		Last Name: <text_field id="last_name"/>
+		<button>Save</button>
+		
+		<button text="Logout" ref="/logout"/>
+	</body>
+</page>
+
+6. List of User Courses
+
+URL: "/profile/courses"
+
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	This is list of all courses you are enrolled into:
+	<list>
+		<item>
+			Course 1
+			Description
+			<button>Leave Course</button>
+		</item>
+		<item>
+			Course 2
+			Description
+			<button>Leave Course</button>
+		</item>
+		...
+		<item>
+			Course N
+			Description
+			<button>Leave Course</button>
+		</item>
+	</list>
+</page>
+
+
+7. List of All Courses Page
+
+URL: "/courses"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	This is list of all courses on our site:
+	<list>
+		<item>
+			Course 1
+			Description
+			<button>Enroll on Course</button>
+		</item>
+		<item>
+			Course 2
+			Description
+			<button>Leave Course</button>
+		</item>
+		...
+		<item>
+			Course N
+			Description
+			<button>Enroll on Course</button>
+		</item>
+	</list>
+</page>
+
+
+8. Course Page
+
+URL: "/courses/{course_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	$CourseTitle
+	$CourseDescription
+	<if is_user_enrolled="true">
+			<button>Leave Course</button>
+	</if>
+	<if is_user_enrolled="false">
+			<button>Enroll on Course</button>
+	</if>
+	<list>
+		<item>
+			Unit 1 Title
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}">
+		</item>
+		<item>
+			Unit 2 Title 
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}">
+		</item>
+		...
+		<item>
+			Unit N Title 
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}">
+		</item>
+	</list>
+</page>
+
+
+9. Unit Page
+
+URL: "/courses/{course_id}/units/{unit_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	$CourseTitle/$UnitTitle
+	$UnitDescription
+	<list>
+		<item>
+			Lesson 1 Title
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}">
+		</item>
+		<item>
+			Lesson 2 Title 
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}">
+		</item>
+		...
+		<item>
+			Lesson N Title 
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}">
+		</item>
+	</list>
+</page>
+
+
+10. Lesson Page
+
+URL: "/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	$CourseTitle/$UnitTitle/$LessonTitle
+	$LessonDescription
+	<list>
+		<item>
+			Lesson Item 1 Title
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}">
+		</item>
+		<item>
+			Lesson Item 2 Title 
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}">
+		</item>
+		...
+		<item>
+			Lesson Item N Title 
+			<button text="Open" ref="/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}">
+		</item>
+	</list>
+</page>
+
+11. Lesson Item Page
+
+URL: "/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+		<if user_logged_in="false">
+			<button text="Login" ref="/login"/>
+			<button text="Register" ref="/register"/>
+		</if>
+		<if is_user_admin="true"> 
+			<button text="Admin Panel" ref="/admin"/>
+		</if>
+	</header>
+	$CourseTitle/$UnitTitle/$LessonTitle/$LessonItemTitle
+	$LessonItemContent
+	<button text="Complete">
+</page>
+
+
+12. Admin Page
+
+URL: "/admin"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		
+		Welcome, $FirstName!
+		<button text="Profile" ref="/profile"/>
+		<button text="Logout" ref="/logout"/>
+	</header>
+	Admin Panel
+	
+	<button text="Courses" ref="/admin/courses"/>
+	<button text="Users" ref="/admin/users"/>
+</page>
+
+
+13. Courses Administration Page
+
+URL: "/admin/courses"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	<button text="Create Course" ref="/admin/create_course">
+	This is list of all courses on our site:
+	<list>
+		<item>
+			Course 1
+			Description
+			<button>Edit</button>
+			<button>Activate</button>
+			<button>Delete</button>
+		</item>
+		<item>
+			Course 2
+			Description
+			<button>Edit</button>
+			<button>Deactivate</button>
+			<button>Delete</button>
+		</item>
+		...
+		<item>
+			Course N
+			Description
+			<button>Edit</button>
+			<button>Deactivate</button>
+			<button>Delete</button>
+		</item>
+	</list>
+</page>
+
+
+14. Create Course Page
+
+URL: "/admin/create_course"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Create New Course
+	Title: <text_field id="course_title"/>
+	Description: <text_field id="course_description"/>
+	<button text="Create">
+</page>
+
+
+15. Edit Course Page
+
+URL: "/admin/courses/{course_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Edit Course
+	Title: <text_field id="course_title"/>
+	Description: <text_field id="course_description"/>
+	<button text="Save">
+	<button>Activate</button>
+	<button text="Delete">
+	
+	List of units:
+	<list>
+		<item>
+			Unit 1 Title
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}">
+		</item>
+		<item>
+			Unit 2 Title 
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}">
+		</item>
+		...
+		<item>
+			Unit N Title 
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}">
+		</item>
+	</list>
+	
+	<button text="Add Unit" ref="/admin/courses/{course_id}/create_unit">
+</page>
+
+
+16. Create Unit Page
+
+URL: "/admin/courses/{course_id}/create_unit"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Create New Unit for $CourseName
+	Title: <text_field id="unit_title"/>
+	Description: <text_field id="unit_description"/>
+	<button text="Create">
+</page>
+
+
+17. Edit Unit Page
+
+URL: "/admin/courses/{course_id}/units/{unit_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Edit Unit in $CourseName
+	Title: <text_field id="unit_title"/>
+	Description: <text_field id="unit_description"/>
+	<button text="Save">
+	<button text="Delete">
+	<list>
+		<item>
+			Lesson 1 Title
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}">
+		</item>
+		<item>
+			Lesson 2 Title 
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}">
+		</item>
+		...
+		<item>
+			Lesson N Title 
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}">
+		</item>
+	</list>
+	<button text="Add Lesson" ref="/admin/courses/{course_id}/units/{unit_id}/create_lesson">
+</page>
+
+
+18. Create Lesson Page
+
+URL: "/admin/courses/{course_id}/units/{unit_id}/create_lesson"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Create New Lesson for $CourseName/$UnitName
+	Title: <text_field id="lesson_title"/>
+	Description: <text_field id="lesson_description"/>
+	<button text="Create">
+</page>
+
+
+19. Edit Lesson Page
+
+URL: "/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Edit Lesson in $CourseName/$UnitName
+	Title: <text_field id="lesson_title"/>
+	Description: <text_field id="lesson_description"/>
+	<button text="Save">
+	<button text="Delete">
+	<list>
+		<item>
+			Lesson item 1 Title
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}">
+		</item>
+		<item>
+			Lesson item 2 Title 
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}">
+		</item>
+		...
+		<item>
+			Lesson item N Title 
+			<button text="Move Up">
+			<button text="Move Down">
+			<button text="Delete">
+			<button text="Edit" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}">
+		</item>
+	</list>
+	<button text="Add Lesson Item" ref="/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/create_lesson_item">
+</page>
+
+
+20. Create Lesson Item Page
+
+URL: "/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/create_lesson_item"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Create New Lesson Item for $CourseName/$UnitName/$LessonName
+	Title: <text_field id="lesson_item_title"/>
+	Content: <text_field id="lesson_item_content"/>
+	<button text="Create">
+</page>
+
+
+21. Edit Lesson Item Page
+
+URL: "/admin/courses/{course_id}/units/{unit_id}/lessons/{lesson_id}/lesson_items/{lesson_item_id}"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	Edit Lesson Item for $CourseName/$UnitName/$LessonName
+	Title: <text_field id="lesson_item_title"/>
+	Content: <text_field id="lesson_item_content"/>
+	<button text="Save">
+	<button text="Delete">
+</page>
+
+
+22. Users Administration Page
+
+URL: "/admin/users"
+
+Description:
+
+<page>
+	<header>
+		Basic Learning System
+		<if user_logged_in="true">
+			Welcome, $FirstName!
+			<button text="Profile" ref="/profile"/>
+			<button text="Logout" ref="/logout"/>
+		</if>
+	</header>
+	<button text="Create User" ref="/admin/create_user">
+	This is list of all users on our site:
+	<list>
+		<item>
+			$UserName1
+			$UserEmail1
+			<button>Edit</button>
+			<button>Delete</button>
+		</item>
+		<item>
+			$UserName2
+			$UserEmail2
+			<button>Edit</button>
+			<button>Delete</button>
+		</item>
+		...
+		<item>
+			$UserNameN
+			$UserEmailN
+			<button>Edit</button>
+			<button>Delete</button>
+		</item>
+	</list>
+</page>
+
+
+23. Create User Page
+
+URL: "/admin/create_user"
+
+Description:
+
+<page>
+	<body>
+		Create user
+		First Name: <text_field id="first_name"/>
+		Last Name: <text_field id="last_name"/>
+		Email: <text_field id="email"/>
+		Password: <text_field id="password"/>
+		Role: <drop_down_chooser id="role">
+		<button>Create</button>
+		
+		<button text="Logout" ref="/logout"/>
+	</body>
+</page>
+
+
+24. Edit User Page
+
+URL: "/admin/users/{user_id}"
+
+Description:
+
+<page>
+	<body>
+		Edit user
+		First Name: <text_field id="first_name"/>
+		Last Name: <text_field id="last_name"/>
+		Email: <text_field id="email"/>
+		Password: <text_field id="password"/>
+		Role: <drop_down_chooser id="role">
+		<button>Save</button>
+		<button>Delete</button>
+		
+		<button text="Logout" ref="/logout"/>
+	</body>
+</page>
