@@ -14,7 +14,8 @@ CREATE TABLE `users` (
 CREATE TABLE `courses` (
   `id` int PRIMARY KEY,
   `title` varchar(255),
-  `description` varchar(255)
+  `description` varchar(255),
+  `active` boolean
 );
 
 -- User need to register/enrol on course before start learning

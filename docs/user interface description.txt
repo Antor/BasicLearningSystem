@@ -102,7 +102,7 @@ Description:
 	</body>
 </page>
 
-6. List of User Courses
+6. User Courses Page
 
 URL: "/profile/courses"
 
@@ -112,15 +112,9 @@ Description:
 <page>
 	<header>
 		Basic Learning System
-		<if user_logged_in="true">
-			Welcome, $FirstName!
-			<button text="Profile" ref="/profile"/>
-			<button text="Logout" ref="/logout"/>
-		</if>
-		<if user_logged_in="false">
-			<button text="Login" ref="/login"/>
-			<button text="Register" ref="/register"/>
-		</if>
+		Welcome, $FirstName!
+		<button text="Profile" ref="/profile"/>
+		<button text="Logout" ref="/logout"/>
 		<if is_user_admin="true"> 
 			<button text="Admin Panel" ref="/admin"/>
 		</if>
@@ -147,7 +141,7 @@ Description:
 </page>
 
 
-7. List of All Courses Page
+7. All Courses Page
 
 URL: "/courses"
 
