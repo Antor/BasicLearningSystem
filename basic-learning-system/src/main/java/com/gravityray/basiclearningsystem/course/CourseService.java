@@ -149,17 +149,10 @@ public class CourseService {
         unitByIdMap.put(unitEntity.getId(), unitEntity);
     }
 
-    public void increaseUnitOrdinal(long unitId) {
+    public void changeUnitOrdinal(long unitId, int delta) {
         UnitEntity unit = unitByIdMap.get(unitId);
         if (unit != null) {
-            unit.setOrdinal(unit.getOrdinal() + 1);
-        }
-    }
-
-    public void decreaseUnitOrdinal(long unitId) {
-        UnitEntity unit = unitByIdMap.get(unitId);
-        if (unit != null) {
-            unit.setOrdinal(unit.getOrdinal() - 1);
+            unit.setOrdinal(unit.getOrdinal() + delta);
         }
     }
 
@@ -198,10 +191,10 @@ public class CourseService {
         lessonByIdMap.put(lessonEntity.getId(), lessonEntity);
     }
 
-    public void increaseLessonOrdinal(long lessonId) {
+    public void changeLessonOrdinal(long lessonId, int delta) {
         LessonEntity lesson = lessonByIdMap.get(lessonId);
         if (lesson != null) {
-            lesson.setOrdinal(lesson.getOrdinal() + 1);
+            lesson.setOrdinal(lesson.getOrdinal() + delta);
         }
     }
 
@@ -247,17 +240,10 @@ public class CourseService {
         lessonItemByIdMap.put(lessonItemEntity.getId(), lessonItemEntity);
     }
 
-    public void increaseLessonItemOrdinal(long lessonItemId) {
+    public void changeLessonItemOrdinal(long lessonItemId, int delta) {
         LessonItemEntity lessonItem = lessonItemByIdMap.get(lessonItemId);
         if (lessonItem != null) {
-            lessonItem.setOrdinal(lessonItem.getOrdinal() + 1);
-        }
-    }
-
-    public void decreaseLessonItemOrdinal(long lessonItemId) {
-        LessonItemEntity lessonItem = lessonItemByIdMap.get(lessonItemId);
-        if (lessonItem != null) {
-            lessonItem.setOrdinal(lessonItem.getOrdinal() - 1);
+            lessonItem.setOrdinal(lessonItem.getOrdinal() + delta);
         }
     }
 

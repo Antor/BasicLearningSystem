@@ -1,7 +1,5 @@
 package com.gravityray.basiclearningsystem.user;
 
-import com.gravityray.basiclearningsystem.user.model.LoginRequestDto;
-import com.gravityray.basiclearningsystem.user.model.LoginResponseDto;
 import com.gravityray.basiclearningsystem.user.model.UserDto;
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UserRestController {
 
     private final UserService userService;
@@ -28,6 +26,12 @@ public class UserRestController {
         long currentUserId = -1; // TODO: fetch via SpringSecurity
         UserEntity userEntity = userService.getUser(currentUserId);
         return userConverter.toUserDto(userEntity);
+    }
+
+    @DeleteMapping("/me/user")
+    public void deleteMyUser() {
+        long currentUserId = -1; // TODO: fetch via SpringSecurity
+        userService.deleteUser(currentUserId);
     }
 
     @GetMapping("/user/{user_id}")
@@ -59,19 +63,5 @@ public class UserRestController {
     @DeleteMapping("/user/{user_id}")
     public void deleteUser(@PathVariable("user_id") Long userId) {
         userService.deleteUser(userId);
-    }
-
-    @DeleteMapping("/me/user")
-    public void deleteMyUser() {
-        long currentUserId = -1; // TODO: fetch via SpringSecurity
-        userService.deleteUser(currentUserId);
-    }
-
-    @PostMapping("/login")
-    public LoginResponseDto login(@RequestBody LoginRequestDto request) {
-        String authToken = userService.loginUser(request.getEmail(), request.getPassword());
-        LoginResponseDto response = new LoginResponseDto();
-        response.setAuthToken(authToken);
-        return response;
     }
 }
