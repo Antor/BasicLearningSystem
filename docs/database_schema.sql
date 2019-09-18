@@ -3,7 +3,7 @@ CREATE DATABASE `BasicLearningSystem`;
 USE `BasicLearningSystem`;
 
 CREATE TABLE `users` (
-  `id` int PRIMARY KEY,
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
   `first_name` varchar(255),

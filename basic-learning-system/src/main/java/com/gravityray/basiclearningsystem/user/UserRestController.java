@@ -2,8 +2,13 @@ package com.gravityray.basiclearningsystem.user;
 
 import com.gravityray.basiclearningsystem.user.model.UserDto;
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
+import com.gravityray.basiclearningsystem.user.service.UserService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +20,7 @@ public class UserRestController {
     private final UserConverter userConverter;
 
     public UserRestController(
-            UserService userService,
+            @Qualifier("persistent") UserService userService,
             UserConverter userConverter) {
         this.userService = userService;
         this.userConverter = userConverter;
@@ -35,9 +40,13 @@ public class UserRestController {
     }
 
     @GetMapping("/user/{user_id}")
-    public UserDto getUser(@PathVariable("user_id") Long userId) {
+    public ResponseEntity<UserDto> getUser(@PathVariable("user_id") Long userId) {
         UserEntity userEntity = userService.getUser(userId);
-        return userConverter.toUserDto(userEntity);
+        if (userEntity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        UserDto userDto = userConverter.toUserDto(userEntity);
+        return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("/user")

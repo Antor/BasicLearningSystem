@@ -1,6 +1,7 @@
-package com.gravityray.basiclearningsystem.user;
+package com.gravityray.basiclearningsystem.user.service;
 
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Qualifier("in_memory")
 public class InMemoryUserService implements UserService {
 
     private final Map<Long, UserEntity> userEntityByIdMap;

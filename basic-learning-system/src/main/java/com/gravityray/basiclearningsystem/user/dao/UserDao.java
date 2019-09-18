@@ -1,10 +1,12 @@
-package com.gravityray.basiclearningsystem.user;
+package com.gravityray.basiclearningsystem.user.dao;
 
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserDao {
+
+    List<UserEntity> getAllUsers();
 
     UserEntity getUser(long id);
 
@@ -13,8 +15,4 @@ public interface UserService {
     void updateUser(UserEntity user);
 
     void deleteUser(long id);
-
-    String loginUser(String email, String password);
-
-    List<UserEntity> getAllUsers();
 }

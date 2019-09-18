@@ -3,6 +3,7 @@ package com.gravityray.basiclearningsystem.course;
 import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
 import com.gravityray.basiclearningsystem.course.model.LessonItemDto;
 import com.gravityray.basiclearningsystem.course.model.LessonItemEntity;
+import com.gravityray.basiclearningsystem.course.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

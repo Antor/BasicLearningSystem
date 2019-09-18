@@ -4,6 +4,7 @@ package com.gravityray.basiclearningsystem.course;
 import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
 import com.gravityray.basiclearningsystem.course.model.LessonDto;
 import com.gravityray.basiclearningsystem.course.model.LessonEntity;
+import com.gravityray.basiclearningsystem.course.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;

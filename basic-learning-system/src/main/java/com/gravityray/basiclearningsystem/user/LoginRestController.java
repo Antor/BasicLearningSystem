@@ -2,6 +2,8 @@ package com.gravityray.basiclearningsystem.user;
 
 import com.gravityray.basiclearningsystem.user.model.LoginRequestDto;
 import com.gravityray.basiclearningsystem.user.model.LoginResponseDto;
+import com.gravityray.basiclearningsystem.user.service.UserService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,8 @@ public class LoginRestController {
 
     private final UserService userService;
 
-    public LoginRestController(UserService userService) {
+    public LoginRestController(
+            @Qualifier("persistent") UserService userService) {
         this.userService = userService;
     }
 
