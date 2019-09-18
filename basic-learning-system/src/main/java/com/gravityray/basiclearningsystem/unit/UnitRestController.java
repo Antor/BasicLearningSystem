@@ -1,10 +1,11 @@
-package com.gravityray.basiclearningsystem.course;
+package com.gravityray.basiclearningsystem.unit;
 
 
+import com.gravityray.basiclearningsystem.course.CourseConverter;
 import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
-import com.gravityray.basiclearningsystem.course.model.UnitDto;
-import com.gravityray.basiclearningsystem.course.model.UnitEntity;
-import com.gravityray.basiclearningsystem.course.service.CourseService;
+import com.gravityray.basiclearningsystem.unit.model.UnitDto;
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
+import com.gravityray.basiclearningsystem.unit.service.UnitService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
@@ -13,23 +14,23 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1")
 public class UnitRestController {
 
-    private final CourseService courseService;
+    private final UnitService unitService;
     private final CourseConverter courseConverter;
 
     public UnitRestController(
-            CourseService courseService,
+            UnitService unitService,
             CourseConverter courseConverter) {
-        this.courseService = courseService;
+        this.unitService = unitService;
         this.courseConverter = courseConverter;
     }
 
     @GetMapping("/unit/{unitId}")
     public UnitDto getUnit(@PathVariable long unitId) {
-        UnitEntity unitEntity = courseService.getUnit(unitId);
+        UnitEntity unitEntity = unitService.getUnit(unitId);
         UnitDto unitDto = courseConverter.toDto(unitEntity);
 
         unitDto.setLessons(
-                courseService.getUnitLessons(unitId)
+                unitService.getUnitLessons(unitId)
                         .stream()
                         .map(courseConverter::toDto)
                         .collect(Collectors.toList()));
@@ -39,23 +40,23 @@ public class UnitRestController {
 
     @PostMapping("/unit")
     public UnitDto createUnit(@RequestBody UnitDto unit) {
-        long unitId = courseService.addUnit(courseConverter.toEntity(unit));
+        long unitId = unitService.addUnit(courseConverter.toEntity(unit));
         unit.setId(unitId);
         return unit;
     }
 
     @PutMapping("/unit")
     public void updateUnit(@RequestBody UnitDto unit) {
-        courseService.updateUnit(courseConverter.toEntity(unit));
+        unitService.updateUnit(courseConverter.toEntity(unit));
     }
 
     @PostMapping("/change-unit-ordinal")
     public void changeUnitOrdinal(@RequestBody ChangeOrdinalRequest request) {
-        courseService.changeUnitOrdinal(request.getId(), request.getDelta());
+        unitService.changeUnitOrdinal(request.getId(), request.getDelta());
     }
 
     @DeleteMapping("/unit/{unit_id}")
     public void deleteUnit(@PathVariable("unit_id") long unitId) {
-        courseService.deleteUnit(unitId);
+        unitService.deleteUnit(unitId);
     }
 }

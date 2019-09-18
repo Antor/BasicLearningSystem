@@ -1,16 +1,14 @@
 package com.gravityray.basiclearningsystem.course.service;
 
 import com.gravityray.basiclearningsystem.course.model.CourseEntity;
-import com.gravityray.basiclearningsystem.course.model.LessonEntity;
-import com.gravityray.basiclearningsystem.course.model.LessonItemEntity;
-import com.gravityray.basiclearningsystem.course.model.UnitEntity;
-import org.springframework.stereotype.Service;
+import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
+import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
-public class InMemoryCourseService implements CourseService {
+public class InMemoryCourseService {
 
     private final Map<Long, CourseEntity> courseByIdMap;
     private long nextCourseId;
@@ -46,7 +44,6 @@ public class InMemoryCourseService implements CourseService {
         completedLessonItemIdSetByUserIdMap = new HashMap<>();
     }
 
-    @Override
     public List<CourseEntity> getUserCourses(long userId) {
         Set<Long> courseIdSet = courseIdListByUserIdMap.get(userId);
         if (courseIdSet == null) {
@@ -57,7 +54,6 @@ public class InMemoryCourseService implements CourseService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public void enrollUserToCourse(long userId, long courseId) {
         Set<Long> courseIdSet = courseIdListByUserIdMap.get(userId);
         if (courseIdSet == null) {
@@ -67,7 +63,6 @@ public class InMemoryCourseService implements CourseService {
         courseIdSet.add(courseId);
     }
 
-    @Override
     public void unenrollUserFromCourse(long userId, long courseId) {
         Set<Long> courseIdSet = courseIdListByUserIdMap.get(userId);
         if (courseIdSet != null) {
@@ -75,12 +70,10 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public List<CourseEntity> getAllCourses() {
         return new ArrayList<>(courseByIdMap.values());
     }
 
-    @Override
     public List<CourseEntity> getActiveCourses() {
         return courseByIdMap.values()
                 .stream()
@@ -88,12 +81,10 @@ public class InMemoryCourseService implements CourseService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public CourseEntity getCourse(long id) {
         return courseByIdMap.get(id);
     }
 
-    @Override
     public long addCourse(CourseEntity courseEntity) {
         long courseId = nextCourseId++;
 
@@ -103,12 +94,10 @@ public class InMemoryCourseService implements CourseService {
         return courseId;
     }
 
-    @Override
     public void updateCourse(CourseEntity courseEntity) {
         courseByIdMap.put(courseEntity.getId(), courseEntity);
     }
 
-    @Override
     public void activateCourse(long courseId) {
         CourseEntity course = courseByIdMap.get(courseId);
         if (course != null) {
@@ -116,7 +105,6 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public void deactivateCourse(long courseId) {
         CourseEntity course = courseByIdMap.get(courseId);
         if (course != null) {
@@ -124,7 +112,6 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public void deleteCourse(long id) {
         courseByIdMap.remove(id);
 
@@ -136,7 +123,6 @@ public class InMemoryCourseService implements CourseService {
                 .forEach(this::deleteUnit);
     }
 
-    @Override
     public List<UnitEntity> getCourseUnits(long courseId) {
         return unitByIdMap.values()
                 .stream()
@@ -144,12 +130,10 @@ public class InMemoryCourseService implements CourseService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public UnitEntity getUnit(long id) {
         return unitByIdMap.get(id);
     }
 
-    @Override
     public long addUnit(UnitEntity unitEntity) {
         long unitId = nextUnitId++;
 
@@ -159,12 +143,10 @@ public class InMemoryCourseService implements CourseService {
         return unitId;
     }
 
-    @Override
     public void updateUnit(UnitEntity unitEntity) {
         unitByIdMap.put(unitEntity.getId(), unitEntity);
     }
 
-    @Override
     public void changeUnitOrdinal(long unitId, int delta) {
         UnitEntity unit = unitByIdMap.get(unitId);
         if (unit != null) {
@@ -172,7 +154,6 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public void deleteUnit(long id) {
         unitByIdMap.remove(id);
 
@@ -184,7 +165,6 @@ public class InMemoryCourseService implements CourseService {
                 .forEach(this::deleteLesson);
     }
 
-    @Override
     public List<LessonEntity> getUnitLessons(long unitId) {
         return lessonByIdMap.values()
                 .stream()
@@ -192,12 +172,10 @@ public class InMemoryCourseService implements CourseService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public LessonEntity getLesson(long id) {
         return lessonByIdMap.get(id);
     }
 
-    @Override
     public long addLesson(LessonEntity lessonEntity) {
         long lessonId = nextLessonId++;
 
@@ -207,12 +185,10 @@ public class InMemoryCourseService implements CourseService {
         return lessonId;
     }
 
-    @Override
     public void updateLesson(LessonEntity lessonEntity) {
         lessonByIdMap.put(lessonEntity.getId(), lessonEntity);
     }
 
-    @Override
     public void changeLessonOrdinal(long lessonId, int delta) {
         LessonEntity lesson = lessonByIdMap.get(lessonId);
         if (lesson != null) {
@@ -220,7 +196,6 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public void decreaseLessonOrdinal(long lessonId) {
         LessonEntity lesson = lessonByIdMap.get(lessonId);
         if (lesson != null) {
@@ -228,7 +203,6 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public void deleteLesson(long id) {
         lessonByIdMap.remove(id);
 
@@ -240,7 +214,6 @@ public class InMemoryCourseService implements CourseService {
                 .forEach(this::deleteLessonItem);
     }
 
-    @Override
     public List<LessonItemEntity> getLessonLessonItems(long lessonId) {
         return lessonItemByIdMap.values()
                 .stream()
@@ -248,12 +221,10 @@ public class InMemoryCourseService implements CourseService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public LessonItemEntity getLessonItem(long id) {
         return lessonItemByIdMap.get(id);
     }
 
-    @Override
     public long addLessonItem(LessonItemEntity lessonItemEntity) {
         long lessonItemId = nextLessonItemId++;
 
@@ -263,12 +234,10 @@ public class InMemoryCourseService implements CourseService {
         return lessonItemId;
     }
 
-    @Override
     public void updateLessonItem(LessonItemEntity lessonItemEntity) {
         lessonItemByIdMap.put(lessonItemEntity.getId(), lessonItemEntity);
     }
 
-    @Override
     public void changeLessonItemOrdinal(long lessonItemId, int delta) {
         LessonItemEntity lessonItem = lessonItemByIdMap.get(lessonItemId);
         if (lessonItem != null) {
@@ -276,12 +245,10 @@ public class InMemoryCourseService implements CourseService {
         }
     }
 
-    @Override
     public void deleteLessonItem(long id) {
         lessonItemByIdMap.remove(id);
     }
 
-    @Override
     public void completeLessonItem(long userId, long lessonItemId) {
         Set<Long> completedLessonItemIdSet = completedLessonItemIdSetByUserIdMap.get(userId);
         if (completedLessonItemIdSet == null) {

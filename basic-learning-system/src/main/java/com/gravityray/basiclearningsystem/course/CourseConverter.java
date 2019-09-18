@@ -1,6 +1,12 @@
 package com.gravityray.basiclearningsystem.course;
 
 import com.gravityray.basiclearningsystem.course.model.*;
+import com.gravityray.basiclearningsystem.lesson.model.LessonDto;
+import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
+import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemDto;
+import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
+import com.gravityray.basiclearningsystem.unit.model.UnitDto;
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import org.springframework.stereotype.Component;
 
 @Component

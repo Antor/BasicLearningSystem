@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.course.model;
+package com.gravityray.basiclearningsystem.lessonitem.model;
 
 public class LessonItemEntity {
 

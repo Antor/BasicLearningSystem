@@ -1,4 +1,6 @@
-package com.gravityray.basiclearningsystem.course.model;
+package com.gravityray.basiclearningsystem.unit.model;
+
+import com.gravityray.basiclearningsystem.lesson.model.LessonDto;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package com.gravityray.basiclearningsystem.course.model;
 
+import com.gravityray.basiclearningsystem.unit.model.UnitDto;
+
 import java.util.List;
 
 public class CourseDto {

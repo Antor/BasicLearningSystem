@@ -1,10 +1,12 @@
-package com.gravityray.basiclearningsystem.course;
+package com.gravityray.basiclearningsystem.lesson;
 
 
+import com.gravityray.basiclearningsystem.course.CourseConverter;
 import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
-import com.gravityray.basiclearningsystem.course.model.LessonDto;
-import com.gravityray.basiclearningsystem.course.model.LessonEntity;
+import com.gravityray.basiclearningsystem.lesson.model.LessonDto;
+import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
+import com.gravityray.basiclearningsystem.lesson.service.LessonService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
@@ -13,11 +15,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1")
 public class LessonRestController {
 
-    private final CourseService courseService;
+    private final LessonService courseService;
     private final CourseConverter courseConverter;
 
     public LessonRestController(
-            CourseService courseService,
+            LessonService courseService,
             CourseConverter courseConverter) {
         this.courseService = courseService;
         this.courseConverter = courseConverter;

@@ -1,16 +1,12 @@
-package com.gravityray.basiclearningsystem.course.model;
+package com.gravityray.basiclearningsystem.unit.model;
 
-import java.util.List;
-
-public class LessonDto {
+public class UnitEntity {
 
     private Long id;
     private String title;
     private String description;
     private Integer ordinal;
-    private Long unitId;
-
-    private List<LessonItemDto> lessonItems;
+    private Long courseId;
 
     public Long getId() {
         return id;
@@ -44,19 +40,11 @@ public class LessonDto {
         this.ordinal = ordinal;
     }
 
-    public Long getUnitId() {
-        return unitId;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setUnitId(Long unitId) {
-        this.unitId = unitId;
-    }
-
-    public List<LessonItemDto> getLessonItems() {
-        return lessonItems;
-    }
-
-    public void setLessonItems(List<LessonItemDto> lessonItems) {
-        this.lessonItems = lessonItems;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 }
