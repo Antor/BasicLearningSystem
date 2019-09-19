@@ -31,22 +31,22 @@ public class JpaUserDao implements UserDao {
         return entityManager.find(UserEntity.class, id);
     }
 
-    @Override
     @Transactional
+    @Override
     public long createUser(UserEntity user) {
         entityManager.persist(user);
         entityManager.flush();
         return user.getId();
     }
 
-    @Override
     @Transactional
+    @Override
     public void updateUser(UserEntity user) {
         entityManager.merge(user);
     }
 
-    @Override
     @Transactional
+    @Override
     public void deleteUser(long id) {
         Query query = entityManager.createNativeQuery("DELETE FROM users where id = ?");
         query.setParameter(1, id);

@@ -1,10 +1,22 @@
 package com.gravityray.basiclearningsystem.course.model;
 
+import javax.persistence.*;
+
+@Entity(name = "courses")
 public class CourseEntity {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "active")
     private boolean active;
 
     public Long getId() {

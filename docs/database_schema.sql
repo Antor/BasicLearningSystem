@@ -12,7 +12,7 @@ CREATE TABLE `users` (
 );
 
 CREATE TABLE `courses` (
-  `id` int PRIMARY KEY,
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
   `description` varchar(255),
   `active` boolean
@@ -28,7 +28,7 @@ CREATE TABLE `users_courses_enrolment` (
 );
 
 CREATE TABLE `units` (
-  `id` int PRIMARY KEY,
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
   `description` varchar(255),
   `ordinal` int,
@@ -37,7 +37,7 @@ CREATE TABLE `units` (
 );
 
 CREATE TABLE `lessons` (
-  `id` int PRIMARY KEY,
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
   `description` varchar(255),
   `ordinal` int,
@@ -46,7 +46,8 @@ CREATE TABLE `lessons` (
 );
 
 CREATE TABLE `lesson_items` (
-  `id` int PRIMARY KEY,
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `title` varchar(255),
   `content` varchar(255),
   `ordinal` int,
   `lesson_id` int,
