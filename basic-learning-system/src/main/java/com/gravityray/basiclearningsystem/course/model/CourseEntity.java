@@ -1,6 +1,9 @@
 package com.gravityray.basiclearningsystem.course.model;
 
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "courses")
 public class CourseEntity {
@@ -18,6 +21,9 @@ public class CourseEntity {
 
     @Column(name = "active")
     private boolean active;
+
+    @OneToMany(mappedBy = "course")
+    private List<UnitEntity> unitList;
 
     public Long getId() {
         return id;
@@ -49,5 +55,13 @@ public class CourseEntity {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<UnitEntity> getUnitList() {
+        return unitList;
+    }
+
+    public void setUnitList(List<UnitEntity> unitList) {
+        this.unitList = unitList;
     }
 }

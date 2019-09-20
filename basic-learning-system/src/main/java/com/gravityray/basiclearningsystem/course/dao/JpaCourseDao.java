@@ -18,17 +18,14 @@ public class JpaCourseDao implements CourseDao {
     private EntityManager entityManager;
 
     @Override
-    public List<CourseEntity> getAllCourses() {
+    public List<CourseEntity> getCourses(boolean onlyActive) {
+        String queryString = onlyActive
+                ? "SELECT c FROM courses c WHERE c.active = TRUE"
+                : "SELECT c FROM courses c";
         TypedQuery<CourseEntity> query = entityManager.createQuery(
-                "SELECT c FROM courses c",
+                queryString,
                 CourseEntity.class);
         return query.getResultList();
-    }
-
-    @Override
-    public List<CourseEntity> getActiveCourses() {
-        // TODO
-        return null;
     }
 
     @Override
@@ -53,13 +50,15 @@ public class JpaCourseDao implements CourseDao {
     @Transactional
     @Override
     public void activateCourse(long courseId) {
-        // TODO
+        CourseEntity courseEntity = getCourse(courseId);
+        courseEntity.setActive(true);
     }
 
     @Transactional
     @Override
     public void deactivateCourse(long courseId) {
-        // TODO
+        CourseEntity courseEntity = getCourse(courseId);
+        courseEntity.setActive(false);
     }
 
     @Transactional
@@ -68,8 +67,6 @@ public class JpaCourseDao implements CourseDao {
         Query query = entityManager.createNativeQuery("DELETE FROM courses where id = ?");
         query.setParameter(1, id);
         query.executeUpdate();
-
-        // TODO: delete course content
     }
 
     @Override

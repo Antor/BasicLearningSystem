@@ -17,13 +17,8 @@ public class PersistentCourseService implements CourseService {
     }
 
     @Override
-    public List<CourseEntity> getAllCourses() {
-        return courseDao.getAllCourses();
-    }
-
-    @Override
-    public List<CourseEntity> getActiveCourses() {
-        return courseDao.getActiveCourses();
+    public List<CourseEntity> getCourses(boolean onlyActive) {
+        return courseDao.getCourses(onlyActive);
     }
 
     @Override

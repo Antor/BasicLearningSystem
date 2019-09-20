@@ -1,6 +1,10 @@
 package com.gravityray.basiclearningsystem.lesson.model;
 
+import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "lessons")
 public class LessonEntity {
@@ -21,6 +25,13 @@ public class LessonEntity {
 
     @Column(name = "unit_id")
     private Long unitId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "unit_id", insertable = false, updatable = false)
+    private UnitEntity unit;
+
+    @OneToMany(mappedBy = "lesson")
+    private List<LessonItemEntity> lessonItems;
 
     public Long getId() {
         return id;
@@ -60,5 +71,21 @@ public class LessonEntity {
 
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
+    }
+
+    public UnitEntity getUnit() {
+        return unit;
+    }
+
+    public void setUnit(UnitEntity unit) {
+        this.unit = unit;
+    }
+
+    public List<LessonItemEntity> getLessonItems() {
+        return lessonItems;
+    }
+
+    public void setLessonItems(List<LessonItemEntity> lessonItems) {
+        this.lessonItems = lessonItems;
     }
 }

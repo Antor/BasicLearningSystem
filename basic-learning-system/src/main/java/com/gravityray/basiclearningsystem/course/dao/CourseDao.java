@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface CourseDao {
 
-    List<CourseEntity> getAllCourses();
-
-    List<CourseEntity> getActiveCourses();
+    List<CourseEntity> getCourses(boolean onlyActive);
 
     CourseEntity getCourse(long id);
 

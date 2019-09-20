@@ -1,5 +1,7 @@
 package com.gravityray.basiclearningsystem.lessonitem.model;
 
+import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
+
 import javax.persistence.*;
 
 @Entity(name = "lesson_items")
@@ -21,6 +23,10 @@ public class LessonItemEntity {
 
     @Column(name = "lesson_id")
     private Long lessonId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "lesson_id", insertable = false, updatable = false)
+    private LessonEntity lesson;
 
     public Long getId() {
         return id;
@@ -60,5 +66,13 @@ public class LessonItemEntity {
 
     public void setLessonId(Long lessonId) {
         this.lessonId = lessonId;
+    }
+
+    public LessonEntity getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(LessonEntity lesson) {
+        this.lesson = lesson;
     }
 }

@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface LessonItemDao {
 
-
-
     LessonItemEntity getLessonItem(long id);
 
     long addLessonItem(LessonItemEntity lessonItemEntity);

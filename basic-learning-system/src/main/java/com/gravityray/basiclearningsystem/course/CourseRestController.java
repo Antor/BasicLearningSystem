@@ -2,6 +2,7 @@ package com.gravityray.basiclearningsystem.course;
 
 import com.gravityray.basiclearningsystem.course.model.*;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
+import com.gravityray.basiclearningsystem.unit.UnitConverter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,25 +14,21 @@ public class CourseRestController {
 
     private final CourseService courseService;
     private final CourseConverter courseConverter;
+    private final UnitConverter unitConverter;
 
     public CourseRestController(
             CourseService courseService,
-            CourseConverter courseConverter) {
+            CourseConverter courseConverter,
+            UnitConverter unitConverter) {
         this.courseService = courseService;
         this.courseConverter = courseConverter;
+        this.unitConverter = unitConverter;
     }
 
-    @GetMapping("/course-all")
-    public List<CourseDto> getAllCourses() {
-        return courseService.getAllCourses()
-                .stream()
-                .map(courseConverter::toDto)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/course-active")
-    public List<CourseDto> getActiveCourses() {
-        return courseService.getActiveCourses()
+    @GetMapping("/course")
+    public List<CourseDto> getAllCourses(
+            @RequestParam(name = "onlyActive", defaultValue = "false") boolean onlyActive) {
+        return courseService.getCourses(onlyActive)
                 .stream()
                 .map(courseConverter::toDto)
                 .collect(Collectors.toList());
@@ -44,7 +41,7 @@ public class CourseRestController {
         courseDto.setUnits(
                 courseService.getCourseUnits(courseId)
                         .stream()
-                        .map(courseConverter::toDto)
+                        .map(unitConverter::toDto)
                         .collect(Collectors.toList()));
         return courseDto;
     }
