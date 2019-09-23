@@ -46,10 +46,10 @@ values (3, 'Lesson 3', 'Description for Lesson 3', 3, 1);
 insert into lesson_items (id, title, content, ordinal, lesson_id)
 values (1, 'Lesson Item 1', 'Lesson Item 1 Content', 1, 1);
 
-insert into lesson_items (id, content, ordinal, lesson_id)
+insert into lesson_items (id, title, content, ordinal, lesson_id)
 values (2, 'Lesson Item 2', 'Lesson Item 2 Content', 2, 1);
 
-insert into lesson_items (id, content, ordinal, lesson_id)
+insert into lesson_items (id, title, content, ordinal, lesson_id)
 values (3, 'Lesson Item 3', 'Lesson Item 3 Content', 3, 1);
 
 -- Assign users to courses
