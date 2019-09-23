@@ -1,8 +1,8 @@
 package com.gravityray.basiclearningsystem.unit;
 
 
-import com.gravityray.basiclearningsystem.course.CourseConverter;
 import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
+import com.gravityray.basiclearningsystem.lesson.LessonConverter;
 import com.gravityray.basiclearningsystem.unit.model.UnitDto;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import com.gravityray.basiclearningsystem.unit.service.UnitService;
@@ -15,24 +15,27 @@ import java.util.stream.Collectors;
 public class UnitRestController {
 
     private final UnitService unitService;
-    private final CourseConverter courseConverter;
+    private final UnitConverter unitConverter;
+    private final LessonConverter lessonConverter;
 
     public UnitRestController(
             UnitService unitService,
-            CourseConverter courseConverter) {
+            UnitConverter unitConverter,
+            LessonConverter lessonConverter) {
         this.unitService = unitService;
-        this.courseConverter = courseConverter;
+        this.unitConverter = unitConverter;
+        this.lessonConverter = lessonConverter;
     }
 
     @GetMapping("/unit/{unitId}")
     public UnitDto getUnit(@PathVariable long unitId) {
         UnitEntity unitEntity = unitService.getUnit(unitId);
-        UnitDto unitDto = courseConverter.toDto(unitEntity);
+        UnitDto unitDto = unitConverter.toDto(unitEntity);
 
         unitDto.setLessons(
-                unitService.getUnitLessons(unitId)
+                unitEntity.getLessonList()
                         .stream()
-                        .map(courseConverter::toDto)
+                        .map(lessonConverter::toDto)
                         .collect(Collectors.toList()));
 
         return unitDto;
@@ -40,14 +43,14 @@ public class UnitRestController {
 
     @PostMapping("/unit")
     public UnitDto createUnit(@RequestBody UnitDto unit) {
-        long unitId = unitService.addUnit(courseConverter.toEntity(unit));
+        long unitId = unitService.addUnit(unitConverter.toEntity(unit));
         unit.setId(unitId);
         return unit;
     }
 
     @PutMapping("/unit")
     public void updateUnit(@RequestBody UnitDto unit) {
-        unitService.updateUnit(courseConverter.toEntity(unit));
+        unitService.updateUnit(unitConverter.toEntity(unit));
     }
 
     @PostMapping("/change-unit-ordinal")

@@ -1,12 +1,11 @@
 package com.gravityray.basiclearningsystem.lesson;
 
 
-import com.gravityray.basiclearningsystem.course.CourseConverter;
 import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
 import com.gravityray.basiclearningsystem.lesson.model.LessonDto;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
-import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.lesson.service.LessonService;
+import com.gravityray.basiclearningsystem.lessonitem.LessonItemConverter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
@@ -16,24 +15,27 @@ import java.util.stream.Collectors;
 public class LessonRestController {
 
     private final LessonService courseService;
-    private final CourseConverter courseConverter;
+    private final LessonConverter lessonConverter;
+    private final LessonItemConverter lessonItemConverter;
 
     public LessonRestController(
             LessonService courseService,
-            CourseConverter courseConverter) {
+            LessonConverter lessonConverter,
+            LessonItemConverter lessonItemConverter) {
         this.courseService = courseService;
-        this.courseConverter = courseConverter;
+        this.lessonConverter = lessonConverter;
+        this.lessonItemConverter = lessonItemConverter;
     }
 
     @GetMapping("/lesson/{lessonId}")
     public LessonDto getLesson(@PathVariable long lessonId) {
         LessonEntity lessonEntity = courseService.getLesson(lessonId);
-        LessonDto lessonDto = courseConverter.toDto(lessonEntity);
+        LessonDto lessonDto = lessonConverter.toDto(lessonEntity);
 
         lessonDto.setLessonItems(
                 courseService.getLessonLessonItems(lessonId)
                         .stream()
-                        .map(courseConverter::toDto)
+                        .map(lessonItemConverter::toDto)
                         .collect(Collectors.toList()));
 
         return lessonDto;
@@ -41,14 +43,14 @@ public class LessonRestController {
 
     @PostMapping("/lesson")
     public LessonDto createLesson(@RequestBody LessonDto lesson) {
-        long lessonId = courseService.addLesson(courseConverter.toEntity(lesson));
+        long lessonId = courseService.addLesson(lessonConverter.toEntity(lesson));
         lesson.setId(lessonId);
         return lesson;
     }
 
     @PutMapping("/lesson")
     public void updateLesson(@RequestBody LessonDto lesson) {
-        courseService.updateLesson(courseConverter.toEntity(lesson));
+        courseService.updateLesson(lessonConverter.toEntity(lesson));
     }
 
     @PostMapping("/change-lesson-ordinal")

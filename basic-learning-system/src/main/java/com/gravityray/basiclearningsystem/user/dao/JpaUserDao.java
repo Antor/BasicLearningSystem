@@ -31,6 +31,16 @@ public class JpaUserDao implements UserDao {
         return entityManager.find(UserEntity.class, id);
     }
 
+    @Override
+    public UserEntity getUser(String username) {
+        TypedQuery<UserEntity> query = entityManager.createQuery(
+                "SELECT u FROM users u WHERE u.email = :username",
+                UserEntity.class);
+        query.setParameter("username", username);
+        List<UserEntity> userList = query.getResultList();
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
     @Transactional
     @Override
     public long createUser(UserEntity user) {

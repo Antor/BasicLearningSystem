@@ -10,6 +10,8 @@ public interface UserDao {
 
     UserEntity getUser(long id);
 
+    UserEntity getUser(String username);
+
     long createUser(UserEntity user);
 
     void updateUser(UserEntity user);

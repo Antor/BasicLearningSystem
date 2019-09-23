@@ -4,11 +4,11 @@ import com.gravityray.basiclearningsystem.user.model.UserDto;
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,20 +27,19 @@ public class UserRestController {
     }
 
     @GetMapping("/me/user")
-    public UserDto getMyUser() {
-        long currentUserId = -1; // TODO: fetch via SpringSecurity
-        UserEntity userEntity = userService.getUser(currentUserId);
+    public UserDto getMyUser(@AuthenticationPrincipal UserDetails userDetails) {
+        UserEntity userEntity = userService.getUser(userDetails.getUsername());
         return userConverter.toUserDto(userEntity);
     }
 
     @DeleteMapping("/me/user")
-    public void deleteMyUser() {
-        long currentUserId = -1; // TODO: fetch via SpringSecurity
+    public void deleteMyUser(@AuthenticationPrincipal UserDetails userDetails) {
+        long currentUserId = userService.getUser(userDetails.getUsername()).getId();
         userService.deleteUser(currentUserId);
     }
 
-    @GetMapping("/user/{user_id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable("user_id") Long userId) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
         UserEntity userEntity = userService.getUser(userId);
         if (userEntity == null) {
             return ResponseEntity.notFound().build();
