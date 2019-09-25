@@ -4,8 +4,9 @@ USE `BasicLearningSystem`;
 
 CREATE TABLE `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(255) UNIQUE NOT NULL,
+  `email` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
+  `token` varchar(255),
   `first_name` varchar(255),
   `last_name` varchar(255),
   `user_role` varchar(255)

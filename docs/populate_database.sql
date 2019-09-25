@@ -1,12 +1,13 @@
 USE `BasicLearningSystem`;
 
 -- Create users
+-- password hash alg: bcrypt(10 rounds)
 
-insert into users (id, username, password, first_name, last_name, user_role)
+insert into users (id, email, password, first_name, last_name, user_role)
 values (1, 'john.smith@example.com', '123456', 'John', 'Smith', 'admin');
 
-insert into users (id, username, password, first_name, last_name, user_role)
-values (2, 'john.smith2@example.com', '12345622', 'John22', 'Smith22', 'student');
+insert into users (id, email, password, first_name, last_name, user_role)
+values (2, 'john.smith2@example.com', '123456', 'John22', 'Smith22', 'student');
 
 -- Create courses
 
