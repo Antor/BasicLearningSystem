@@ -5,6 +5,7 @@ import com.gravityray.basiclearningsystem.unit.dao.UnitDao;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,31 +19,33 @@ public class PersistentUnitService implements UnitService {
 
     @Override
     public UnitEntity getUnit(long id) {
-        return unitDao.getUnit(id);
+        return unitDao.findById(id).orElse(null);
     }
 
     @Override
     public long addUnit(UnitEntity unitEntity) {
-        return unitDao.addUnit(unitEntity);
+        return unitDao.save(unitEntity).getId();
     }
 
     @Override
     public void updateUnit(UnitEntity unitEntity) {
-        unitDao.updateUnit(unitEntity);
+        unitDao.save(unitEntity);
     }
 
     @Override
     public void changeUnitOrdinal(long unitId, int delta) {
-        unitDao.changeUnitOrdinal(unitId, delta);
+        UnitEntity unitEntity = unitDao.findById(unitId).orElse(null);
+        unitEntity.setOrdinal(unitEntity.getOrdinal() + delta);
     }
 
     @Override
     public void deleteUnit(long id) {
-        unitDao.deleteUnit(id);
+        unitDao.deleteById(id);
     }
 
     @Override
     public List<LessonEntity> getUnitLessons(long unitId) {
-        return unitDao.getUnitLessons(unitId);
+        // TODO
+        return new ArrayList<>();
     }
 }

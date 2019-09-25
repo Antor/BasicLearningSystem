@@ -15,31 +15,31 @@ public class PersistentLessonItemService implements LessonItemService {
 
     @Override
     public LessonItemEntity getLessonItem(long id) {
-        return lessonItemDao.getLessonItem(id);
+        return lessonItemDao.findById(id).orElse(null);
     }
 
     @Override
     public long addLessonItem(LessonItemEntity lessonItemEntity) {
-        return lessonItemDao.addLessonItem(lessonItemEntity);
+        return lessonItemDao.save(lessonItemEntity).getId();
     }
 
     @Override
     public void updateLessonItem(LessonItemEntity lessonItemEntity) {
-        lessonItemDao.updateLessonItem(lessonItemEntity);
+        lessonItemDao.save(lessonItemEntity);
     }
 
     @Override
     public void changeLessonItemOrdinal(long lessonItemId, int delta) {
-        lessonItemDao.changeLessonItemOrdinal(lessonItemId, delta);
+        // TODO
     }
 
     @Override
     public void deleteLessonItem(long id) {
-        lessonItemDao.deleteLessonItem(id);
+        lessonItemDao.deleteById(id);
     }
 
     @Override
     public void completeLessonItem(long userId, long lessonItemId) {
-        lessonItemDao.completeLessonItem(userId, lessonItemId);
+        // TODO
     }
 }

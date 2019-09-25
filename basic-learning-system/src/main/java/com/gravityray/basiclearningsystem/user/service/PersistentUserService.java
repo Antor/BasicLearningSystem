@@ -5,7 +5,9 @@ import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @Qualifier("persistent")
@@ -13,39 +15,40 @@ public class PersistentUserService implements UserService {
 
     private final UserDao userDao;
 
-    public PersistentUserService(
-            @Qualifier("jpa") UserDao userDao) {
+    public PersistentUserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return userDao.getAllUsers();
+        List<UserEntity> result = new ArrayList<>();
+        userDao.findAll().forEach(result::add);
+        return result;
     }
 
     @Override
     public UserEntity getUser(long id) {
-        return userDao.getUser(id);
+        return userDao.findById(id).orElse(null);
     }
 
     @Override
     public UserEntity getUser(String username) {
-        return userDao.getUser(username);
+        return userDao.findUserByUsername(username);
     }
 
     @Override
     public long createUser(UserEntity user) {
-        return userDao.createUser(user);
+        return userDao.save(user).getId();
     }
 
     @Override
     public void updateUser(UserEntity user) {
-        userDao.updateUser(user);
+        userDao.save(user);
     }
 
     @Override
     public void deleteUser(long id) {
-        userDao.deleteUser(id);
+        userDao.deleteById(id);
     }
 
     @Override

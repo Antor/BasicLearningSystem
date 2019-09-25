@@ -1,20 +1,14 @@
 package com.gravityray.basiclearningsystem.user.dao;
 
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public interface UserDao extends CrudRepository<UserEntity, Long> {
 
-public interface UserDao {
-
-    List<UserEntity> getAllUsers();
-
-    UserEntity getUser(long id);
-
-    UserEntity getUser(String username);
-
-    long createUser(UserEntity user);
-
-    void updateUser(UserEntity user);
-
-    void deleteUser(long id);
+    @Query( value = "SELECT u FROM users u WHERE u.email = :username")
+    UserEntity findUserByUsername(@Param("username") String username);
 }

@@ -1,32 +1,13 @@
 package com.gravityray.basiclearningsystem.course.dao;
 
 import com.gravityray.basiclearningsystem.course.model.CourseEntity;
-import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public interface CourseDao extends CrudRepository<CourseEntity, Long> {
 
-public interface CourseDao {
-
-    List<CourseEntity> getCourses(boolean onlyActive);
-
-    CourseEntity getCourse(long id);
-
-    long addCourse(CourseEntity courseEntity);
-
-    void updateCourse(CourseEntity courseEntity);
-
-    void activateCourse(long courseId);
-
-    void deactivateCourse(long courseId);
-
-    void deleteCourse(long id);
-
-    List<UnitEntity> getCourseUnits(long courseId);
-
-
-    List<CourseEntity> getUserCourses(long userId);
-
-    void enrollUserToCourse(long userId, long courseId);
-
-    void unenrollUserFromCourse(long userId, long courseId);
+    @Query("SELECT c FROM courses c WHERE c.active = TRUE")
+    Iterable<CourseEntity> getActiveCourses();
 }

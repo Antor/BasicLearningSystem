@@ -35,8 +35,9 @@ public class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAd
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
-                    .antMatchers("/api/v1/**").authenticated()
+                    .anyRequest().permitAll() // DEBUG
+//                    .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
+//                    .antMatchers("/api/v1/**").authenticated()
                     .and()
                 .httpBasic()
                     .realmName("Basic Learning System")

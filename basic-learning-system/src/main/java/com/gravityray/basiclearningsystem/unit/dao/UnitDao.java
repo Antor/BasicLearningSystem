@@ -1,20 +1,9 @@
 package com.gravityray.basiclearningsystem.unit.dao;
 
-import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface UnitDao {
-    UnitEntity getUnit(long id);
-
-    long addUnit(UnitEntity unitEntity);
-
-    void updateUnit(UnitEntity unitEntity);
-
-    void changeUnitOrdinal(long unitId, int delta);
-
-    void deleteUnit(long id);
-
-    List<LessonEntity> getUnitLessons(long unitId);
+@Repository
+public interface UnitDao extends CrudRepository<UnitEntity, Long> {
 }
