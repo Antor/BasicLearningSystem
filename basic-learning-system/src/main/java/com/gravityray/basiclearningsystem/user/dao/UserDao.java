@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDao extends CrudRepository<UserEntity, Long> {
 
-    @Query( value = "SELECT u FROM users u WHERE u.email = :username")
-    UserEntity findUserByUsername(@Param("username") String username);
+    @Query( value = "SELECT u FROM users u WHERE u.email = :email")
+    UserEntity findUserByEmail(@Param("email") String username);
 }

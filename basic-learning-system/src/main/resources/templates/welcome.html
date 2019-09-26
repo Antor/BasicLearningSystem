@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+
+<p th:text="#{welcome.welcome}">Welcome to BSL</p>
+
+<p th:if="${not authenticated}">
+    <a href="/login" th:href="@{/login}">Login</a><br/>
+    <a href="/register" th:href="@{/register}">Register</a>
+</p>
+<p th:if="${authenticated}">
+    <span th:text="|Welcome, ${username}|">Welcome, User!</span>
+    <a href="/logout" th:href="@{/logout}">Logout</a>
+</p>
+
+<p>You can view list of all courses <a href="/course" th:href="@{/course}">here</a></p>
+
+</body>
+</html>

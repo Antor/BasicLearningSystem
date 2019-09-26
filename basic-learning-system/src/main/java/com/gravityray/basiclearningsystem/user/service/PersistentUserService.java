@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @Qualifier("persistent")
@@ -33,7 +32,7 @@ public class PersistentUserService implements UserService {
 
     @Override
     public UserEntity getUser(String username) {
-        return userDao.findUserByUsername(username);
+        return userDao.findUserByEmail(username);
     }
 
     @Override

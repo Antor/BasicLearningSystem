@@ -20,7 +20,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity user = userDao.findUserByUsername(username);
+        UserEntity user = userDao.findUserByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException(
                     String.format("User with the username %s doesn't exist", username));
