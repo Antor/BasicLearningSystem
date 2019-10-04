@@ -1,17 +1,11 @@
 package com.gravityray.basiclearningsystem.admin.controller.ui;
 
-import com.gravityray.basiclearningsystem.course.converter.CourseConverter;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.user.controller.ui.UserInfoModelAppender;
-import com.gravityray.basiclearningsystem.user.converter.UserConverter;
-import com.gravityray.basiclearningsystem.user.model.dto.UserDto;
 import com.gravityray.basiclearningsystem.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class AdministrationController {
@@ -37,7 +31,7 @@ public class AdministrationController {
         return "administration";
     }
 
-    @GetMapping("/admin/courses")
+    @GetMapping("/admin/course")
     public String administrationCourses(Model model) {
 
         userInfoModelAppender.append(model);
@@ -47,7 +41,14 @@ public class AdministrationController {
         return "administration_courses";
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/admin/course/create")
+    public String courseCreate(Model model) {
+        userInfoModelAppender.append(model);
+
+        return "course_create";
+    }
+
+    @GetMapping("/admin/user")
     public String administrationUsers(Model model) {
 
         userInfoModelAppender.append(model);
@@ -55,5 +56,12 @@ public class AdministrationController {
         model.addAttribute("users", userService.getAllUsers());
 
         return "administration_users";
+    }
+
+    @GetMapping("/admin/user/create")
+    public String userCreate(Model model) {
+        userInfoModelAppender.append(model);
+
+        return "user_create";
     }
 }

@@ -12,6 +12,7 @@
 <div th:replace="~{header :: userHeader}"></div>
 
 <h3>List of Users</h3>
+<a href="#" th:href="@{/admin/user/create}">Create user</a>
 <ul>
     <li th:each="user : ${users}" >
         <span th:text="|${user.firstName} ${user.lastName}|">John Smith</span><br/>

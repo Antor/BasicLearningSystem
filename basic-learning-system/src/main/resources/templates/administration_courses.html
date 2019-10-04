@@ -12,6 +12,7 @@
 <div th:replace="~{header :: userHeader}"></div>
 
 <h3>List of Courses</h3>
+<a href="#" th:href="@{/admin/course/create}">Create course</a>
 <ul>
     <li th:each="course : ${courses}" >
         <span th:text="${course.title}">Course title</span><br/>
