@@ -12,7 +12,16 @@
 <div th:replace="~{header :: userHeader}"></div>
 
 <h3>List of Courses</h3>
-<p>TODO</p>
+<ul>
+    <li th:each="course : ${courses}" >
+        <span th:text="${course.title}">Course title</span><br/>
+        <span th:text="${course.description}">Course description</span><br/>
+        <a href="#" >Edit</a>
+        <a href="#" th:if="${not course.active}">Activate</a>
+        <a href="#" th:if="${course.active}">Deactivate</a>
+        <a href="#" >Delete</a>
+    </li>
+</ul>
 
 </body>
 </html>
