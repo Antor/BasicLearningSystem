@@ -7,19 +7,17 @@
     <title>Course List</title>
 </head>
 <body>
-<p><a th:href="@{/}">Home</a></p>
-<h1 th:text="#{title}">Basic Learning System</h1>
-<p th:if="${not authenticated}">
-    <a href="/login" th:href="@{/login}">Login</a><br/>
-    <a href="/register" th:href="@{/register}">Register</a>
+
+<div th:replace="~{header :: titleHeader}"></div>
+<div th:replace="~{header :: userHeader}"></div>
+
+<p>
+    List of available courses:
+    <br/>
+    <ul>
+        <li th:each="c : ${courses}" th:text="${c.title}">Course title</li>
+    </ul>
 </p>
-<p th:if="${authenticated}">
-    <span th:text="|Welcome, ${username}|">Welcome, User!</span>
-    <a href="/logout" th:href="@{/logout}">Logout</a>
-</p>
-<p>List of available courses:</p>
-<ul>
-    <li th:each="c : ${courses}" th:text="${c.title}">Course title</li>
-</ul>
+
 </body>
 </html>

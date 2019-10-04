@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.course;
+package com.gravityray.basiclearningsystem.course.converter;
 
 import com.gravityray.basiclearningsystem.course.model.CourseDto;
 import com.gravityray.basiclearningsystem.course.model.CourseEntity;

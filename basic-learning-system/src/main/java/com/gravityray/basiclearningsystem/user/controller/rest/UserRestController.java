@@ -1,7 +1,8 @@
-package com.gravityray.basiclearningsystem.user;
+package com.gravityray.basiclearningsystem.user.controller.rest;
 
-import com.gravityray.basiclearningsystem.user.model.UserDto;
-import com.gravityray.basiclearningsystem.user.model.UserEntity;
+import com.gravityray.basiclearningsystem.user.converter.UserConverter;
+import com.gravityray.basiclearningsystem.user.model.dto.UserDto;
+import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;

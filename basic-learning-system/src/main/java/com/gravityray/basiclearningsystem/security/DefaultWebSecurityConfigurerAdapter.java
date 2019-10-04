@@ -35,6 +35,6 @@ public class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAd
                 .formLogin()
                 .and()
                 .logout()
-                    .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/");
     }
 }

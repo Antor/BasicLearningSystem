@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.user.model;
+package com.gravityray.basiclearningsystem.user.model.dto;
 
 public class LoginResponseDto {
 

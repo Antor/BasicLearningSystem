@@ -1,5 +1,6 @@
-package com.gravityray.basiclearningsystem.course;
+package com.gravityray.basiclearningsystem.course.controller.rest;
 
+import com.gravityray.basiclearningsystem.course.converter.CourseConverter;
 import com.gravityray.basiclearningsystem.course.model.*;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.unit.UnitConverter;

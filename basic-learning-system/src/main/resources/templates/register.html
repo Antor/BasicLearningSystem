@@ -5,8 +5,40 @@
     <title>Register</title>
 </head>
 <body>
-<p><a th:href="@{/}">Home</a></p>
-<h1 th:text="#{title}">Basic Learning System</h1>
-<p>TODO: implement user registration</p>
+
+<div th:replace="~{header :: titleHeader}"></div>
+
+<p>Please fill and submit the form below to create account:</p>
+
+<p th:if="${not errors.isEmpty()}">
+    Errors:
+<ul>
+    <li th:each="e : ${errors}" th:text="${e}">Error message</li>
+</ul>
+</p>
+
+<form
+        th:action="@{/register}"
+        method="post"
+        th:object="${registrationForm}">
+
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" id="firstName" th:value="*{firstName}">
+    <br/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" id="lastName" th:value="*{lastName}">
+    <br/>
+
+    <label for="email">Email:</label>
+    <input type="text" name="email" id="email" th:value="*{email}">
+    <br/>
+
+    <label for="password">Password:</label>
+    <input type="text" name="password" id="password" th:value="*{password}">
+    <br/>
+
+    <input type="submit" value="Register">
+</form>
 </body>
 </html>

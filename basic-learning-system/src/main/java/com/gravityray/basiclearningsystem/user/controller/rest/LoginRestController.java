@@ -1,7 +1,7 @@
-package com.gravityray.basiclearningsystem.user;
+package com.gravityray.basiclearningsystem.user.controller.rest;
 
-import com.gravityray.basiclearningsystem.user.model.LoginRequestDto;
-import com.gravityray.basiclearningsystem.user.model.LoginResponseDto;
+import com.gravityray.basiclearningsystem.user.model.dto.LoginRequestDto;
+import com.gravityray.basiclearningsystem.user.model.dto.LoginResponseDto;
 import com.gravityray.basiclearningsystem.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
