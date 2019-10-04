@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+</head>
+<body>
+
+<div th:replace="~{header :: titleHeader}"></div>
+<div th:replace="~{header :: userHeader}"></div>
+
+<h3>Administration Panel</h3>
+<p>
+    <a href="/admin/courses" th:href="@{/admin/courses}">Courses</a><br/>
+    <a href="/admin/users" th:href="@{/admin/users}">Users</a>
+</p>
+</body>
+</html>

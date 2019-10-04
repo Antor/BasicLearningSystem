@@ -16,12 +16,13 @@
 
 <div th:fragment="userHeader">
     <p th:if="${not authenticated}">
-        <a href="/login" th:href="@{/login}">Login</a>
+        <a href="/login" th:href="@{/login}">Login</a><br/>
         <a href="/register" th:href="@{/register}">Register</a>
     </p>
 
     <p th:if="${authenticated}">
-        <span th:text="|Welcome, ${username}|">Welcome, User!</span>
+        <span th:text="|Welcome, ${username}|">Welcome, User!</span><br/>
+        <a th:if="${isAdmin}" href="/admin" th:href="@{/admin}">Admin</a><br/>
         <a href="/logout" th:href="@{/logout}">Logout</a>
     </p>
 </div>

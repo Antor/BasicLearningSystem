@@ -24,6 +24,9 @@ public class UserInfoModelAppender {
         model.addAttribute("authenticated", authenticated);
 
         if (authenticated) {
+            String role = userEntity.getRole();
+            boolean admin = role != null && role.equalsIgnoreCase("admin");
+            model.addAttribute("isAdmin", admin);
             model.addAttribute("username", userEntity.getFirstName());
         }
     }

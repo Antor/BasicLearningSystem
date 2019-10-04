@@ -30,11 +30,19 @@ public class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAd
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().permitAll()
+                .antMatchers("/", "/register", "/course").permitAll()
+                .antMatchers("/admin", "/admin/**").hasAuthority("admin")
+                .anyRequest().authenticated()
                 .and()
+
                 .formLogin()
+                .permitAll()
                 .and()
+
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+
+                .httpBasic();
     }
 }
