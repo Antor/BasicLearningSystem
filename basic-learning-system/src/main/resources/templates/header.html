@@ -23,6 +23,7 @@
     <p th:if="${authenticated}">
         <span th:text="|Welcome, ${username}|">Welcome, User!</span><br/>
         <a th:if="${isAdmin}" href="/admin" th:href="@{/admin}">Admin</a><br/>
+        <a href="/profile" th:href="@{/profile}">Profile</a><br/>
         <a href="/logout" th:href="@{/logout}">Logout</a>
     </p>
 </div>

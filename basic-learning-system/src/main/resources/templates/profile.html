@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+
+<div th:replace="~{header :: titleHeader}"></div>
+
+<h3>Profile information</h3>
+<p th:text="|Name: ${name}|">Name: John Smith</p>
+<p th:text="|Email: ${email}|">Email: john@example.com</p>
+
+<p>
+    <a href="#" th:href="@{/profile/edit}">Edit Profile</a><br/>
+    <a href="#" th:href="@{/profile/course}">My Courses</a><br/>
+    <a href="#" th:href="@{/profile/delete}">Delete Profile</a><br/>
+</p>
+
+</body>
+</html>
