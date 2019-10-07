@@ -17,7 +17,7 @@
     <li th:each="user : ${users}" >
         <span th:text="|${user.firstName} ${user.lastName}|">John Smith</span><br/>
         <span th:text="${user.email}">john@example.com</span><br/>
-        <a href="#">Edit</a>
+        <a href="#" th:href="@{/admin/user/{userId}(userId=${user.id})}">Edit</a>
         <a href="#">Delete</a>
     </li>
 </ul>

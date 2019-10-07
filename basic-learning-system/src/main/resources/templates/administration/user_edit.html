@@ -11,13 +11,15 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
-<h3>Create user</h3>
+<h3>Edit user</h3>
 
 <div th:replace="~{fragments/errors :: errors}"></div>
 
-<form th:action="@{/admin/user/create}" method="post">
-    <div th:replace="~{fragments/user :: userFormFields(canEditRole = true, canEditPassword = true)}"></div>
-    <input type="submit" value="Create">
+<form
+        th:action="@{/admin/user/{userId}(userId=${userId})}"
+        method="post">
+    <div th:replace="~{fragments/user :: userFormFields(canEditRole = true, canEditPassword = false)}"></div>
+    <input type="submit" value="Save">
 </form>
 
 </body>

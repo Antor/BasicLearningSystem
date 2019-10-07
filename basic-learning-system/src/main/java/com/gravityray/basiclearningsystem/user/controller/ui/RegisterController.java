@@ -48,7 +48,7 @@ public class RegisterController {
             HttpServletRequest request,
             Model model,
             UserDto user) {
-        List<String> verificationErrors = userValidator.validateUser(user);
+        List<String> verificationErrors = userValidator.validateCreateUser(user);
 
         if (verificationErrors.size() > 0) {
             model.addAttribute("errors", verificationErrors);

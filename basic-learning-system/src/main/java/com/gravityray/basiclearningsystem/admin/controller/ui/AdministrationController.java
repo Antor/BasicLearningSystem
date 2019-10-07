@@ -11,6 +11,7 @@ import com.gravityray.basiclearningsystem.user.validator.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -76,6 +77,59 @@ public class AdministrationController {
         return "administration/administration_users";
     }
 
+    @GetMapping("/admin/user/{userId}")
+    public String userEditGet(
+            @PathVariable Long userId,
+            Model model) {
+        userInfoModelAppender.append(model);
+        rolesModelAppender.append(model);
+
+        UserEntity userEntity = userService.getUser(userId);
+        model.addAttribute("userId", userId);
+        model.addAttribute("errors", new ArrayList<>());
+        model.addAttribute("user", userConverter.toUserDto(userEntity));
+
+        return "administration/user_edit";
+    }
+
+    @PostMapping("/admin/user/{userId}")
+    public String userEditPost(
+            @PathVariable Long userId,
+            Model model,
+            UserDto user) {
+        List<String> verificationErrors = userValidator.validateEditUser(user);
+        if (verificationErrors.size() > 0) {
+            userInfoModelAppender.append(model);
+            rolesModelAppender.append(model);
+
+            model.addAttribute("errors", verificationErrors);
+            model.addAttribute("user", user);
+
+            return "administration/user_edit";
+        }
+
+        try {
+            UserEntity userEntity = userService.getUser(userId);
+            userEntity.setFirstName(user.getFirstName());
+            userEntity.setLastName(user.getLastName());
+            userEntity.setEmail(user.getEmail());
+            userEntity.setRole(user.getRole());
+            userService.updateUser(userEntity);
+
+        } catch (Exception e) {
+            userInfoModelAppender.append(model);
+            rolesModelAppender.append(model);
+
+            List<String> createUserErrors = new ArrayList<>();
+            createUserErrors.add(e.getMessage());
+            model.addAttribute("errors", createUserErrors);
+            model.addAttribute("user", user);
+            return "administration/user_edit";
+        }
+
+        return "redirect:/admin/user";
+    }
+
     @GetMapping("/admin/user/create")
     public String userCreateGet(Model model) {
         userInfoModelAppender.append(model);
@@ -89,14 +143,14 @@ public class AdministrationController {
 
     @PostMapping("/admin/user/create")
     public String userCreatePost(Model model, UserDto user) {
-        userInfoModelAppender.append(model);
-        rolesModelAppender.append(model);
-
-        List<String> verificationErrors = userValidator.validateUser(user);
-
+        List<String> verificationErrors = userValidator.validateCreateUser(user);
         if (verificationErrors.size() > 0) {
+            userInfoModelAppender.append(model);
+            rolesModelAppender.append(model);
+
             model.addAttribute("errors", verificationErrors);
             model.addAttribute("user", user);
+
             return "administration/user_create";
         }
 
@@ -105,6 +159,9 @@ public class AdministrationController {
             userService.createUser(userEntity);
 
         } catch (Exception e) {
+            userInfoModelAppender.append(model);
+            rolesModelAppender.append(model);
+
             List<String> createUserErrors = new ArrayList<>();
             createUserErrors.add(e.getMessage());
             model.addAttribute("errors", createUserErrors);
