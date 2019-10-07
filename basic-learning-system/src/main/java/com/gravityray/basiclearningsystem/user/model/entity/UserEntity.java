@@ -16,9 +16,6 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "token")
-    private String token;
-
     @Column(name = "first_name")
     private String firstName;
 

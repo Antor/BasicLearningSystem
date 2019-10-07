@@ -1,5 +1,6 @@
 package com.gravityray.basiclearningsystem.user.service;
 
+import com.gravityray.basiclearningsystem.user.model.entity.Role;
 import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface UserService {
     void deleteUser(long id);
 
     String loginUser(String email, String password);
+
+    public List<Role> getAllRoles();
 }

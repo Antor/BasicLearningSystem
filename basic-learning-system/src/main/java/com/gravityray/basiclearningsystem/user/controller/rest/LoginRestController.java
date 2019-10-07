@@ -23,6 +23,7 @@ public class LoginRestController {
     @PostMapping("/login")
     public LoginResponseDto login(@RequestBody LoginRequestDto request) {
         String authToken = userService.loginUser(request.getEmail(), request.getPassword());
+
         LoginResponseDto response = new LoginResponseDto();
         response.setAuthToken(authToken);
         return response;

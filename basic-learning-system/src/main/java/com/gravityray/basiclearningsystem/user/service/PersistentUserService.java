@@ -1,6 +1,7 @@
 package com.gravityray.basiclearningsystem.user.service;
 
 import com.gravityray.basiclearningsystem.user.dao.UserDao;
+import com.gravityray.basiclearningsystem.user.model.entity.Role;
 import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,13 @@ public class PersistentUserService implements UserService {
     public String loginUser(String email, String password) {
         // TODO: figure out
         return null;
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(new Role(Role.ID_ADMIN, "Admin"));
+        roleList.add(new Role(Role.ID_STUDENT, "Student"));
+        return roleList;
     }
 }

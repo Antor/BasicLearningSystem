@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Errors</title>
+</head>
+<body>
+
+<div th:fragment="errors">
+    <p th:if="${not errors.isEmpty()}">
+        Errors:
+    <ul>
+        <li th:each="e : ${errors}" th:text="${e}">Error message</li>
+    </ul>
+    </p>
+</div>
+
+</body>
+</html>

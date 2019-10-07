@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+
+<div
+        th:fragment="userFormFields(canEditRole)"
+        th:object="${user}">
+
+    <input type="hidden" name="id" id="id" th:value="*{id}">
+
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" id="firstName" th:value="*{firstName}">
+    <br/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" id="lastName" th:value="*{lastName}">
+    <br/>
+
+    <label for="email">Email:</label>
+    <input type="text" name="email" id="email" th:value="*{email}">
+    <br/>
+
+    <label for="password">Password:</label>
+    <input type="text" name="password" id="password" th:value="*{password}">
+    <br/>
+
+    <div th:if="${canEditRole}">
+        <label for="role">Role:</label>
+        <select id="role" name="role">
+            <option
+                    th:each="role : ${roles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}"
+                    th:selected="${role.id} == *{role}">Role
+            </option>
+        </select>
+        <br/>
+    </div>
+    <input
+            th:if="${not canEditRole}"
+            type="hidden"
+            name="role"
+            id="role_hidden"
+            th:value="*{role}">
+</div>
+
+
+</body>
+</html>
