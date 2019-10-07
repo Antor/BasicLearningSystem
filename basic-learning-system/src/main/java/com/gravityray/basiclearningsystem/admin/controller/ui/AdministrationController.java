@@ -171,4 +171,41 @@ public class AdministrationController {
 
         return "redirect:/admin/user";
     }
+
+    @GetMapping("/admin/user/{userId}/delete")
+    public String userDeleteGet(
+            @PathVariable Long userId,
+            Model model) {
+        userInfoModelAppender.append(model);
+
+        UserEntity userEntity = userService.getUser(userId);
+        model.addAttribute("userId", userId);
+        model.addAttribute("errors", new ArrayList<>());
+        model.addAttribute("user", userConverter.toUserDto(userEntity));
+
+        return "administration/user_delete";
+    }
+
+    @PostMapping("/admin/user/{userId}/delete")
+    public String userDeletePost(
+            @PathVariable Long userId,
+            Model model) {
+
+        try {
+            userService.deleteUser(userId);
+
+        } catch (Exception e) {
+            userInfoModelAppender.append(model);
+            rolesModelAppender.append(model);
+
+            List<String> createUserErrors = new ArrayList<>();
+            createUserErrors.add(e.getMessage());
+            model.addAttribute("errors", createUserErrors);
+            UserEntity userEntity = userService.getUser(userId);
+            model.addAttribute("user", userConverter.toUserDto(userEntity));
+            return "administration/user_delete";
+        }
+
+        return "redirect:/admin/user";
+    }
 }

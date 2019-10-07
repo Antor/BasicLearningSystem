@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete user</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<h3>Delete user</h3>
+
+<div th:replace="~{fragments/errors :: errors}"></div>
+
+<form
+        th:action="@{/admin/user/{userId}/delete(userId=${userId})}"
+        method="post">
+    <p>Do you want to delete <span th:text="|${user.firstName} ${user.lastName}|">John Smith</span></p>
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>
