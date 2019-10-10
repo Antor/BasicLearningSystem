@@ -1,7 +1,7 @@
 package com.gravityray.basiclearningsystem.lesson;
 
 
-import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
+import com.gravityray.basiclearningsystem.course.model.dto.ChangeOrdinalRequest;
 import com.gravityray.basiclearningsystem.lesson.model.LessonDto;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.lesson.service.LessonService;

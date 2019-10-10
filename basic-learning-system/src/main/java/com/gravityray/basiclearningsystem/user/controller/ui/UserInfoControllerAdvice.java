@@ -4,19 +4,21 @@ import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-@Component
-public class UserInfoModelAppender {
+@ControllerAdvice
+public class UserInfoControllerAdvice {
 
     private final UserService userService;
 
-    public UserInfoModelAppender(UserService userService) {
+    public UserInfoControllerAdvice(UserService userService) {
         this.userService = userService;
     }
 
-    public void append(Model model) {
+    @ModelAttribute
+    public void appendUserInfo(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         UserEntity userEntity = userService.getUser(authentication.getName());

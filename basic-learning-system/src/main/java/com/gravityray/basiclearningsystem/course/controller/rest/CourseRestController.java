@@ -1,7 +1,8 @@
 package com.gravityray.basiclearningsystem.course.controller.rest;
 
 import com.gravityray.basiclearningsystem.course.converter.CourseConverter;
-import com.gravityray.basiclearningsystem.course.model.*;
+import com.gravityray.basiclearningsystem.course.model.dto.CourseDto;
+import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.unit.UnitConverter;
 import org.springframework.web.bind.annotation.*;

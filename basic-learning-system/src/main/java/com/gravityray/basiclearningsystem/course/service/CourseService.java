@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.course.service;
 
-import com.gravityray.basiclearningsystem.course.model.CourseEntity;
+import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 
 import java.util.List;

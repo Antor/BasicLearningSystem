@@ -10,6 +10,16 @@
 
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
+
+<p>
+    <span> Navigation:</span><br/>
+    <span>
+        <a href="#" th:href="@{/admin}">Admin</a>
+        /
+        <a href="#" th:href="@{/admin/course}">Courses</a>
+    </span>
+</p>
+
 <h3>Create course</h3>
 <p>TODO</p>
 

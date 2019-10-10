@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.lessonitem;
 
-import com.gravityray.basiclearningsystem.course.model.ChangeOrdinalRequest;
+import com.gravityray.basiclearningsystem.course.model.dto.ChangeOrdinalRequest;
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemDto;
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
 import com.gravityray.basiclearningsystem.lessonitem.service.LessonItemService;

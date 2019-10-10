@@ -11,16 +11,21 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
+<p>
+    <span> Navigation:</span><br/>
+    <a href="#" th:href="@{/admin}">Admin</a><br/>
+</p>
+
 <h3>List of Courses</h3>
 <a href="#" th:href="@{/admin/course/create}">Create course</a>
 <ul>
-    <li th:each="course : ${courses}" >
+    <li th:each="course : ${courses}">
         <span th:text="${course.title}">Course title</span><br/>
         <span th:text="${course.description}">Course description</span><br/>
-        <a href="#" >Edit</a>
+        <a href="#">Edit</a>
         <a href="#" th:if="${not course.active}">Activate</a>
         <a href="#" th:if="${course.active}">Deactivate</a>
-        <a href="#" >Delete</a>
+        <a href="#">Delete</a>
     </li>
 </ul>
 

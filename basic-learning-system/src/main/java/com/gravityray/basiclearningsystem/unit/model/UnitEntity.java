@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.unit.model;
 
-import com.gravityray.basiclearningsystem.course.model.CourseEntity;
+import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 
 import javax.persistence.*;

@@ -15,8 +15,7 @@ public class LoginRestController {
 
     private final UserService userService;
 
-    public LoginRestController(
-            @Qualifier("persistent") UserService userService) {
+    public LoginRestController(UserService userService) {
         this.userService = userService;
     }
 

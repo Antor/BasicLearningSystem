@@ -1,7 +1,7 @@
 package com.gravityray.basiclearningsystem.course.service;
 
 import com.gravityray.basiclearningsystem.course.dao.CourseDao;
-import com.gravityray.basiclearningsystem.course.model.CourseEntity;
+import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import org.springframework.stereotype.Service;
 
@@ -46,15 +46,13 @@ public class PersistentCourseService implements CourseService {
     @Override
     public void activateCourse(long courseId) {
         courseDao.findById(courseId)
-                .orElse(null)
-                .setActive(true);
+                .ifPresent(courseEntity -> courseEntity.setActive(true));
     }
 
     @Override
     public void deactivateCourse(long courseId) {
         courseDao.findById(courseId)
-                .orElse(null)
-                .setActive(false);
+                .ifPresent(courseEntity -> courseEntity.setActive(true));
     }
 
     @Override

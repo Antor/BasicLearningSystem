@@ -4,7 +4,6 @@ import com.gravityray.basiclearningsystem.user.converter.UserConverter;
 import com.gravityray.basiclearningsystem.user.model.dto.UserDto;
 import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +20,7 @@ public class UserRestController {
     private final UserConverter userConverter;
 
     public UserRestController(
-            @Qualifier("persistent") UserService userService,
+            UserService userService,
             UserConverter userConverter) {
         this.userService = userService;
         this.userConverter = userConverter;

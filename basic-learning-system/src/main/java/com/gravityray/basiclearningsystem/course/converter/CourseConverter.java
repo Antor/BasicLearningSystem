@@ -1,7 +1,7 @@
 package com.gravityray.basiclearningsystem.course.converter;
 
-import com.gravityray.basiclearningsystem.course.model.CourseDto;
-import com.gravityray.basiclearningsystem.course.model.CourseEntity;
+import com.gravityray.basiclearningsystem.course.model.dto.CourseDto;
+import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
 import org.springframework.stereotype.Component;
 
 @Component

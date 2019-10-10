@@ -11,6 +11,15 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
+<p>
+    <span> Navigation:</span><br/>
+    <span>
+        <a href="#" th:href="@{/admin}">Admin</a>
+        /
+        <a href="#" th:href="@{/admin/user}">Users</a>
+    </span>
+</p>
+
 <h3>Create user</h3>
 
 <div th:replace="~{fragments/errors :: errors}"></div>
