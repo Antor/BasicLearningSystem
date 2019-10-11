@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.user.controller.ui;
+package com.gravityray.basiclearningsystem.registration;
 
 import com.gravityray.basiclearningsystem.user.converter.UserConverter;
 import com.gravityray.basiclearningsystem.user.model.dto.UserDto;

@@ -9,7 +9,7 @@
 <body>
 
 <div
-        th:fragment="userFormFields(canEditRole, canEditPassword)"
+        th:fragment="userFormFields(canEditRole, canEditPassword, canEditEmail)"
         th:object="${user}">
 
     <input type="hidden" name="id" id="id" th:value="*{id}">
@@ -22,9 +22,11 @@
     <input type="text" name="lastName" id="lastName" th:value="*{lastName}">
     <br/>
 
-    <label for="email">Email:</label>
-    <input type="text" name="email" id="email" th:value="*{email}">
-    <br/>
+    <div th:if="${canEditEmail}">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" th:value="*{email}">
+        <br/>
+    </div>
 
     <div th:if="${canEditPassword}">
         <label for="password">Password:</label>

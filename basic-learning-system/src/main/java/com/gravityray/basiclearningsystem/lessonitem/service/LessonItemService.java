@@ -2,11 +2,7 @@ package com.gravityray.basiclearningsystem.lessonitem.service;
 
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
 
-import java.util.List;
-
 public interface LessonItemService {
-
-
 
     LessonItemEntity getLessonItem(long id);
 

@@ -9,10 +9,11 @@
 <body>
 
 <div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
 
 <h3>Profile information</h3>
-<p th:text="|Name: ${name}|">Name: John Smith</p>
-<p th:text="|Email: ${email}|">Email: john@example.com</p>
+<p th:text="|Name: ${profile.name}|">Name: John Smith</p>
+<p th:text="|Email: ${profile.email}|">Email: john@example.com</p>
 
 <p>
     <a href="#" th:href="@{/profile/edit}">Edit Profile</a><br/>

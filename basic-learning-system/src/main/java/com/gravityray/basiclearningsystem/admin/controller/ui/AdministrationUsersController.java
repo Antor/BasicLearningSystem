@@ -72,7 +72,6 @@ public class AdministrationUsersController {
             UserEntity userEntity = userService.getUser(userId);
             userEntity.setFirstName(user.getFirstName());
             userEntity.setLastName(user.getLastName());
-            userEntity.setEmail(user.getEmail());
             userEntity.setRole(user.getRole());
             userService.updateUser(userEntity);
 

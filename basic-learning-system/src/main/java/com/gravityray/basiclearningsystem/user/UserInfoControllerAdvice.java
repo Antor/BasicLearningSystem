@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.user.controller.ui;
+package com.gravityray.basiclearningsystem.user;
 
 import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;

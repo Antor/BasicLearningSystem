@@ -27,7 +27,7 @@
 <form
         th:action="@{/admin/user/{userId}(userId=${userId})}"
         method="post">
-    <div th:replace="~{fragments/user :: userFormFields(canEditRole = true, canEditPassword = false)}"></div>
+    <div th:replace="~{fragments/user :: userFormFields(canEditRole = true, canEditPassword = false, canEditEmail = false)}"></div>
     <input type="submit" value="Save">
 </form>
 
