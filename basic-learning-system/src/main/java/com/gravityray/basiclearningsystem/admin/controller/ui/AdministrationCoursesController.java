@@ -74,7 +74,24 @@ public class AdministrationCoursesController {
             model.addAttribute("course", editCourseForm);
             return "administration/course_edit";
         }
+    }
 
+    @GetMapping("/admin/course/{courseId}/delete")
+    public String courseDeleteGet(
+            @PathVariable Long courseId,
+            Model model) {
 
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", courseService.getEditCourseForm(courseId));
+
+        return "administration/course_delete";
+    }
+
+    @PostMapping("/admin/course/{courseId}/delete")
+    public String courseDeletePost(@PathVariable Long courseId) {
+
+        courseService.deleteCourse(courseId);
+
+        return "redirect:/admin/course";
     }
 }

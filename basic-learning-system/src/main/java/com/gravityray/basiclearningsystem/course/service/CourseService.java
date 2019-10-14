@@ -1,6 +1,7 @@
 package com.gravityray.basiclearningsystem.course.service;
 
 import com.gravityray.basiclearningsystem.admin.controller.ui.CreateCourseForm;
+import com.gravityray.basiclearningsystem.admin.controller.ui.DeleteCourseInfo;
 import com.gravityray.basiclearningsystem.admin.controller.ui.EditCourseForm;
 import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
@@ -15,6 +16,8 @@ public interface CourseService {
     CourseEntity getCourse(long id);
 
     EditCourseForm getEditCourseForm(long id);
+
+    DeleteCourseInfo getDeleteCourseInfo(long id);
 
     void createCourse(CreateCourseForm course) throws CreateCourseFormNotValidException;
 

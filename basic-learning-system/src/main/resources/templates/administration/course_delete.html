@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete course</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<p>
+    <span> Navigation:</span><br/>
+    <span>
+        <a href="#" th:href="@{/admin}">Admin</a>
+        /
+        <a href="#" th:href="@{/admin/course}">Courses</a>
+    </span>
+</p>
+
+<h3>Delete course</h3>
+
+<div th:replace="~{fragments/errors :: errors}"></div>
+
+<form
+        th:action="@{/admin/course/{courseId}/delete(courseId=${course.id})}"
+        method="post">
+    <p>Do you want to delete course "<span th:text="|${course.title}|">Basic Java</span>"</p>
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.gravityray.basiclearningsystem.course.service;
 
 import com.gravityray.basiclearningsystem.admin.controller.ui.CreateCourseForm;
+import com.gravityray.basiclearningsystem.admin.controller.ui.DeleteCourseInfo;
 import com.gravityray.basiclearningsystem.admin.controller.ui.EditCourseForm;
 import com.gravityray.basiclearningsystem.course.dao.CourseDao;
 import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
@@ -53,6 +54,18 @@ public class DefaultCourseService implements CourseService {
                     form.setTitle(courseEntity.getTitle());
                     form.setDescription(courseEntity.getDescription());
                     return form;
+                })
+                .orElse(null);
+    }
+
+    @Override
+    public DeleteCourseInfo getDeleteCourseInfo(long id) {
+        return courseDao.findById(id)
+                .map(courseEntity -> {
+                    DeleteCourseInfo course = new DeleteCourseInfo();
+                    course.setId(courseEntity.getId());
+                    course.setTitle(courseEntity.getTitle());
+                    return course;
                 })
                 .orElse(null);
     }
@@ -121,6 +134,7 @@ public class DefaultCourseService implements CourseService {
                 .ifPresent(courseEntity -> courseEntity.setActive(true));
     }
 
+    @Transactional
     @Override
     public void deleteCourse(long id) {
         courseDao.deleteById(id);
