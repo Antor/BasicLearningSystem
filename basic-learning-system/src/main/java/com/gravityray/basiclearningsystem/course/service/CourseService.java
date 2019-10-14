@@ -1,5 +1,6 @@
 package com.gravityray.basiclearningsystem.course.service;
 
+import com.gravityray.basiclearningsystem.admin.controller.ui.CourseActiveToggleInfo;
 import com.gravityray.basiclearningsystem.admin.controller.ui.CreateCourseForm;
 import com.gravityray.basiclearningsystem.admin.controller.ui.DeleteCourseInfo;
 import com.gravityray.basiclearningsystem.admin.controller.ui.EditCourseForm;
@@ -19,6 +20,8 @@ public interface CourseService {
 
     DeleteCourseInfo getDeleteCourseInfo(long id);
 
+    CourseActiveToggleInfo getCourseActiveToggleInfo(Long courseId);
+
     void createCourse(CreateCourseForm course) throws CreateCourseFormNotValidException;
 
     long addCourse(CourseEntity courseEntity);
@@ -26,6 +29,8 @@ public interface CourseService {
     void updateCourse(CourseEntity courseEntity);
 
     void updateCourse(EditCourseForm editCourseForm) throws CourseNotFoundException, EditCourseFormNotValidException;
+
+    void toggleCourseActive(Long courseId);
 
     void activateCourse(long courseId);
 
@@ -40,6 +45,4 @@ public interface CourseService {
     void enrollUserToCourse(long userId, long courseId);
 
     void unenrollUserFromCourse(long userId, long courseId);
-
-
 }

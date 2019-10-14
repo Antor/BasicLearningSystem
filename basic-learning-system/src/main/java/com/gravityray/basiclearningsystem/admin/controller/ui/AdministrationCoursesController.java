@@ -94,4 +94,34 @@ public class AdministrationCoursesController {
 
         return "redirect:/admin/course";
     }
+
+    @GetMapping("/admin/course/{courseId}/activate")
+    public String courseActivateGet(
+            @PathVariable Long courseId,
+            Model model) {
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", courseService.getCourseActiveToggleInfo(courseId));
+
+        return "administration/course_active_toggle";
+    }
+
+    @GetMapping("/admin/course/{courseId}/deactivate")
+    public String courseDeactivateGet(
+            @PathVariable Long courseId,
+            Model model) {
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", courseService.getCourseActiveToggleInfo(courseId));
+
+        return "administration/course_active_toggle";
+    }
+
+    @PostMapping("/admin/course/{courseId}/active/toggle")
+    public String courseToggleActive(@PathVariable Long courseId) {
+
+        courseService.toggleCourseActive(courseId);
+
+        return "redirect:/admin/course";
+    }
 }

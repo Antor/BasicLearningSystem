@@ -1,5 +1,6 @@
 package com.gravityray.basiclearningsystem.course.service;
 
+import com.gravityray.basiclearningsystem.admin.controller.ui.CourseActiveToggleInfo;
 import com.gravityray.basiclearningsystem.admin.controller.ui.CreateCourseForm;
 import com.gravityray.basiclearningsystem.admin.controller.ui.DeleteCourseInfo;
 import com.gravityray.basiclearningsystem.admin.controller.ui.EditCourseForm;
@@ -70,6 +71,19 @@ public class DefaultCourseService implements CourseService {
                 .orElse(null);
     }
 
+    @Override
+    public CourseActiveToggleInfo getCourseActiveToggleInfo(Long id) {
+        return courseDao.findById(id)
+                .map(courseEntity -> {
+                    CourseActiveToggleInfo course = new CourseActiveToggleInfo();
+                    course.setId(courseEntity.getId());
+                    course.setTitle(courseEntity.getTitle());
+                    course.setActive(courseEntity.isActive());
+                    return course;
+                })
+                .orElse(null);
+    }
+
     @Transactional
     @Override
     public void createCourse(CreateCourseForm course)
@@ -122,12 +136,21 @@ public class DefaultCourseService implements CourseService {
         courseEntity.setDescription(editCourseForm.getDescription());
     }
 
+    @Transactional
+    @Override
+    public void toggleCourseActive(Long id) {
+        courseDao.findById(id)
+                .ifPresent(course -> course.setActive(!course.isActive()));
+    }
+
+    @Transactional
     @Override
     public void activateCourse(long courseId) {
         courseDao.findById(courseId)
                 .ifPresent(courseEntity -> courseEntity.setActive(true));
     }
 
+    @Transactional
     @Override
     public void deactivateCourse(long courseId) {
         courseDao.findById(courseId)

@@ -23,6 +23,7 @@
 <a href="#" th:href="@{/admin/course/create}">Create course</a>
 
 <div th:each="course : ${courses}" class="row">
+    <span th:text="'#' + ${course.id}">#01</span><br/>
     <span th:text="${course.title}">Course title</span><br/>
     <span th:text="${course.description}">Course description</span><br/>
 
