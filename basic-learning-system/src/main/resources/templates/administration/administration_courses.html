@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
 
@@ -17,17 +19,31 @@
 </p>
 
 <h3>List of Courses</h3>
+
 <a href="#" th:href="@{/admin/course/create}">Create course</a>
-<ul>
-    <li th:each="course : ${courses}">
-        <span th:text="${course.title}">Course title</span><br/>
-        <span th:text="${course.description}">Course description</span><br/>
-        <a href="#">Edit</a>
-        <a href="#" th:if="${not course.active}">Activate</a>
-        <a href="#" th:if="${course.active}">Deactivate</a>
-        <a href="#">Delete</a>
-    </li>
-</ul>
+
+<div th:each="course : ${courses}" class="row">
+    <span th:text="${course.title}">Course title</span><br/>
+    <span th:text="${course.description}">Course description</span><br/>
+
+    <a href="#"
+       th:href="@{/admin/course/{courseId}(courseId=${course.id})}"
+       class="action">Edit</a>
+    <a href="#"
+       th:href="@{/admin/course/{courseId}/unit(courseId=${course.id})}"
+       class="action">Edit Units</a>
+    <a href="#"
+       th:if="${not course.active}"
+       th:href="@{/admin/course/{courseId}/activate(courseId=${course.id})}"
+       class="action">Activate</a>
+    <a href="#"
+       th:if="${course.active}"
+       th:href="@{/admin/course/{courseId}/deactivate(courseId=${course.id})}"
+       class="action">Deactivate</a>
+    <a href="#"
+       th:href="@{/admin/course/{courseId}/delete(courseId=${course.id})}"
+       class="action">Delete</a>
+</div>
 
 </body>
 </html>

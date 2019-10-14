@@ -21,16 +21,16 @@
     </span>
 </p>
 
-<h3>Create course</h3>
+<h3>Edit course</h3>
 
 <div th:replace="~{fragments/errors :: errors}"></div>
 
 <form
         th:action="@{/admin/course/create}"
         method="post">
-    <div th:replace="~{fragments/course :: courseFormFields (handleId = false)}"></div>
+    <div th:replace="~{fragments/course :: courseFormFields(handleId = true)}"></div>
 
-    <input type="submit" value="Create">
+    <input type="submit" value="Save">
 </form>
 
 </body>
