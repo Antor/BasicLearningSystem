@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<p>
+    <span> Navigation:</span><br/>
+    <a href="#" th:href="@{/admin}">Admin</a><br/>
+</p>
+
+<h3>List of Courses</h3>
+
+<a href="#" th:href="@{/admin/course/create}" class="button">Create course</a>
+<div class="separator"></div>
+<div >
+    <div th:each="course : ${courses}" class="row">
+        <span th:text="'#' + ${course.id}">#01</span><br/>
+        <span th:text="${course.title}">Course title</span><br/>
+        <span th:text="${course.description}">Course description</span><br/>
+
+        <a href="#"
+           th:href="@{/admin/course/{courseId}(courseId=${course.id})}"
+           class="action">Edit</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit(courseId=${course.id})}"
+           class="action">Edit Units</a>
+        <a href="#"
+           th:if="${not course.active}"
+           th:href="@{/admin/course/{courseId}/activate(courseId=${course.id})}"
+           class="action">Activate</a>
+        <a href="#"
+           th:if="${course.active}"
+           th:href="@{/admin/course/{courseId}/deactivate(courseId=${course.id})}"
+           class="action">Deactivate</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/delete(courseId=${course.id})}"
+           class="action">Delete</a>
+    </div>
+</div>
+
+</body>
+</html>

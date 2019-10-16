@@ -2,6 +2,7 @@ package com.gravityray.basiclearningsystem.admin.controller;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateCourseForm;
 import com.gravityray.basiclearningsystem.admin.model.EditCourseForm;
+import com.gravityray.basiclearningsystem.course.model.CourseEntity;
 import com.gravityray.basiclearningsystem.course.service.CourseNotFoundException;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.course.service.CreateCourseFormNotValidException;
@@ -15,19 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Collections;
 
 @Controller
-public class AdministrationCoursesController {
+public class AdministrationCourseController {
 
     private final CourseService courseService;
 
-    public AdministrationCoursesController(CourseService courseService) {
+    public AdministrationCourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @GetMapping("/admin/course")
-    public String administrationCourses(Model model) {
+    public String courseList(Model model) {
         model.addAttribute("courses", courseService.getCourses(false));
 
-        return "administration/administration_courses";
+        return "administration/course_list";
     }
 
     @GetMapping("/admin/course/create")
@@ -126,5 +127,17 @@ public class AdministrationCoursesController {
         courseService.toggleCourseActive(courseId);
 
         return "redirect:/admin/course";
+    }
+
+    @GetMapping("/admin/course/{courseId}/unit")
+    public String unitList(
+            @PathVariable Long courseId,
+            Model model) {
+
+        CourseEntity course = courseService.getCourse(courseId);
+        model.addAttribute("course", course);
+        model.addAttribute("units", course.getUnitList());
+
+        return "administration/unit_list";
     }
 }

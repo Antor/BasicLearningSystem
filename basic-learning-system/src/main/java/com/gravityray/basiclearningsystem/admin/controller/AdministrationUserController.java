@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class AdministrationUsersController {
+public class AdministrationUserController {
 
     private final UserService userService;
     private final RolesModelAppender rolesModelAppender;
     private final UserValidator userValidator;
     private final UserConverter userConverter;
 
-    public AdministrationUsersController(
+    public AdministrationUserController(
             UserService userService,
             RolesModelAppender rolesModelAppender,
             UserValidator userValidator,
@@ -38,7 +38,7 @@ public class AdministrationUsersController {
     public String administrationUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
 
-        return "administration/administration_users";
+        return "administration/user_list";
     }
 
     @GetMapping("/admin/user/{userId}")

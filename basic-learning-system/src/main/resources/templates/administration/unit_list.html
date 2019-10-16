@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit list</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<p>
+    <span> Navigation:</span><br/>
+    <span>
+        <a href="#" th:href="@{/admin}">Admin</a>
+        /
+        <a href="#" th:href="@{/admin/course}">Courses</a>
+    </span>
+</p>
+
+<h2 th:text="${course.title}">Course name</h2>
+
+<h3>List of Units</h3>
+
+<a href="#"
+   th:href="@{/admin/course/{courseId}/unit/create(courseId=${course.id})}"
+   class="button">Create unit</a>
+<div class="separator"></div>
+
+<div >
+    <div th:each="unit : ${units}" class="row">
+        <span th:text="'#' + ${unit.id}">#01</span><br/>
+        <span th:text="${unit.title}">Unit title</span><br/>
+        <span th:text="${unit.description}">Unit description</span><br/>
+
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}(courseId=${course.id}, unitId=${unit.id})}"
+           class="action">Edit</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson(courseId=${course.id}, unitId=${unit.id})}"
+           class="action">Edit Lessons</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/delete(courseId=${course.id}, unitId=${unit.id})}"
+           class="action">Delete</a>
+    </div>
+</div>
+
+
+</body>
+</html>

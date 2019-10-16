@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<p>
+    <span> Navigation:</span><br/>
+    <a href="#" th:href="@{/admin}">Admin</a><br/>
+</p>
+
+<h3>List of Users</h3>
+
+<a href="#" th:href="@{/admin/user/create}" class="button">Create user</a>
+<div class="separator"></div>
+<div>
+    <div th:each="user : ${users}" class="row">
+        <span th:text="'#' + ${user.id}">#1</span><br/>
+        <span th:text="|${user.firstName} ${user.lastName}|">John Smith</span><br/>
+        <span th:text="${user.email}">john@example.com</span><br/>
+        <a href="#"
+           th:href="@{/admin/user/{userId}(userId=${user.id})}"
+           class="action">Edit</a>
+        <a href="#"
+           th:href="@{/admin/user/{userId}/delete(userId=${user.id})}"
+           class="action">Delete</a>
+    </div>
+</div>
+</body>
+</html>

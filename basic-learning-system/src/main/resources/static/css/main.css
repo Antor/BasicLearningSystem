@@ -12,5 +12,15 @@
 }
 
 .row:nth-child(odd) {
-    background: #FFF
+    background: #e9e9e9
+}
+
+.button {
+    padding: 8px;
+    background: #f2f2f2;
+}
+
+.separator {
+    padding: 8px;
+    height: 1px;
 }

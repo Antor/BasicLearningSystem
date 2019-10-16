@@ -15,7 +15,6 @@ public class UserValidator {
 
         validateFirstName(user, errors);
         validateLastName(user, errors);
-        validateEmail(user, errors);
         validateRole(user, errors);
 
         return errors;
