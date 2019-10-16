@@ -1,20 +1,30 @@
 package com.gravityray.basiclearningsystem.unit.service;
 
+import com.gravityray.basiclearningsystem.admin.model.CreateUnitForm;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.unit.dao.UnitDao;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultUnitService implements UnitService {
 
     private final UnitDao unitDao;
+    private final Validator validator;
 
-    public DefaultUnitService(UnitDao unitDao) {
+    public DefaultUnitService(
+            UnitDao unitDao,
+            Validator validator) {
         this.unitDao = unitDao;
+        this.validator = validator;
     }
 
     @Override
@@ -47,5 +57,27 @@ public class DefaultUnitService implements UnitService {
     public List<LessonEntity> getUnitLessons(long unitId) {
         // TODO
         return new ArrayList<>();
+    }
+
+    @Transactional
+    @Override
+    public void createUnit(long courseId, CreateUnitForm createUnitForm)
+            throws CreateUnitFormNotValidException {
+        Set<ConstraintViolation<CreateUnitForm>> constraintViolationSet =
+                validator.validate(createUnitForm);
+        if (!constraintViolationSet.isEmpty()) {
+            throw new CreateUnitFormNotValidException(
+                    constraintViolationSet.stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.toList()));
+        }
+
+        UnitEntity unitEntity = new UnitEntity();
+        unitEntity.setTitle(createUnitForm.getTitle());
+        unitEntity.setDescription(createUnitForm.getDescription());
+        unitEntity.setOrdinal(0);// TODO: set proper value
+        unitEntity.setCourseId(courseId);
+
+        unitDao.save(unitEntity);
     }
 }
