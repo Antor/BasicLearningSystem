@@ -1,11 +1,11 @@
 package com.gravityray.basiclearningsystem.registration;
 
-import com.gravityray.basiclearningsystem.user.converter.UserConverter;
-import com.gravityray.basiclearningsystem.user.model.dto.UserDto;
-import com.gravityray.basiclearningsystem.user.model.entity.Role;
-import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
+import com.gravityray.basiclearningsystem.unit.service.UserConverter;
+import com.gravityray.basiclearningsystem.user.model.UserDto;
+import com.gravityray.basiclearningsystem.user.model.Role;
+import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;
-import com.gravityray.basiclearningsystem.user.validator.UserValidator;
+import com.gravityray.basiclearningsystem.user.service.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

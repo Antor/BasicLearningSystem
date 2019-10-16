@@ -1,9 +1,8 @@
 package com.gravityray.basiclearningsystem.user.service;
 
 import com.gravityray.basiclearningsystem.user.dao.UserDao;
-import com.gravityray.basiclearningsystem.user.model.entity.Role;
-import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.gravityray.basiclearningsystem.user.model.Role;
+import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.gravityray.basiclearningsystem.user.service;
 
-import com.gravityray.basiclearningsystem.user.model.entity.Role;
-import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
+import com.gravityray.basiclearningsystem.user.model.Role;
+import com.gravityray.basiclearningsystem.user.model.UserEntity;
 
 import java.util.List;
 

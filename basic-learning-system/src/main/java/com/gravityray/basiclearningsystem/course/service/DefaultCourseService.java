@@ -1,11 +1,11 @@
 package com.gravityray.basiclearningsystem.course.service;
 
-import com.gravityray.basiclearningsystem.admin.controller.ui.CourseActiveToggleInfo;
-import com.gravityray.basiclearningsystem.admin.controller.ui.CreateCourseForm;
-import com.gravityray.basiclearningsystem.admin.controller.ui.DeleteCourseInfo;
-import com.gravityray.basiclearningsystem.admin.controller.ui.EditCourseForm;
+import com.gravityray.basiclearningsystem.admin.model.CourseActiveToggleInfo;
+import com.gravityray.basiclearningsystem.admin.model.CreateCourseForm;
+import com.gravityray.basiclearningsystem.admin.model.DeleteCourseInfo;
+import com.gravityray.basiclearningsystem.admin.model.EditCourseForm;
 import com.gravityray.basiclearningsystem.course.dao.CourseDao;
-import com.gravityray.basiclearningsystem.course.model.entity.CourseEntity;
+import com.gravityray.basiclearningsystem.course.model.CourseEntity;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

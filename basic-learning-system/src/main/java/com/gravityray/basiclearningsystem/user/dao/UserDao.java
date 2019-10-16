@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.user.dao;
 
-import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
+import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

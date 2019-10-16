@@ -1,7 +1,7 @@
 package com.gravityray.basiclearningsystem.security;
 
 import com.gravityray.basiclearningsystem.user.dao.UserDao;
-import com.gravityray.basiclearningsystem.user.model.entity.UserEntity;
+import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
