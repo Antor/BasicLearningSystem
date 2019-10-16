@@ -71,9 +71,22 @@ public class AdministrationUnitController {
             @PathVariable Long unitId,
             Model model) {
 
-        // TODO
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", courseService.getCourse(courseId));
+        model.addAttribute("unit", unitService.getUnit(unitId));
 
         return "administration/unit_delete";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}/delete")
+    public String unitDeletePost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            Model model) {
+
+        unitService.deleteUnit(unitId);
+
+        return String.format("redirect:/admin/course/%d/unit", courseId);
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson")

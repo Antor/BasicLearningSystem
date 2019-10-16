@@ -15,6 +15,17 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
-<p>TODO: Delete Unit</p>
+<h2 th:text="${course.title}">Course name</h2>
+<h3>Delete unit</h3>
+
+<div th:replace="~{fragments/errors :: errors}"></div>
+
+<form
+        th:action="@{/admin/course/{courseId}/unit/{unitId}/delete(courseId=${course.id}, unitId=${unit.id})}"
+        method="post">
+    <p>Do you want to delete unit "<span th:text="|${unit.title}|">Unit title</span>"</p>
+    <input type="submit" value="Delete">
+</form>
+
 </body>
 </html>
