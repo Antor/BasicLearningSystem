@@ -35,8 +35,8 @@ public class PersistentUserService implements UserService {
     }
 
     @Override
-    public long createUser(UserEntity user) {
-        return userDao.save(user).getId();
+    public void createUser(UserEntity user) {
+        userDao.save(user);
     }
 
     @Override

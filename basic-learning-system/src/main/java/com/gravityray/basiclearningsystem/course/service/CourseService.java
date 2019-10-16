@@ -9,6 +9,7 @@ import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface CourseService {
 
     List<CourseEntity> getCourses(boolean onlyActive);

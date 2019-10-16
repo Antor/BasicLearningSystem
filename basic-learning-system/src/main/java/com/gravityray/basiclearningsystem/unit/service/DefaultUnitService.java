@@ -34,8 +34,8 @@ public class DefaultUnitService implements UnitService {
 
     @Override
     public void changeUnitOrdinal(long unitId, int delta) {
-        UnitEntity unitEntity = unitDao.findById(unitId).orElse(null);
-        unitEntity.setOrdinal(unitEntity.getOrdinal() + delta);
+        unitDao.findById(unitId)
+                .ifPresent(unitEntity -> unitEntity.setOrdinal(unitEntity.getOrdinal() + delta));
     }
 
     @Override

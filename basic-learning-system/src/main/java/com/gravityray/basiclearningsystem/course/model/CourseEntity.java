@@ -5,6 +5,7 @@ import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import javax.persistence.*;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @Entity(name = "courses")
 public class CourseEntity {
 

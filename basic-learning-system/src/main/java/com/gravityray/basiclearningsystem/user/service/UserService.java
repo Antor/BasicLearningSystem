@@ -13,7 +13,7 @@ public interface UserService {
 
     UserEntity getUser(String username);
 
-    long createUser(UserEntity user);
+    void createUser(UserEntity user);
 
     void updateUser(UserEntity user);
 
@@ -21,5 +21,6 @@ public interface UserService {
 
     String loginUser(String email, String password);
 
+    @SuppressWarnings("UnnecessaryInterfaceModifier")
     public List<Role> getAllRoles();
 }

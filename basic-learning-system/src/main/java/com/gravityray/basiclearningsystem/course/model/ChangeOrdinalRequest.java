@@ -1,5 +1,6 @@
 package com.gravityray.basiclearningsystem.course.model;
 
+@SuppressWarnings("unused")
 public class ChangeOrdinalRequest {
 
     private Long id;

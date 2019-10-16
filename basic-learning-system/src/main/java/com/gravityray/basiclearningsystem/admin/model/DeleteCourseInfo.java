@@ -1,8 +1,5 @@
 package com.gravityray.basiclearningsystem.admin.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 public class DeleteCourseInfo {
 
     private Long id;

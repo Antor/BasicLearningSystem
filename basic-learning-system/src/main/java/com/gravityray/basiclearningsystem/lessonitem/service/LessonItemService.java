@@ -2,6 +2,7 @@ package com.gravityray.basiclearningsystem.lessonitem.service;
 
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
 
+@SuppressWarnings("unused")
 public interface LessonItemService {
 
     LessonItemEntity getLessonItem(long id);

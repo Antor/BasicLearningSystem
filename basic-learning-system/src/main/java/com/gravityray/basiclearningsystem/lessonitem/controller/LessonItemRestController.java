@@ -24,8 +24,7 @@ public class LessonItemRestController {
     @GetMapping("/lesson-item/{lessonItemId}")
     public LessonItemDto getLessonItem(@PathVariable long lessonItemId) {
         LessonItemEntity lessonItemEntity = lessonItemService.getLessonItem(lessonItemId);
-        LessonItemDto lessonItemDto = lessonItemConverter.toDto(lessonItemEntity);
-        return lessonItemDto;
+        return lessonItemConverter.toDto(lessonItemEntity);
     }
 
     @PostMapping("/lesson-item")

@@ -6,6 +6,7 @@ public class EditProfileFormNotValidException extends Exception {
 
     private final List<String> errorMessageList;
 
+    @SuppressWarnings("WeakerAccess")
     public EditProfileFormNotValidException(List<String> errorMessageList) {
         this.errorMessageList = errorMessageList;
     }

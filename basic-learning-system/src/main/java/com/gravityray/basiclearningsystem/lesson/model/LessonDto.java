@@ -4,6 +4,7 @@ import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemDto;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class LessonDto {
 
     private Long id;

@@ -64,6 +64,7 @@ public class AdministrationCoursesController {
 
     @PostMapping("/admin/course/{courseId}")
     public String courseEditPost(
+            @SuppressWarnings("unused") @PathVariable Long courseId,
             Model model,
             EditCourseForm editCourseForm) throws CourseNotFoundException {
 

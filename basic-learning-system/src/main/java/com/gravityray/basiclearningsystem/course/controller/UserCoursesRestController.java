@@ -45,6 +45,7 @@ public class UserCoursesRestController {
         courseService.enrollUserToCourse(userId, courseId);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @PostMapping("/me/unenroll")
     public void unenrollUserToCourse(
             @RequestBody Long courseId,

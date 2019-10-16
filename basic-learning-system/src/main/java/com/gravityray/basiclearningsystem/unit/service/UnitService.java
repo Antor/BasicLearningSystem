@@ -5,6 +5,7 @@ import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface UnitService {
 
     UnitEntity getUnit(long id);

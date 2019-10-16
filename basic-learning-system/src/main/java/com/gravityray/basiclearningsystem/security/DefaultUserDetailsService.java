@@ -26,11 +26,9 @@ public class DefaultUserDetailsService implements UserDetailsService {
                     String.format("User with the username %s doesn't exist", username));
         }
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+        return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
                 AuthorityUtils.createAuthorityList(user.getRole()));
-
-        return userDetails;
     }
 }

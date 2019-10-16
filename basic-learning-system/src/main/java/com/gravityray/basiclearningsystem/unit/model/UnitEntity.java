@@ -6,6 +6,7 @@ import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import javax.persistence.*;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @Entity(name = "units")
 public class UnitEntity {
 

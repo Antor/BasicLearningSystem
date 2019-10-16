@@ -1,5 +1,6 @@
 package com.gravityray.basiclearningsystem.user.model;
 
+@SuppressWarnings("unused")
 public class UserDto {
 
     private Long id;

@@ -19,6 +19,7 @@ public class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAd
         this.userDetailsService = userDetailsService;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)

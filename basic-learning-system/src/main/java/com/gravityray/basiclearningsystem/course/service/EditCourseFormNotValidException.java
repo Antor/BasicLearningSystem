@@ -6,6 +6,7 @@ public class EditCourseFormNotValidException extends Throwable {
 
     private List<String> errorList;
 
+    @SuppressWarnings("WeakerAccess")
     public EditCourseFormNotValidException(List<String> errorList) {
         this.errorList = errorList;
     }
