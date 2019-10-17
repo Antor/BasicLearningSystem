@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Delete Lesson</title>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
-<p>TODO: Delete Lesson</p>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<h2>
+    <span th:text="${course.title}">Course name</span>
+    /
+    <span th:text="${unit.title}">Unit name</span>
+</h2>
+
+<h3>Delete unit</h3>
+
+<div th:replace="~{fragments/errors :: errors}"></div>
+
+<form
+        th:action="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/delete(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+        method="post">
+    <p>Do you want to delete lesson "<span th:text="|${lesson.title}|">Lesson title</span>"</p>
+    <input type="submit" value="Delete">
+</form>
+
 </body>
 </html>

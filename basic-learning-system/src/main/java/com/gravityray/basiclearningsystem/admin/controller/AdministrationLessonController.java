@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Collections;
 
 @Controller
 public class AdministrationLessonController {
@@ -44,9 +47,26 @@ public class AdministrationLessonController {
             @PathVariable Long lessonId,
             Model model) {
 
-        // TODO
+        LessonEntity lessonEntity = lessonService.getLesson(lessonId);
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", lessonEntity.getUnit().getCourse());
+        model.addAttribute("unit", lessonEntity.getUnit());
+        model.addAttribute("lesson", lessonEntity);
 
         return "administration/lesson_delete";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/delete")
+    public String lessonDeletePost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            @PathVariable Long lessonId,
+            Model model) {
+
+        lessonService.deleteLesson(lessonId);
+
+        return String.format("redirect:/admin/course/%d/unit/%d/lesson", courseId, unitId);
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item")
