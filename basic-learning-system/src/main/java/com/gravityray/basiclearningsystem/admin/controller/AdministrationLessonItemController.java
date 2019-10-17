@@ -1,6 +1,10 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
+import com.gravityray.basiclearningsystem.admin.model.CreateLessonItemForm;
+import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
+import com.gravityray.basiclearningsystem.lesson.service.LessonService;
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
+import com.gravityray.basiclearningsystem.lessonitem.service.CreateLessonItemFormNotValidException;
 import com.gravityray.basiclearningsystem.lessonitem.service.LessonItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +17,13 @@ import java.util.Collections;
 @Controller
 public class AdministrationLessonItemController {
 
+    private final LessonService lessonService;
     private final LessonItemService lessonItemService;
 
-    public AdministrationLessonItemController(LessonItemService lessonItemService) {
+    public AdministrationLessonItemController(
+            LessonService lessonService,
+            LessonItemService lessonItemService) {
+        this.lessonService = lessonService;
         this.lessonItemService = lessonItemService;
     }
 
@@ -25,8 +33,39 @@ public class AdministrationLessonItemController {
             @PathVariable Long unitId,
             @PathVariable Long lessonId,
             Model model) {
-        // TODO
+        LessonEntity lessonEntity = lessonService.getLesson(lessonId);
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", lessonEntity.getUnit().getCourse());
+        model.addAttribute("unit", lessonEntity.getUnit());
+        model.addAttribute("lesson", lessonEntity);
+        model.addAttribute("lessonItem", new CreateLessonItemForm());
+
         return "administration/lesson_item_create";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/create")
+    public String lessonItemCreatePost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            @PathVariable Long lessonId,
+            Model model,
+            CreateLessonItemForm createLessonItemForm) {
+        try {
+            lessonItemService.createLessonItem(lessonId, createLessonItemForm);
+            return String.format("redirect:/admin/course/%d/unit/%d/lesson/%d/item", courseId, unitId, lessonId);
+
+        } catch (CreateLessonItemFormNotValidException e) {
+            model.addAttribute("errors", e.getErrorList());
+
+            LessonEntity lessonEntity = lessonService.getLesson(lessonId);
+            model.addAttribute("course", lessonEntity.getUnit().getCourse());
+            model.addAttribute("unit", lessonEntity.getUnit());
+            model.addAttribute("lesson", lessonEntity);
+
+            model.addAttribute("lessonItem", createLessonItemForm);
+            return "administration/lesson_item_create";
+        }
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}")
