@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Lesson Item List</title>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
-<p>TODO: Lesson Item List</p>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<h2>
+    <span th:text="${course.title}">Course name</span>
+    /
+    <span th:text="${unit.title}">Unit name</span>
+    /
+    <span th:text="${lesson.title}">Lesson name</span>
+</h2>
+
+<h3>List of Lesson Items</h3>
+
+<a href="#"
+   th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/create(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+   class="button">Create lesson item</a>
+<div class="separator"></div>
+
+<div >
+    <div th:each="lessonItem : ${lessonItems}" class="row">
+        <span th:text="'#' + ${lessonItem.id}">#01</span><br/>
+        <span th:text="${lessonItem.title}">Lesson Item title</span><br/>
+        <span th:text="${lessonItem.content}">Lesson Item content</span><br/>
+
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id}, lessonItemId=${lessonItem.id})}"
+           class="action">Edit</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}/delete(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id}, lessonItemId=${lessonItem.id})}"
+           class="action">Delete</a>
+    </div>
+</div>
+
 </body>
 </html>
