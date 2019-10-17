@@ -1,6 +1,8 @@
 package com.gravityray.basiclearningsystem.unit.service;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateUnitForm;
+import com.gravityray.basiclearningsystem.admin.model.EditUnitForm;
+import com.gravityray.basiclearningsystem.course.service.EditUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.unit.dao.UnitDao;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
@@ -79,5 +81,23 @@ public class DefaultUnitService implements UnitService {
         unitEntity.setCourseId(courseId);
 
         unitDao.save(unitEntity);
+    }
+
+    @Transactional
+    @Override
+    public void updateUnit(Long courseId, EditUnitForm editUnitForm) throws EditUnitFormNotValidException {
+        Set<ConstraintViolation<EditUnitForm>> constraintViolationSet =
+                validator.validate(editUnitForm);
+        if (!constraintViolationSet.isEmpty()) {
+            throw new EditUnitFormNotValidException(
+                    constraintViolationSet.stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.toList()));
+        }
+        unitDao.findById(editUnitForm.getId())
+            .ifPresent(unitEntity -> {
+                unitEntity.setTitle(editUnitForm.getTitle());
+                unitEntity.setDescription(editUnitForm.getDescription());
+            });
     }
 }

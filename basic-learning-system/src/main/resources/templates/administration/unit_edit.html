@@ -15,6 +15,19 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
-<p>TODO: Edit Unit</p>
+<h2 th:text="${course.title}">Course name</h2>
+
+<h3>Edit Unit</h3>
+
+<div th:replace="~{fragments/errors :: errors}"></div>
+
+<form
+        th:action="@{/admin/course/{courseId}/unit/{unitId}(courseId=${course.id}, unitId=${unit.id})}"
+        method="post">
+    <div th:replace="~{fragments/unit :: unitFormFields(handleId = true)}"></div>
+
+    <input type="submit" value="Save">
+</form>
+
 </body>
 </html>

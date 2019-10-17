@@ -26,7 +26,7 @@
 <div th:replace="~{fragments/errors :: errors}"></div>
 
 <form
-        th:action="@{/admin/course/create}"
+        th:action="@{/admin/course/{courseId}(courseId=${course.id})}"
         method="post">
     <div th:replace="~{fragments/course :: courseFormFields(handleId = true)}"></div>
 

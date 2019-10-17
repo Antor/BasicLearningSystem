@@ -1,7 +1,9 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateUnitForm;
+import com.gravityray.basiclearningsystem.admin.model.EditUnitForm;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
+import com.gravityray.basiclearningsystem.course.service.EditUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.unit.service.CreateUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.unit.service.UnitService;
 import org.springframework.stereotype.Controller;
@@ -60,9 +62,31 @@ public class AdministrationUnitController {
             @PathVariable Long unitId,
             Model model) {
 
-        // TODO
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", courseService.getCourse(courseId));
+        model.addAttribute("unit", unitService.getUnit(unitId));
 
         return "administration/unit_edit";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}")
+    public String unitEditPost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            Model model,
+            EditUnitForm editUnitForm) {
+
+        try {
+            unitService.updateUnit(courseId, editUnitForm);
+            return String.format("redirect:/admin/course/%d/unit", courseId);
+
+        } catch (EditUnitFormNotValidException e) {
+            model.addAttribute("errors", e.getErrorList());
+            model.addAttribute("course", courseService.getCourse(courseId));
+            model.addAttribute("unit", editUnitForm);
+
+            return "administration/unit_edit";
+        }
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/delete")
