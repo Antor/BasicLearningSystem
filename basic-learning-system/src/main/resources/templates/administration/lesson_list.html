@@ -15,6 +15,36 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
-<p>TODO: Lesson List</p>
+<h2>
+    <span th:text="${course.title}">Course name</span>
+    /
+    <span th:text="${unit.title}">Unit name</span>
+</h2>
+
+<h3>List of Lessons</h3>
+
+<a href="#"
+   th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/create(courseId=${course.id}, unitId=${unit.id})}"
+   class="button">Create lesson</a>
+<div class="separator"></div>
+
+<div >
+    <div th:each="lesson : ${lessons}" class="row">
+        <span th:text="'#' + ${lesson.id}">#01</span><br/>
+        <span th:text="${lesson.title}">Lesson title</span><br/>
+        <span th:text="${lesson.description}">Lesson description</span><br/>
+
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+           class="action">Edit</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+           class="action">Edit Lesson Items</a>
+        <a href="#"
+           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/delete(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+           class="action">Delete</a>
+    </div>
+</div>
+
 </body>
 </html>

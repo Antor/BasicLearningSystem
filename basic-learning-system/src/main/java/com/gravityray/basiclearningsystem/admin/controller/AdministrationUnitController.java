@@ -2,8 +2,10 @@ package com.gravityray.basiclearningsystem.admin.controller;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateUnitForm;
 import com.gravityray.basiclearningsystem.admin.model.EditUnitForm;
+import com.gravityray.basiclearningsystem.course.model.CourseEntity;
 import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.course.service.EditUnitFormNotValidException;
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import com.gravityray.basiclearningsystem.unit.service.CreateUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.unit.service.UnitService;
 import org.springframework.stereotype.Controller;
@@ -116,9 +118,13 @@ public class AdministrationUnitController {
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson")
     public String unitList(
             @PathVariable Long courseId,
-            @PathVariable Long unitId) {
+            @PathVariable Long unitId,
+            Model model) {
 
-        // TODO
+        UnitEntity unitEntity = unitService.getUnit(unitId);
+        model.addAttribute("course", unitEntity.getCourse());
+        model.addAttribute("unit", unitEntity);
+        model.addAttribute("lessons", unitEntity.getLessonList());
 
         return "administration/lesson_list";
     }

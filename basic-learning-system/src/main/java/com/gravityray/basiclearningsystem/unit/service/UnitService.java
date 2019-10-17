@@ -21,8 +21,6 @@ public interface UnitService {
 
     void deleteUnit(long id);
 
-    List<LessonEntity> getUnitLessons(long unitId);
-
     void createUnit(long courseId, CreateUnitForm createUnitForm) throws CreateUnitFormNotValidException;
 
     void updateUnit(Long courseId, EditUnitForm editUnitForm) throws EditUnitFormNotValidException;

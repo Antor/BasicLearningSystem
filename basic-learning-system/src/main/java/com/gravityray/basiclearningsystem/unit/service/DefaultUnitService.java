@@ -3,7 +3,6 @@ package com.gravityray.basiclearningsystem.unit.service;
 import com.gravityray.basiclearningsystem.admin.model.CreateUnitForm;
 import com.gravityray.basiclearningsystem.admin.model.EditUnitForm;
 import com.gravityray.basiclearningsystem.course.service.EditUnitFormNotValidException;
-import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.unit.dao.UnitDao;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import org.springframework.stereotype.Service;
@@ -11,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,12 +50,6 @@ public class DefaultUnitService implements UnitService {
     @Override
     public void deleteUnit(long id) {
         unitDao.deleteById(id);
-    }
-
-    @Override
-    public List<LessonEntity> getUnitLessons(long unitId) {
-        // TODO
-        return new ArrayList<>();
     }
 
     @Transactional
