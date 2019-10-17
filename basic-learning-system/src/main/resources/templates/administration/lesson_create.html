@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Lesson</title>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
-<p>TODO: Create lesson</p>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<h2>
+    <span th:text="${course.title}">Course name</span>
+    /
+    <span th:text="${unit.title}">Unit name</span>
+</h2>
+
+<h3>Create lesson</h3>
+
+<div th:replace="~{fragments/errors :: errors}"></div>
+
+<form
+        th:action="@{/admin/course/{courseId}/unit/{unitId}/lesson/create(courseId=${course.id}, unitId=${unit.id})}"
+        method="post">
+    <div th:replace="~{fragments/lesson :: lessonFormFields (handleId = false)}"></div>
+
+    <input type="submit" value="Create">
+</form>
+
 </body>
 </html>

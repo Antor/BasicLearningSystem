@@ -1,7 +1,11 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
+import com.gravityray.basiclearningsystem.admin.model.CreateLessonForm;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
+import com.gravityray.basiclearningsystem.lesson.service.CreateLessonFormNotValidException;
 import com.gravityray.basiclearningsystem.lesson.service.LessonService;
+import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
+import com.gravityray.basiclearningsystem.unit.service.UnitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +17,13 @@ import java.util.Collections;
 @Controller
 public class AdministrationLessonController {
 
+    private final UnitService unitService;
     private final LessonService lessonService;
 
-    public AdministrationLessonController(LessonService lessonService) {
+    public AdministrationLessonController(
+            UnitService unitService,
+            LessonService lessonService) {
+        this.unitService = unitService;
         this.lessonService = lessonService;
     }
 
@@ -24,8 +32,38 @@ public class AdministrationLessonController {
             @PathVariable Long courseId,
             @PathVariable Long unitId,
             Model model) {
-        // TODO
+
+        UnitEntity unitEntity = unitService.getUnit(unitId);
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", unitEntity.getCourse());
+        model.addAttribute("unit", unitEntity);
+        model.addAttribute("lesson", new CreateLessonForm());
+
         return "administration/lesson_create";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}/lesson/create")
+    public String lessonCreatePost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            Model model,
+            CreateLessonForm createLessonForm) {
+
+        try {
+            lessonService.createLesson(unitId, createLessonForm);
+            return String.format("redirect:/admin/course/%d/unit/%d/lesson", courseId, unitId);
+
+        } catch (CreateLessonFormNotValidException e) {
+            model.addAttribute("errors", e.getErrorList());
+
+            UnitEntity unitEntity = unitService.getUnit(unitId);
+            model.addAttribute("course", unitEntity.getCourse());
+            model.addAttribute("unit", unitEntity);
+
+            model.addAttribute("lesson", createLessonForm);
+            return "administration/lesson_create";
+        }
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}")

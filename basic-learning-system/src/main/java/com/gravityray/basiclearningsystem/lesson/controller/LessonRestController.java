@@ -34,7 +34,7 @@ public class LessonRestController {
         LessonDto lessonDto = lessonConverter.toDto(lessonEntity);
 
         lessonDto.setLessonItems(
-                courseService.getLessonLessonItems(lessonId)
+                lessonEntity.getLessonItems()
                         .stream()
                         .map(lessonItemConverter::toDto)
                         .collect(Collectors.toList()));
