@@ -1,8 +1,11 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateLessonForm;
+import com.gravityray.basiclearningsystem.admin.model.EditLessonForm;
+import com.gravityray.basiclearningsystem.course.service.EditUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.lesson.service.CreateLessonFormNotValidException;
+import com.gravityray.basiclearningsystem.lesson.service.EditLessonFormNotValidException;
 import com.gravityray.basiclearningsystem.lesson.service.LessonService;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
 import com.gravityray.basiclearningsystem.unit.service.UnitService;
@@ -73,9 +76,38 @@ public class AdministrationLessonController {
             @PathVariable Long lessonId,
             Model model) {
 
-        // TODO
+        LessonEntity lessonEntity = lessonService.getLesson(lessonId);
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", lessonEntity.getUnit().getCourse());
+        model.addAttribute("unit", lessonEntity.getUnit());
+        model.addAttribute("lesson", lessonEntity);
 
         return "administration/lesson_edit";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}")
+    public String lessonEditPost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            @PathVariable Long lessonId,
+            Model model,
+            EditLessonForm editLessonForm) {
+        try {
+            lessonService.updateLesson(editLessonForm);
+            return String.format("redirect:/admin/course/%d/unit/%d/lesson", courseId, unitId);
+
+        } catch (EditLessonFormNotValidException e) {
+            model.addAttribute("errors", e.getErrorList());
+
+            UnitEntity unitEntity = unitService.getUnit(unitId);
+            model.addAttribute("course", unitEntity.getCourse());
+            model.addAttribute("unit", unitEntity);
+
+            model.addAttribute("lesson", editLessonForm);
+
+            return "administration/lesson_edit";
+        }
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/delete")

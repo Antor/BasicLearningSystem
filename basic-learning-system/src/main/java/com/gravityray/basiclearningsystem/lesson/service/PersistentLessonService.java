@@ -1,9 +1,11 @@
 package com.gravityray.basiclearningsystem.lesson.service;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateLessonForm;
+import com.gravityray.basiclearningsystem.admin.model.EditLessonForm;
 import com.gravityray.basiclearningsystem.lesson.dao.LessonDao;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -46,6 +48,7 @@ public class PersistentLessonService implements LessonService {
         lessonDao.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void createLesson(long unitId, CreateLessonForm createLessonForm) throws CreateLessonFormNotValidException {
         Set<ConstraintViolation<CreateLessonForm>> constraintViolationSet =
@@ -64,5 +67,23 @@ public class PersistentLessonService implements LessonService {
         lessonEntity.setUnitId(unitId);
 
         lessonDao.save(lessonEntity);
+    }
+
+    @Transactional
+    @Override
+    public void updateLesson(EditLessonForm editLessonForm) throws EditLessonFormNotValidException {
+        Set<ConstraintViolation<EditLessonForm>> constraintViolationSet =
+                validator.validate(editLessonForm);
+        if (!constraintViolationSet.isEmpty()) {
+            throw new EditLessonFormNotValidException(
+                    constraintViolationSet.stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.toList()));
+        }
+        lessonDao.findById(editLessonForm.getId())
+                .ifPresent(unitEntity -> {
+                    unitEntity.setTitle(editLessonForm.getTitle());
+                    unitEntity.setDescription(editLessonForm.getDescription());
+                });
     }
 }
