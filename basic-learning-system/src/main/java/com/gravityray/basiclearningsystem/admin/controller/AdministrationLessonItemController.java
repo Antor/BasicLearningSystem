@@ -1,10 +1,12 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateLessonItemForm;
+import com.gravityray.basiclearningsystem.admin.model.EditLessonItemForm;
 import com.gravityray.basiclearningsystem.lesson.model.LessonEntity;
 import com.gravityray.basiclearningsystem.lesson.service.LessonService;
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
 import com.gravityray.basiclearningsystem.lessonitem.service.CreateLessonItemFormNotValidException;
+import com.gravityray.basiclearningsystem.lessonitem.service.EditLessonItemFormNotValidException;
 import com.gravityray.basiclearningsystem.lessonitem.service.LessonItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,9 +78,41 @@ public class AdministrationLessonItemController {
             @PathVariable Long lessonItemId,
             Model model) {
 
-        // TODO
+        LessonItemEntity lessonItemEntity = lessonItemService.getLessonItem(lessonItemId);
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", lessonItemEntity.getLesson().getUnit().getCourse());
+        model.addAttribute("unit", lessonItemEntity.getLesson().getUnit());
+        model.addAttribute("lesson", lessonItemEntity.getLesson());
+        model.addAttribute("lessonItem", lessonItemEntity);
 
         return "administration/lesson_item_edit";
+    }
+
+    @PostMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}")
+    public String lessonItemEditPost(
+            @PathVariable Long courseId,
+            @PathVariable Long unitId,
+            @PathVariable Long lessonId,
+            @PathVariable Long lessonItemId,
+            Model model,
+            EditLessonItemForm editLessonItemForm) {
+        try {
+            lessonItemService.updateLessonItem(editLessonItemForm);
+            return String.format("redirect:/admin/course/%d/unit/%d/lesson/%d/item", courseId, unitId, lessonId);
+
+        } catch (EditLessonItemFormNotValidException e) {
+            model.addAttribute("errors", e.getErrorList());
+
+            LessonEntity lessonEntity = lessonService.getLesson(lessonId);
+            model.addAttribute("course", lessonEntity.getUnit().getCourse());
+            model.addAttribute("unit", lessonEntity.getUnit());
+            model.addAttribute("lesson", lessonEntity);
+
+            model.addAttribute("lessonItem", editLessonItemForm);
+
+            return "administration/lesson_edit";
+        }
     }
 
     @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}/delete")

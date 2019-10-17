@@ -1,6 +1,7 @@
 package com.gravityray.basiclearningsystem.lessonitem.service;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateLessonItemForm;
+import com.gravityray.basiclearningsystem.admin.model.EditLessonItemForm;
 import com.gravityray.basiclearningsystem.lessonitem.dao.LessonItemDao;
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,24 @@ public class PersistentLessonItemService implements LessonItemService {
         lessonItemEntity.setLessonId(lessonId);
 
         lessonItemDao.save(lessonItemEntity);
+    }
+
+    @Transactional
+    @Override
+    public void updateLessonItem(EditLessonItemForm editLessonItemForm)
+            throws EditLessonItemFormNotValidException {
+        Set<ConstraintViolation<EditLessonItemForm>> constraintViolationSet =
+                validator.validate(editLessonItemForm);
+        if (!constraintViolationSet.isEmpty()) {
+            throw new EditLessonItemFormNotValidException(
+                    constraintViolationSet.stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.toList()));
+        }
+        lessonItemDao.findById(editLessonItemForm.getId())
+                .ifPresent(lessonItemEntity -> {
+                    lessonItemEntity.setTitle(editLessonItemForm.getTitle());
+                    lessonItemEntity.setContent(editLessonItemForm.getContent());
+                });
     }
 }

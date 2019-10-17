@@ -1,6 +1,8 @@
 package com.gravityray.basiclearningsystem.lessonitem.service;
 
 import com.gravityray.basiclearningsystem.admin.model.CreateLessonItemForm;
+import com.gravityray.basiclearningsystem.admin.model.EditLessonItemForm;
+import com.gravityray.basiclearningsystem.lesson.service.EditLessonFormNotValidException;
 import com.gravityray.basiclearningsystem.lessonitem.model.LessonItemEntity;
 
 @SuppressWarnings("unused")
@@ -20,4 +22,7 @@ public interface LessonItemService {
 
     void createLessonItem(long lessonId, CreateLessonItemForm createLessonItemForm)
             throws CreateLessonItemFormNotValidException;
+
+    void updateLessonItem(EditLessonItemForm editLessonItemForm)
+            throws EditLessonItemFormNotValidException;
 }
