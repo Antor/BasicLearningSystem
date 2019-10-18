@@ -11,11 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin/user")
 public class AdministrationUserController {
 
     private final UserService userService;
@@ -34,14 +36,14 @@ public class AdministrationUserController {
         this.userConverter = userConverter;
     }
 
-    @GetMapping("/admin/user")
+    @GetMapping
     public String administrationUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
 
-        return "administration/user_list";
+        return "administration/user/list";
     }
 
-    @GetMapping("/admin/user/{userId}")
+    @GetMapping("/{userId}")
     public String userEditGet(@PathVariable Long userId, Model model) {
         rolesModelAppender.append(model);
 
@@ -50,10 +52,10 @@ public class AdministrationUserController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("user", userConverter.toUserDto(userEntity));
 
-        return "administration/user_edit";
+        return "administration/user/edit";
     }
 
-    @PostMapping("/admin/user/{userId}")
+    @PostMapping("/{userId}")
     public String userEditPost(
             @PathVariable Long userId,
             Model model,
@@ -65,7 +67,7 @@ public class AdministrationUserController {
             model.addAttribute("errors", verificationErrors);
             model.addAttribute("user", user);
 
-            return "administration/user_edit";
+            return "administration/user/edit";
         }
 
         try {
@@ -88,17 +90,17 @@ public class AdministrationUserController {
         return "redirect:/admin/user";
     }
 
-    @GetMapping("/admin/user/create")
+    @GetMapping("/create")
     public String userCreateGet(Model model) {
         rolesModelAppender.append(model);
 
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("user", new UserDto());
 
-        return "administration/user_create";
+        return "administration/user/create";
     }
 
-    @PostMapping("/admin/user/create")
+    @PostMapping("/create")
     public String userCreatePost(Model model, UserDto user) {
         List<String> verificationErrors = userValidator.validateCreateUser(user);
         if (verificationErrors.size() > 0) {
@@ -107,7 +109,7 @@ public class AdministrationUserController {
             model.addAttribute("errors", verificationErrors);
             model.addAttribute("user", user);
 
-            return "administration/user_create";
+            return "administration/user/create";
         }
 
         try {
@@ -121,13 +123,13 @@ public class AdministrationUserController {
             createUserErrors.add(e.getMessage());
             model.addAttribute("errors", createUserErrors);
             model.addAttribute("user", user);
-            return "administration/user_create";
+            return "administration/user/create";
         }
 
         return "redirect:/admin/user";
     }
 
-    @GetMapping("/admin/user/{userId}/delete")
+    @GetMapping("/{userId}/delete")
     public String userDeleteGet(@PathVariable Long userId, Model model) {
 
         UserEntity userEntity = userService.getUser(userId);
@@ -135,10 +137,10 @@ public class AdministrationUserController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("user", userConverter.toUserDto(userEntity));
 
-        return "administration/user_delete";
+        return "administration/user/delete";
     }
 
-    @PostMapping("/admin/user/{userId}/delete")
+    @PostMapping("/{userId}/delete")
     public String userDeletePost(@PathVariable Long userId, Model model) {
 
         try {
@@ -152,7 +154,7 @@ public class AdministrationUserController {
             model.addAttribute("errors", createUserErrors);
             UserEntity userEntity = userService.getUser(userId);
             model.addAttribute("user", userConverter.toUserDto(userEntity));
-            return "administration/user_delete";
+            return "administration/user/delete";
         }
 
         return "redirect:/admin/user";
