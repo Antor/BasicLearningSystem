@@ -23,5 +23,5 @@ public interface UnitService {
 
     void createUnit(long courseId, CreateUnitForm createUnitForm) throws CreateUnitFormNotValidException;
 
-    void updateUnit(Long courseId, EditUnitForm editUnitForm) throws EditUnitFormNotValidException;
+    void updateUnit(EditUnitForm editUnitForm) throws EditUnitFormNotValidException;
 }

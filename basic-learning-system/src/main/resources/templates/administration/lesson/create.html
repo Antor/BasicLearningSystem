@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Lesson Item</title>
+    <title>Create Lesson</title>
 
     <link rel="stylesheet"
           type="text/css"
@@ -19,20 +19,19 @@
     <span th:text="${course.title}">Course name</span>
     /
     <span th:text="${unit.title}">Unit name</span>
-    /
-    <span th:text="${lesson.title}">Lesson name</span>
 </h2>
 
-<h3>Create lesson item</h3>
+<h3>Create lesson</h3>
 
 <div th:replace="~{fragments/errors :: errors}"></div>
 
 <form
-        th:action="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/create(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+        th:action="@{/admin/unit/{unitId}/lesson/create(unitId=${unit.id})}"
         method="post">
-    <div th:replace="~{fragments/lesson_item :: lessonItemFormFields (handleId = false)}"></div>
+    <div th:replace="~{fragments/lesson :: lessonFormFields (handleId = false)}"></div>
 
     <input type="submit" value="Create">
 </form>
+
 </body>
 </html>

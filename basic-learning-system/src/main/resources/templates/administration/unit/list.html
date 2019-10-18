@@ -39,13 +39,13 @@
         <span th:text="${unit.description}">Unit description</span><br/>
 
         <a href="#"
-           th:href="@{/admin/course/{courseId}/unit/{unitId}(courseId=${course.id}, unitId=${unit.id})}"
+           th:href="@{/admin/unit/{unitId}(unitId=${unit.id})}"
            class="action">Edit</a>
         <a href="#"
-           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson(courseId=${course.id}, unitId=${unit.id})}"
+           th:href="@{/admin/unit/{unitId}/lesson(unitId=${unit.id})}"
            class="action">Edit Lessons</a>
         <a href="#"
-           th:href="@{/admin/course/{courseId}/unit/{unitId}/delete(courseId=${course.id}, unitId=${unit.id})}"
+           th:href="@{/admin/unit/{unitId}/delete(unitId=${unit.id})}"
            class="action">Delete</a>
     </div>
 </div>

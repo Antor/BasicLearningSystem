@@ -26,7 +26,7 @@
 <h3>List of Lesson Items</h3>
 
 <a href="#"
-   th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/create(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id})}"
+   th:href="@{/admin/lesson/{lessonId}/item/create(lessonId=${lesson.id})}"
    class="button">Create lesson item</a>
 <div class="separator"></div>
 
@@ -37,10 +37,10 @@
         <span th:text="${lessonItem.content}">Lesson Item content</span><br/>
 
         <a href="#"
-           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id}, lessonItemId=${lessonItem.id})}"
+           th:href="@{/admin/lesson-item/{lessonItemId}(lessonItemId=${lessonItem.id})}"
            class="action">Edit</a>
         <a href="#"
-           th:href="@{/admin/course/{courseId}/unit/{unitId}/lesson/{lessonId}/item/{lessonItemId}/delete(courseId=${course.id}, unitId=${unit.id}, lessonId=${lesson.id}, lessonItemId=${lessonItem.id})}"
+           th:href="@{/admin/lesson-item/{lessonItemId}/delete(lessonItemId=${lessonItem.id})}"
            class="action">Delete</a>
     </div>
 </div>

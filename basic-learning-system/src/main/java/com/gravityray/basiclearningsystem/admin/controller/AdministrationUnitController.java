@@ -1,131 +1,133 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
-import com.gravityray.basiclearningsystem.admin.model.CreateUnitForm;
+import com.gravityray.basiclearningsystem.admin.model.CreateLessonForm;
 import com.gravityray.basiclearningsystem.admin.model.EditUnitForm;
-import com.gravityray.basiclearningsystem.course.model.CourseEntity;
-import com.gravityray.basiclearningsystem.course.service.CourseService;
 import com.gravityray.basiclearningsystem.course.service.EditUnitFormNotValidException;
+import com.gravityray.basiclearningsystem.lesson.service.CreateLessonFormNotValidException;
+import com.gravityray.basiclearningsystem.lesson.service.LessonService;
 import com.gravityray.basiclearningsystem.unit.model.UnitEntity;
-import com.gravityray.basiclearningsystem.unit.service.CreateUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.unit.service.UnitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 
 @Controller
+@RequestMapping("/admin/unit")
 public class AdministrationUnitController {
 
-    private final CourseService courseService;
     private final UnitService unitService;
+    private final LessonService lessonService;
 
     public AdministrationUnitController(
-            CourseService courseService,
-            UnitService unitService) {
-        this.courseService = courseService;
+            UnitService unitService,
+            LessonService lessonService) {
         this.unitService = unitService;
+        this.lessonService = lessonService;
     }
 
-    @GetMapping("/admin/course/{courseId}/unit/create")
-    public String unitCreateGet(
-            @PathVariable Long courseId,
-            Model model) {
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getCourse(courseId));
-        model.addAttribute("unit", new CreateUnitForm());
-
-        return "administration/unit_create";
-    }
-
-    @PostMapping("/admin/course/{courseId}/unit/create")
-    public String unitCreatePost(
-            @PathVariable Long courseId,
-            Model model,
-            CreateUnitForm createUnitForm) {
-
-        try {
-            unitService.createUnit(courseId, createUnitForm);
-            return String.format("redirect:/admin/course/%d/unit", courseId);
-
-        } catch (CreateUnitFormNotValidException e) {
-            model.addAttribute("errors", e.getErrorList());
-            model.addAttribute("course", courseService.getCourse(courseId));
-            model.addAttribute("unit", createUnitForm);
-            return "administration/unit_create";
-        }
-    }
-
-    @GetMapping("/admin/course/{courseId}/unit/{unitId}")
+    @GetMapping("/{unitId}")
     public String unitEditGet(
-            @PathVariable Long courseId,
-            @PathVariable Long unitId,
+            @PathVariable long unitId,
             Model model) {
 
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getCourse(courseId));
-        model.addAttribute("unit", unitService.getUnit(unitId));
+        UnitEntity unitEntity = unitService.getUnit(unitId);
 
-        return "administration/unit_edit";
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", unitEntity.getCourse());
+        model.addAttribute("unit", unitEntity);
+
+        return "administration/unit/edit";
     }
 
-    @PostMapping("/admin/course/{courseId}/unit/{unitId}")
+    @PostMapping("/{unitId}")
     public String unitEditPost(
-            @PathVariable Long courseId,
-            @PathVariable Long unitId,
+            @PathVariable long unitId,
             Model model,
             EditUnitForm editUnitForm) {
 
+        UnitEntity unitEntity = unitService.getUnit(unitId);
         try {
-            unitService.updateUnit(courseId, editUnitForm);
-            return String.format("redirect:/admin/course/%d/unit", courseId);
+            unitService.updateUnit(editUnitForm);
+            return String.format("redirect:/admin/course/%d/unit", unitEntity.getCourseId());
 
         } catch (EditUnitFormNotValidException e) {
             model.addAttribute("errors", e.getErrorList());
-            model.addAttribute("course", courseService.getCourse(courseId));
+            model.addAttribute("course", unitEntity.getCourse());
             model.addAttribute("unit", editUnitForm);
 
-            return "administration/unit_edit";
+            return "administration/unit/edit";
         }
     }
 
-    @GetMapping("/admin/course/{courseId}/unit/{unitId}/delete")
-    public String unitDeleteGet(
-            @PathVariable Long courseId,
-            @PathVariable Long unitId,
-            Model model) {
+    @GetMapping("/{unitId}/delete")
+    public String unitDeleteGet(@PathVariable long unitId, Model model) {
 
+        UnitEntity unitEntity = unitService.getUnit(unitId);
         model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getCourse(courseId));
-        model.addAttribute("unit", unitService.getUnit(unitId));
+        model.addAttribute("course", unitEntity.getCourse());
+        model.addAttribute("unit", unitEntity);
 
-        return "administration/unit_delete";
+        return "administration/unit/delete";
     }
 
-    @PostMapping("/admin/course/{courseId}/unit/{unitId}/delete")
-    public String unitDeletePost(
-            @PathVariable Long courseId,
-            @PathVariable Long unitId,
-            Model model) {
+    @PostMapping("/{unitId}/delete")
+    public String unitDeletePost(@PathVariable long unitId) {
+
+        long courseId = unitService.getUnit(unitId).getCourseId();
 
         unitService.deleteUnit(unitId);
 
         return String.format("redirect:/admin/course/%d/unit", courseId);
     }
 
-    @GetMapping("/admin/course/{courseId}/unit/{unitId}/lesson")
-    public String unitList(
-            @PathVariable Long courseId,
-            @PathVariable Long unitId,
-            Model model) {
+    @GetMapping("/{unitId}/lesson")
+    public String unitLessonList(@PathVariable long unitId, Model model) {
 
         UnitEntity unitEntity = unitService.getUnit(unitId);
         model.addAttribute("course", unitEntity.getCourse());
         model.addAttribute("unit", unitEntity);
         model.addAttribute("lessons", unitEntity.getLessonList());
 
-        return "administration/lesson_list";
+        return "administration/lesson/list";
+    }
+
+    @GetMapping("/{unitId}/lesson/create")
+    public String lessonCreateGet(@PathVariable long unitId, Model model) {
+
+        UnitEntity unitEntity = unitService.getUnit(unitId);
+
+        model.addAttribute("errors", Collections.emptyList());
+        model.addAttribute("course", unitEntity.getCourse());
+        model.addAttribute("unit", unitEntity);
+        model.addAttribute("lesson", new CreateLessonForm());
+
+        return "administration/lesson/create";
+    }
+
+    @PostMapping("/{unitId}/lesson/create")
+    public String lessonCreatePost(
+            @PathVariable long unitId,
+            Model model,
+            CreateLessonForm createLessonForm) {
+
+        try {
+            lessonService.createLesson(unitId, createLessonForm);
+            return String.format("redirect:/admin/unit/%d/lesson", unitId);
+
+        } catch (CreateLessonFormNotValidException e) {
+            model.addAttribute("errors", e.getErrorList());
+
+            UnitEntity unitEntity = unitService.getUnit(unitId);
+            model.addAttribute("course", unitEntity.getCourse());
+            model.addAttribute("unit", unitEntity);
+
+            model.addAttribute("lesson", createLessonForm);
+            return "administration/lesson/create";
+        }
     }
 }

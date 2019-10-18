@@ -76,7 +76,7 @@ public class DefaultUnitService implements UnitService {
 
     @Transactional
     @Override
-    public void updateUnit(Long courseId, EditUnitForm editUnitForm) throws EditUnitFormNotValidException {
+    public void updateUnit(EditUnitForm editUnitForm) throws EditUnitFormNotValidException {
         Set<ConstraintViolation<EditUnitForm>> constraintViolationSet =
                 validator.validate(editUnitForm);
         if (!constraintViolationSet.isEmpty()) {

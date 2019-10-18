@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Lesson</title>
+    <title>Delete Unit</title>
 
     <link rel="stylesheet"
           type="text/css"
@@ -15,22 +15,16 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
-<h2>
-    <span th:text="${course.title}">Course name</span>
-    /
-    <span th:text="${unit.title}">Unit name</span>
-</h2>
-
-<h3>Create lesson</h3>
+<h2 th:text="${course.title}">Course name</h2>
+<h3>Delete unit</h3>
 
 <div th:replace="~{fragments/errors :: errors}"></div>
 
 <form
-        th:action="@{/admin/course/{courseId}/unit/{unitId}/lesson/create(courseId=${course.id}, unitId=${unit.id})}"
+        th:action="@{/admin/unit/{unitId}/delete(unitId=${unit.id})}"
         method="post">
-    <div th:replace="~{fragments/lesson :: lessonFormFields (handleId = false)}"></div>
-
-    <input type="submit" value="Create">
+    <p>Do you want to delete unit "<span th:text="|${unit.title}|">Unit title</span>"</p>
+    <input type="submit" value="Delete">
 </form>
 
 </body>
