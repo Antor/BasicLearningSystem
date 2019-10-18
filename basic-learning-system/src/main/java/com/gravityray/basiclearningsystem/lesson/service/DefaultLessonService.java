@@ -13,12 +13,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class PersistentLessonService implements LessonService {
+public class DefaultLessonService implements LessonService {
 
     private final LessonDao lessonDao;
     private final Validator validator;
 
-    public PersistentLessonService(LessonDao lessonDao, Validator validator) {
+    public DefaultLessonService(LessonDao lessonDao, Validator validator) {
         this.lessonDao = lessonDao;
         this.validator = validator;
     }

@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.unit.service;
+package com.gravityray.basiclearningsystem.user.service;
 
 import com.gravityray.basiclearningsystem.user.model.UserDto;
 import com.gravityray.basiclearningsystem.user.model.UserEntity;

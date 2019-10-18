@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.registration;
 
-import com.gravityray.basiclearningsystem.unit.service.UserConverter;
+import com.gravityray.basiclearningsystem.user.service.UserConverter;
 import com.gravityray.basiclearningsystem.user.model.UserDto;
 import com.gravityray.basiclearningsystem.user.model.Role;
 import com.gravityray.basiclearningsystem.user.model.UserEntity;

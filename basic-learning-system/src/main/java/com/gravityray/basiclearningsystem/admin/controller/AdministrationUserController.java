@@ -1,7 +1,7 @@
 package com.gravityray.basiclearningsystem.admin.controller;
 
 import com.gravityray.basiclearningsystem.user.controller.RolesModelAppender;
-import com.gravityray.basiclearningsystem.unit.service.UserConverter;
+import com.gravityray.basiclearningsystem.user.service.UserConverter;
 import com.gravityray.basiclearningsystem.user.model.UserDto;
 import com.gravityray.basiclearningsystem.user.model.UserEntity;
 import com.gravityray.basiclearningsystem.user.service.UserService;

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PersistentUserService implements UserService {
+public class DefaultUserService implements UserService {
 
     private final UserDao userDao;
 
-    public PersistentUserService(UserDao userDao) {
+    public DefaultUserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
