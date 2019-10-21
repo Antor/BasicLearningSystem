@@ -24,3 +24,12 @@
     padding: 8px;
     height: 1px;
 }
+
+.actionSequence {
+    padding: 8px;
+    background: #f2f2f2;
+}
+
+.welcome {
+    padding: 8px;
+}

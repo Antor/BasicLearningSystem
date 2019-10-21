@@ -5,6 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
 
@@ -15,28 +19,40 @@
 </div>
 
 <div th:fragment="userHeader">
-    <p th:if="${not authenticated}">
-        <a href="/login"
+    <div th:if="${not authenticated}">
+        <span class="actionSequence">
+        <a href="#"
            th:href="@{/login}"
            class="action">Login</a>
-        <a href="/register"
+        <a href="#"
            th:href="@{/register}"
            class="action">Register</a>
-    </p>
+        </span>
+    </div>
 
-    <p th:if="${authenticated}">
-        <span th:text="|Welcome, ${username}|">Welcome, User!</span><br/>
-        <a th:if="${isAdmin}"
-           href="/admin"
-           th:href="@{/admin}"
-           class="action">Admin</a>
-        <a href="/profile"
-           th:href="@{/profile}"
-           class="action">Profile</a>
-        <a href="/logout"
-           th:href="@{/logout}"
-           class="action">Logout</a>
-    </p>
+    <div th:if="${authenticated}">
+        <div>
+            <span th:text="|Welcome, ${username}!|">Welcome, User!</span>
+        </div>
+        <div class="separator"></div>
+        <div>
+            <span class="actionSequence">
+            <a href="#"
+               th:href="@{/profile/course}"
+               class="action">My Courses</a>
+            <a href="#"
+               th:href="@{/profile}"
+               class="action">Profile</a>
+            <a th:if="${isAdmin}"
+               href="#"
+               th:href="@{/admin}"
+               class="action">Admin</a>
+            <a href="#"
+               th:href="@{/logout}"
+               class="action">Logout</a>
+                </span>
+        </div>
+    </div>
 </div>
 
 </body>
