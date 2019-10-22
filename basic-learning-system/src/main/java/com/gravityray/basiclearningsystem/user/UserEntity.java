@@ -1,8 +1,12 @@
 package com.gravityray.basiclearningsystem.user;
 
+import com.gravityray.basiclearningsystem.studyitem.course.CourseEntity;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "users")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -24,6 +28,14 @@ public class UserEntity {
 
     @Column(name = "user_role")
     private String role;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_courses_enrolment",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<CourseEntity> courseList;
 
     public Long getId() {
         return id;
@@ -71,5 +83,13 @@ public class UserEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<CourseEntity> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseEntity> courseList) {
+        this.courseList = courseList;
     }
 }

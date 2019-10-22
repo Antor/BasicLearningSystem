@@ -12,4 +12,6 @@ public interface ProfileService {
     DeleteProfileInfo getDeleteProfileInfo(String email) throws ProfileNotFoundException;
 
     void deleteProfile(DeleteProfileInfo profileInfo);
+
+    ProfileCourseListInfo getProfileCourseListInfo(String username);
 }

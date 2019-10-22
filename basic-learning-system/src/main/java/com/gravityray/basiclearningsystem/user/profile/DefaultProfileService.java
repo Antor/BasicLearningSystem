@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -88,5 +89,25 @@ public class DefaultProfileService implements ProfileService {
     @Transactional
     public void deleteProfile(DeleteProfileInfo profileInfo) {
         userService.deleteUser(profileInfo.getId());
+    }
+
+    @Override
+    public ProfileCourseListInfo getProfileCourseListInfo(String email) {
+        UserEntity user = userService.getUser(email);
+
+        List<ProfileCourseItemInfo> courseList = user.getCourseList()
+                .stream()
+                .map(courseEntity -> {
+                    ProfileCourseItemInfo item = new ProfileCourseItemInfo();
+                    item.setId(courseEntity.getId());
+                    item.setTitle(courseEntity.getTitle());
+                    item.setDescription(courseEntity.getDescription());
+                    return item;
+                })
+                .collect(Collectors.toList());
+
+        ProfileCourseListInfo info  = new ProfileCourseListInfo();
+        info.setCourseList(courseList);
+        return info;
     }
 }

@@ -58,8 +58,10 @@ public class ProfileController {
     }
 
     @GetMapping("/course")
-    public String profileCourseList() {
-        // TODO
+    public String profileCourseList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        model.addAttribute(
+                "info",
+                profileService.getProfileCourseListInfo(userDetails.getUsername()));
         return "profile/course_list";
     }
 
