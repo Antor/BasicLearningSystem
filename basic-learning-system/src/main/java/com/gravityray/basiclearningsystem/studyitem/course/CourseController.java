@@ -1,5 +1,7 @@
 package com.gravityray.basiclearningsystem.studyitem.course;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,11 @@ public class CourseController {
     }
 
     @GetMapping
-    public String courseList(Model model) {
-        model.addAttribute("courses", courseService.getCourses(true));
+    public String courseList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails != null ? userDetails.getUsername() : null;
+        model.addAttribute(
+                "info",
+                courseService.getActiveCourseItemListInfo(email));
 
         return "course_list";
     }

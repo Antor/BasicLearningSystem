@@ -12,13 +12,25 @@
 <div th:replace="~{fragments/header :: titleHeader}"></div>
 <div th:replace="~{fragments/header :: userHeader}"></div>
 
-<p>
-    List of available courses:
-    <br/>
-    <ul>
-        <li th:each="c : ${courses}" th:text="${c.title}">Course title</li>
-    </ul>
-</p>
+<h3>Courses:</h3>
+<div>
+    <div th:each="course : ${info.courseList}" class="row">
+        <span th:text="'#' + ${course.id}">#01</span><br/>
+        <span th:text="${course.title}">Course title</span><br/>
+        <span th:text="${course.description}">Course description</span><br/>
+
+        <div th:if="${info.userAuthenticated}">
+            <a href="#"
+               th:if="${not course.enrolled}"
+               th:href="@{/course/{courseId}/enrol(courseId=${course.id})}"
+               class="action">Enrol</a>
+            <a href="#"
+               th:if="${course.enrolled}"
+               th:href="@{/course/{courseId}/leave(courseId=${course.id})}"
+               class="action">Leave</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

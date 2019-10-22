@@ -44,4 +44,6 @@ public interface CourseService {
     void enrollUserToCourse(long userId, long courseId);
 
     void unenrollUserFromCourse(long userId, long courseId);
+
+    CourseItemListInfo getActiveCourseItemListInfo(String email);
 }

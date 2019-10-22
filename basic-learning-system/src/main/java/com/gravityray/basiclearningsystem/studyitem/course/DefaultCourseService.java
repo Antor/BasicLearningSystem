@@ -5,6 +5,8 @@ import com.gravityray.basiclearningsystem.adminpanel.course.CreateCourseForm;
 import com.gravityray.basiclearningsystem.adminpanel.course.DeleteCourseInfo;
 import com.gravityray.basiclearningsystem.adminpanel.course.EditCourseForm;
 import com.gravityray.basiclearningsystem.studyitem.unit.UnitEntity;
+import com.gravityray.basiclearningsystem.user.UserDao;
+import com.gravityray.basiclearningsystem.user.UserEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +21,15 @@ import java.util.stream.Collectors;
 public class DefaultCourseService implements CourseService {
 
     private final CourseDao courseDao;
+    private final UserDao userDao;
     private final Validator validator;
 
     public DefaultCourseService(
             CourseDao courseDao,
+            UserDao userDao,
             Validator validator) {
         this.courseDao = courseDao;
+        this.userDao = userDao;
         this.validator = validator;
     }
 
@@ -181,5 +186,36 @@ public class DefaultCourseService implements CourseService {
     @Override
     public void unenrollUserFromCourse(long userId, long courseId) {
         // TODO
+    }
+
+    @Override
+    public CourseItemListInfo getActiveCourseItemListInfo(String email) {
+        UserEntity userEntity = userDao.findUserByEmail(email);
+
+        List<CourseItemInfo> courseList = new ArrayList<>();
+        courseDao.getActiveCourses()
+                .forEach(courseEntity -> {
+                    CourseItemInfo item = new CourseItemInfo();
+                    item.setId(courseEntity.getId());
+                    item.setTitle(courseEntity.getTitle());
+                    item.setDescription(courseEntity.getDescription());
+
+                    item.setEnrolled(false);
+                    if (userEntity != null) {
+                        for (CourseEntity userCourseEntity : userEntity.getCourseList()) {
+                            if (courseEntity.getId().equals(userCourseEntity.getId())) {
+                                item.setEnrolled(true);
+                                break;
+                            }
+                        }
+                    }
+
+                    courseList.add(item);
+                });
+
+        CourseItemListInfo info = new CourseItemListInfo();
+        info.setUserAuthenticated(userEntity != null);
+        info.setCourseList(courseList);
+        return info;
     }
 }
