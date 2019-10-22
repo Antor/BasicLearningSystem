@@ -37,13 +37,11 @@ public interface CourseService {
 
     void deleteCourse(long id);
 
-    List<UnitEntity> getCourseUnits(long courseId);
+    void enrolUserToCourse(long courseId, String email);
 
-    List<CourseEntity> getUserCourses(long userId);
-
-    void enrollUserToCourse(long userId, long courseId);
-
-    void unenrollUserFromCourse(long userId, long courseId);
+    void unenrolUserFromCourse(long courseId, String email);
 
     CourseItemListInfo getActiveCourseItemListInfo(String email);
+
+    CourseItemInfo getCourseItemInfo(long courseId, String email);
 }

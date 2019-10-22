@@ -166,26 +166,32 @@ public class DefaultCourseService implements CourseService {
         courseDao.deleteById(id);
     }
 
+    @Transactional
     @Override
-    public List<UnitEntity> getCourseUnits(long courseId) {
-        // TODO
-        return new ArrayList<>();
+    public void enrolUserToCourse(long courseId, String email) {
+        UserEntity userEntity = userDao.findUserByEmail(email);
+        CourseEntity courseEntity = courseDao.findById(courseId).orElse(null);
+
+        boolean hasCourse = userEntity.getCourseList()
+                .stream()
+                .anyMatch(userCourseEntity -> courseEntity.getId().equals(userCourseEntity.getId()));
+        if (!hasCourse) {
+            userEntity.getCourseList().add(courseEntity);
+        }
     }
 
+    @Transactional
     @Override
-    public List<CourseEntity> getUserCourses(long userId) {
-        // TODO
-        return new ArrayList<>();
-    }
+    public void unenrolUserFromCourse(long courseId, String email) {
+        UserEntity userEntity = userDao.findUserByEmail(email);
+        CourseEntity courseEntity = courseDao.findById(courseId).orElse(null);
 
-    @Override
-    public void enrollUserToCourse(long userId, long courseId) {
-        // TODO
-    }
-
-    @Override
-    public void unenrollUserFromCourse(long userId, long courseId) {
-        // TODO
+        boolean hasCourse = userEntity.getCourseList()
+                .stream()
+                .anyMatch(userCourseEntity -> courseEntity.getId().equals(userCourseEntity.getId()));
+        if (hasCourse) {
+            userEntity.getCourseList().remove(courseEntity);
+        }
     }
 
     @Override
@@ -217,5 +223,25 @@ public class DefaultCourseService implements CourseService {
         info.setUserAuthenticated(userEntity != null);
         info.setCourseList(courseList);
         return info;
+    }
+
+    @Override
+    public CourseItemInfo getCourseItemInfo(long courseId, String email) {
+        CourseEntity courseEntity = courseDao.findById(courseId).orElse(null);
+
+        CourseItemInfo item = new CourseItemInfo();
+        item.setId(courseEntity.getId());
+        item.setTitle(courseEntity.getTitle());
+        item.setDescription(courseEntity.getDescription());
+
+        item.setEnrolled(false);
+        UserEntity userEntity = userDao.findUserByEmail(email);
+        for (CourseEntity userCourse : userEntity.getCourseList()) {
+            if (userCourse.getId().equals(courseId)) {
+                item.setEnrolled(true);
+            }
+        }
+
+        return item;
     }
 }

@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Leave Course</title>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
-<h3>TODO: Leave Course</h3>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<h3>Leave Course</h3>
+
+<form
+        th:action="@{/course/{courseId}/leave(courseId=${course.id})}"
+        method="post">
+    <p>Do you want to leave course "<span th:text="|${course.title}|">Basic Java</span>"</p>
+    <input type="submit" value="Leave">
+</form>
+
 </body>
 </html>
