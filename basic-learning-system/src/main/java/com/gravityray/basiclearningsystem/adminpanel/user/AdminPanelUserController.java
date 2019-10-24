@@ -40,7 +40,7 @@ public class AdminPanelUserController {
     public String administrationUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
 
-        return "administration/user/list";
+        return "adminpanel/user/list";
     }
 
     @GetMapping("/{userId}")
@@ -52,7 +52,7 @@ public class AdminPanelUserController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("user", userConverter.toUserDto(userEntity));
 
-        return "administration/user/edit";
+        return "adminpanel/user/edit";
     }
 
     @PostMapping("/{userId}")
@@ -67,7 +67,7 @@ public class AdminPanelUserController {
             model.addAttribute("errors", verificationErrors);
             model.addAttribute("user", user);
 
-            return "administration/user/edit";
+            return "adminpanel/user/edit";
         }
 
         try {
@@ -84,7 +84,7 @@ public class AdminPanelUserController {
             createUserErrors.add(e.getMessage());
             model.addAttribute("errors", createUserErrors);
             model.addAttribute("user", user);
-            return "administration/user_edit";
+            return "adminpanel/user_edit";
         }
 
         return "redirect:/admin/user";
@@ -97,7 +97,7 @@ public class AdminPanelUserController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("user", new UserDto());
 
-        return "administration/user/create";
+        return "adminpanel/user/create";
     }
 
     @PostMapping("/create")
@@ -109,7 +109,7 @@ public class AdminPanelUserController {
             model.addAttribute("errors", verificationErrors);
             model.addAttribute("user", user);
 
-            return "administration/user/create";
+            return "adminpanel/user/create";
         }
 
         try {
@@ -123,7 +123,7 @@ public class AdminPanelUserController {
             createUserErrors.add(e.getMessage());
             model.addAttribute("errors", createUserErrors);
             model.addAttribute("user", user);
-            return "administration/user/create";
+            return "adminpanel/user/create";
         }
 
         return "redirect:/admin/user";
@@ -137,7 +137,7 @@ public class AdminPanelUserController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("user", userConverter.toUserDto(userEntity));
 
-        return "administration/user/delete";
+        return "adminpanel/user/delete";
     }
 
     @PostMapping("/{userId}/delete")
@@ -154,7 +154,7 @@ public class AdminPanelUserController {
             model.addAttribute("errors", createUserErrors);
             UserEntity userEntity = userService.getUser(userId);
             model.addAttribute("user", userConverter.toUserDto(userEntity));
-            return "administration/user/delete";
+            return "adminpanel/user/delete";
         }
 
         return "redirect:/admin/user";

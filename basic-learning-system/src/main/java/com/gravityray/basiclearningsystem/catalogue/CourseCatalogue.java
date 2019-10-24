@@ -1,18 +1,18 @@
-package com.gravityray.basiclearningsystem.studyitem.course;
+package com.gravityray.basiclearningsystem.catalogue;
 
 import java.util.List;
 
-public class CourseItemListInfo {
+public class CourseCatalogue {
 
-    private List<CourseItemInfo> courseList;
+    private List<CourseCatalogueItem> courseList;
 
     private boolean userAuthenticated;
 
-    public List<CourseItemInfo> getCourseList() {
+    public List<CourseCatalogueItem> getCourseList() {
         return courseList;
     }
 
-    public void setCourseList(List<CourseItemInfo> courseList) {
+    public void setCourseList(List<CourseCatalogueItem> courseList) {
         this.courseList = courseList;
     }
 

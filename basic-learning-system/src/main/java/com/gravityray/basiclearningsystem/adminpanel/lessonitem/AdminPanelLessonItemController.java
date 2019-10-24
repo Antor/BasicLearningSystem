@@ -38,7 +38,7 @@ public class AdminPanelLessonItemController {
         model.addAttribute("lesson", lessonItemEntity.getLesson());
         model.addAttribute("lessonItem", lessonItemEntity);
 
-        return "administration/lesson_item/edit";
+        return "adminpanel/lesson_item/edit";
     }
 
     @PostMapping("/{lessonItemId}")
@@ -61,7 +61,7 @@ public class AdminPanelLessonItemController {
 
             model.addAttribute("lessonItem", editLessonItemForm);
 
-            return "administration/lesson_item/edit";
+            return "adminpanel/lesson_item/edit";
         }
     }
 
@@ -75,7 +75,7 @@ public class AdminPanelLessonItemController {
         model.addAttribute("lesson", lessonItemEntity.getLesson());
         model.addAttribute("lessonItem", lessonItemEntity);
 
-        return "administration/lesson_item/delete";
+        return "adminpanel/lesson_item/delete";
     }
 
     @PostMapping("/{lessonItemId}/delete")

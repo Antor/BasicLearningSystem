@@ -32,7 +32,7 @@
 
 <div >
     <div th:each="lessonItem : ${lessonItems}" class="row">
-        <span th:text="'#' + ${lessonItem.id}">#01</span><br/>
+        <span th:text="'id: ' + ${lessonItem.id}" class="id">id: 01</span><br/>
         <span th:text="${lessonItem.title}">Lesson Item title</span><br/>
         <span th:text="${lessonItem.content}">Lesson Item content</span><br/>
 

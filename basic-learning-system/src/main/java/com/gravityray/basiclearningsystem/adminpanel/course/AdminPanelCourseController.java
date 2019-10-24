@@ -35,7 +35,7 @@ public class AdminPanelCourseController {
     public String courseList(Model model) {
         model.addAttribute("courses", courseService.getCourses(false));
 
-        return "administration/course/list";
+        return "adminpanel/course/list";
     }
 
     @GetMapping("/create")
@@ -43,7 +43,7 @@ public class AdminPanelCourseController {
         model.addAttribute("errors", Collections.emptyList());
         model.addAttribute("course", new CreateCourseForm());
 
-        return "administration/course/create";
+        return "adminpanel/course/create";
     }
 
     @PostMapping("/create")
@@ -55,7 +55,7 @@ public class AdminPanelCourseController {
         } catch (CreateCourseFormNotValidException e) {
             model.addAttribute("errors", e.getErrorList());
             model.addAttribute("course", courseForm);
-            return "administration/course/create";
+            return "adminpanel/course/create";
         }
     }
 
@@ -67,7 +67,7 @@ public class AdminPanelCourseController {
         model.addAttribute("errors", Collections.emptyList());
         model.addAttribute("course", courseService.getEditCourseForm(courseId));
 
-        return "administration/course/edit";
+        return "adminpanel/course/edit";
     }
 
     @PostMapping("/{courseId}")
@@ -83,7 +83,7 @@ public class AdminPanelCourseController {
         } catch (EditCourseFormNotValidException e) {
             model.addAttribute("errors", e.getErrorList());
             model.addAttribute("course", editCourseForm);
-            return "administration/course/edit";
+            return "adminpanel/course/edit";
         }
     }
 
@@ -95,7 +95,7 @@ public class AdminPanelCourseController {
         model.addAttribute("errors", Collections.emptyList());
         model.addAttribute("course", courseService.getEditCourseForm(courseId));
 
-        return "administration/course/delete";
+        return "adminpanel/course/delete";
     }
 
     @PostMapping("/{courseId}/delete")
@@ -114,7 +114,7 @@ public class AdminPanelCourseController {
         model.addAttribute("errors", Collections.emptyList());
         model.addAttribute("course", courseService.getCourseActiveToggleInfo(courseId));
 
-        return "administration/course/active_toggle";
+        return "adminpanel/course/active_toggle";
     }
 
     @GetMapping("/{courseId}/deactivate")
@@ -125,7 +125,7 @@ public class AdminPanelCourseController {
         model.addAttribute("errors", Collections.emptyList());
         model.addAttribute("course", courseService.getCourseActiveToggleInfo(courseId));
 
-        return "administration/course/active_toggle";
+        return "adminpanel/course/active_toggle";
     }
 
     @PostMapping("/{courseId}/active/toggle")
@@ -145,7 +145,7 @@ public class AdminPanelCourseController {
         model.addAttribute("course", course);
         model.addAttribute("units", course.getUnitList());
 
-        return "administration/unit/list";
+        return "adminpanel/unit/list";
     }
 
     @GetMapping("/{courseId}/unit/create")
@@ -156,7 +156,7 @@ public class AdminPanelCourseController {
         model.addAttribute("course", courseService.getCourse(courseId));
         model.addAttribute("unit", new CreateUnitForm());
 
-        return "administration/unit/create";
+        return "adminpanel/unit/create";
     }
 
     @PostMapping("/{courseId}/unit/create")
@@ -173,7 +173,7 @@ public class AdminPanelCourseController {
             model.addAttribute("errors", e.getErrorList());
             model.addAttribute("course", courseService.getCourse(courseId));
             model.addAttribute("unit", createUnitForm);
-            return "administration/unit/create";
+            return "adminpanel/unit/create";
         }
     }
 }

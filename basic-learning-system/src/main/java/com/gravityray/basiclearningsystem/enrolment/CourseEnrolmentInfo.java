@@ -1,6 +1,6 @@
-package com.gravityray.basiclearningsystem.studyitem.course;
+package com.gravityray.basiclearningsystem.enrolment;
 
-public class CourseItemInfo {
+public class CourseEnrolmentInfo {
 
     private long id;
 

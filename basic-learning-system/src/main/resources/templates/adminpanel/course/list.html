@@ -26,7 +26,7 @@
 <div class="separator"></div>
 <div >
     <div th:each="course : ${courses}" class="row">
-        <span th:text="'#' + ${course.id}">#01</span><br/>
+        <span th:text="'id: ' + ${course.id}" class="id">id: 01</span><br/>
         <span th:text="${course.title}">Course title</span><br/>
         <span th:text="${course.description}">Course description</span><br/>
 

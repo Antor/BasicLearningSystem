@@ -18,12 +18,12 @@
 <h3>My courses</h3>
 <div >
     <div th:each="course : ${info.courseList}" class="row">
-        <span th:text="'#' + ${course.id}">#01</span><br/>
+        <span th:text="'id: ' + ${course.id}" class="id">id: 01</span><br/>
         <span th:text="${course.title}">Course title</span><br/>
         <span th:text="${course.description}">Course description</span><br/>
 
         <a href="#"
-           th:href="@{/course/{courseId}/leave(courseId=${course.id})}"
+           th:href="@{/catalogue/course/{courseId}/leave(courseId=${course.id}, target='profile')}"
            class="action">Leave</a>
     </div>
 </div>

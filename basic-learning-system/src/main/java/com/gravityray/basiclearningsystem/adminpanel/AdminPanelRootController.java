@@ -10,7 +10,7 @@ public class AdminPanelRootController {
 
     @GetMapping
     public String administration() {
-        return "administration/main";
+        return "adminpanel/main";
     }
 
 }

@@ -40,7 +40,7 @@ public class AdminPanelUnitController {
         model.addAttribute("course", unitEntity.getCourse());
         model.addAttribute("unit", unitEntity);
 
-        return "administration/unit/edit";
+        return "adminpanel/unit/edit";
     }
 
     @PostMapping("/{unitId}")
@@ -59,7 +59,7 @@ public class AdminPanelUnitController {
             model.addAttribute("course", unitEntity.getCourse());
             model.addAttribute("unit", editUnitForm);
 
-            return "administration/unit/edit";
+            return "adminpanel/unit/edit";
         }
     }
 
@@ -71,7 +71,7 @@ public class AdminPanelUnitController {
         model.addAttribute("course", unitEntity.getCourse());
         model.addAttribute("unit", unitEntity);
 
-        return "administration/unit/delete";
+        return "adminpanel/unit/delete";
     }
 
     @PostMapping("/{unitId}/delete")
@@ -92,7 +92,7 @@ public class AdminPanelUnitController {
         model.addAttribute("unit", unitEntity);
         model.addAttribute("lessons", unitEntity.getLessonList());
 
-        return "administration/lesson/list";
+        return "adminpanel/lesson/list";
     }
 
     @GetMapping("/{unitId}/lesson/create")
@@ -105,7 +105,7 @@ public class AdminPanelUnitController {
         model.addAttribute("unit", unitEntity);
         model.addAttribute("lesson", new CreateLessonForm());
 
-        return "administration/lesson/create";
+        return "adminpanel/lesson/create";
     }
 
     @PostMapping("/{unitId}/lesson/create")
@@ -126,7 +126,7 @@ public class AdminPanelUnitController {
             model.addAttribute("unit", unitEntity);
 
             model.addAttribute("lesson", createLessonForm);
-            return "administration/lesson/create";
+            return "adminpanel/lesson/create";
         }
     }
 }

@@ -4,7 +4,6 @@ import com.gravityray.basiclearningsystem.adminpanel.course.CourseActiveToggleIn
 import com.gravityray.basiclearningsystem.adminpanel.course.CreateCourseForm;
 import com.gravityray.basiclearningsystem.adminpanel.course.DeleteCourseInfo;
 import com.gravityray.basiclearningsystem.adminpanel.course.EditCourseForm;
-import com.gravityray.basiclearningsystem.studyitem.unit.UnitEntity;
 
 import java.util.List;
 
@@ -36,12 +35,4 @@ public interface CourseService {
     void deactivateCourse(long courseId);
 
     void deleteCourse(long id);
-
-    void enrolUserToCourse(long courseId, String email);
-
-    void unenrolUserFromCourse(long courseId, String email);
-
-    CourseItemListInfo getActiveCourseItemListInfo(String email);
-
-    CourseItemInfo getCourseItemInfo(long courseId, String email);
 }

@@ -30,7 +30,7 @@
 
 <div >
     <div th:each="lesson : ${lessons}" class="row">
-        <span th:text="'#' + ${lesson.id}">#01</span><br/>
+        <span th:text="'id: ' + ${lesson.id}" class="id">#01</span><br/>
         <span th:text="${lesson.title}">Lesson title</span><br/>
         <span th:text="${lesson.description}">Lesson description</span><br/>
 

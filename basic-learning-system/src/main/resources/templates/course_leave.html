@@ -18,7 +18,7 @@
 <h3>Leave Course</h3>
 
 <form
-        th:action="@{/course/{courseId}/leave(courseId=${course.id})}"
+        th:action="@{/catalogue/course/{courseId}/leave(courseId=${course.id}, target=${target})}"
         method="post">
     <p>Do you want to leave course "<span th:text="|${course.title}|">Basic Java</span>"</p>
     <input type="submit" value="Leave">

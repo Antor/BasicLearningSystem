@@ -18,7 +18,7 @@
 <h3>Enrol to course</h3>
 
 <form
-        th:action="@{/course/{courseId}/enrol(courseId=${course.id})}"
+        th:action="@{/catalogue/course/{courseId}/enrol(courseId=${course.id}, target=${target})}"
         method="post">
     <p>Do you want to enrol to course "<span th:text="|${course.title}|">Basic Java</span>"</p>
     <input type="submit" value="Enrol">

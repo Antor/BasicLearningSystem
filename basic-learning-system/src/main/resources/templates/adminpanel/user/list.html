@@ -25,7 +25,7 @@
 <div class="separator"></div>
 <div>
     <div th:each="user : ${users}" class="row">
-        <span th:text="'#' + ${user.id}">#1</span><br/>
+        <span th:text="'id: ' + ${user.id}" class="id">id: 1</span><br/>
         <span th:text="|${user.firstName} ${user.lastName}|">John Smith</span><br/>
         <span th:text="${user.email}">john@example.com</span><br/>
         <a href="#"
