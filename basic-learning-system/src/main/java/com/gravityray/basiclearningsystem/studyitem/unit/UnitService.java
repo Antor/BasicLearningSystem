@@ -1,8 +1,7 @@
 package com.gravityray.basiclearningsystem.studyitem.unit;
 
-import com.gravityray.basiclearningsystem.adminpanel.unit.CreateUnitForm;
 import com.gravityray.basiclearningsystem.adminpanel.unit.EditUnitForm;
-import com.gravityray.basiclearningsystem.studyitem.course.EditUnitFormNotValidException;
+import com.gravityray.basiclearningsystem.adminpanel.unit.EditUnitFormNotValidException;
 
 @SuppressWarnings("unused")
 public interface UnitService {
@@ -16,8 +15,6 @@ public interface UnitService {
     void changeUnitOrdinal(long unitId, int delta);
 
     void deleteUnit(long id);
-
-    void createUnit(long courseId, CreateUnitForm createUnitForm) throws CreateUnitFormNotValidException;
 
     void updateUnit(EditUnitForm editUnitForm) throws EditUnitFormNotValidException;
 }

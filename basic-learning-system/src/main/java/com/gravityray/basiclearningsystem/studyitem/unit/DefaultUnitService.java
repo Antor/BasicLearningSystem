@@ -1,8 +1,7 @@
 package com.gravityray.basiclearningsystem.studyitem.unit;
 
-import com.gravityray.basiclearningsystem.adminpanel.unit.CreateUnitForm;
 import com.gravityray.basiclearningsystem.adminpanel.unit.EditUnitForm;
-import com.gravityray.basiclearningsystem.studyitem.course.EditUnitFormNotValidException;
+import com.gravityray.basiclearningsystem.adminpanel.unit.EditUnitFormNotValidException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,28 +47,6 @@ public class DefaultUnitService implements UnitService {
     @Override
     public void deleteUnit(long id) {
         unitDao.deleteById(id);
-    }
-
-    @Transactional
-    @Override
-    public void createUnit(long courseId, CreateUnitForm createUnitForm)
-            throws CreateUnitFormNotValidException {
-        Set<ConstraintViolation<CreateUnitForm>> constraintViolationSet =
-                validator.validate(createUnitForm);
-        if (!constraintViolationSet.isEmpty()) {
-            throw new CreateUnitFormNotValidException(
-                    constraintViolationSet.stream()
-                            .map(ConstraintViolation::getMessage)
-                            .collect(Collectors.toList()));
-        }
-
-        UnitEntity unitEntity = new UnitEntity();
-        unitEntity.setTitle(createUnitForm.getTitle());
-        unitEntity.setDescription(createUnitForm.getDescription());
-        unitEntity.setOrdinal(0);// TODO: set proper value
-        unitEntity.setCourseId(courseId);
-
-        unitDao.save(unitEntity);
     }
 
     @Transactional

@@ -1,13 +1,13 @@
-package com.gravityray.basiclearningsystem.studyitem.course;
+package com.gravityray.basiclearningsystem.adminpanel.course;
 
 import java.util.List;
 
-public class EditCourseFormNotValidException extends Throwable {
+public class CourseEditInfoNotValidException extends Throwable {
 
     private List<String> errorList;
 
     @SuppressWarnings("WeakerAccess")
-    public EditCourseFormNotValidException(List<String> errorList) {
+    public CourseEditInfoNotValidException(List<String> errorList) {
         this.errorList = errorList;
     }
 

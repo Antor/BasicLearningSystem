@@ -1,13 +1,5 @@
 package com.gravityray.basiclearningsystem.adminpanel.course;
 
-import com.gravityray.basiclearningsystem.adminpanel.unit.CreateUnitForm;
-import com.gravityray.basiclearningsystem.studyitem.course.CourseEntity;
-import com.gravityray.basiclearningsystem.studyitem.course.CourseNotFoundException;
-import com.gravityray.basiclearningsystem.studyitem.course.CourseService;
-import com.gravityray.basiclearningsystem.studyitem.course.CreateCourseFormNotValidException;
-import com.gravityray.basiclearningsystem.studyitem.course.EditCourseFormNotValidException;
-import com.gravityray.basiclearningsystem.studyitem.unit.CreateUnitFormNotValidException;
-import com.gravityray.basiclearningsystem.studyitem.unit.UnitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,165 +7,154 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/course")
 public class AdminPanelCourseController {
 
-    private final CourseService courseService;
-    private final UnitService unitService;
+    private final AdminPanelCourseService adminPanelCourseService;
 
-    public AdminPanelCourseController(
-            CourseService courseService,
-            UnitService unitService) {
-        this.courseService = courseService;
-        this.unitService = unitService;
+    public AdminPanelCourseController(AdminPanelCourseService adminPanelCourseService) {
+        this.adminPanelCourseService = adminPanelCourseService;
     }
 
     @GetMapping
     public String courseList(Model model) {
-        model.addAttribute("courses", courseService.getCourses(false));
+        model.addAttribute(
+                "courseList",
+                adminPanelCourseService.getCourseList());
 
         return "adminpanel/course/list";
     }
 
     @GetMapping("/create")
     public String courseCreateGet(Model model) {
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", new CreateCourseForm());
+        model.addAttribute("course", new CourseCreateInfo());
+        model.addAttribute("errorList", new ArrayList<>());
 
         return "adminpanel/course/create";
     }
 
     @PostMapping("/create")
-    public String courseCreatePost(Model model, CreateCourseForm courseForm) {
+    public String courseCreatePost(CourseCreateInfo course, Model model) {
         try {
-            courseService.createCourse(courseForm);
+            adminPanelCourseService.createCourse(course);
             return "redirect:/admin/course";
 
-        } catch (CreateCourseFormNotValidException e) {
-            model.addAttribute("errors", e.getErrorList());
-            model.addAttribute("course", courseForm);
+        } catch (CourseCreateInfoNotValidException e) {
+            model.addAttribute("course", course);
+            model.addAttribute("errorList", e.getErrorList());
             return "adminpanel/course/create";
         }
     }
 
     @GetMapping("/{courseId}")
-    public String courseEditGet(
-            @PathVariable Long courseId,
-            Model model) {
-
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getEditCourseForm(courseId));
+    public String courseEditGet(@PathVariable long courseId, Model model) {
+        model.addAttribute("course", adminPanelCourseService.getCourseEditInfo(courseId));
+        model.addAttribute("errorList", new ArrayList<>());
 
         return "adminpanel/course/edit";
     }
 
     @PostMapping("/{courseId}")
-    public String courseEditPost(
-            @SuppressWarnings("unused") @PathVariable Long courseId,
-            Model model,
-            EditCourseForm editCourseForm) throws CourseNotFoundException {
-
+    public String courseEditPost(@PathVariable long courseId, Model model, CourseEditInfo course) {
+        course.setId(courseId);
         try {
-            courseService.updateCourse(editCourseForm);
+            adminPanelCourseService.updateCourse(course);
             return "redirect:/admin/course";
 
-        } catch (EditCourseFormNotValidException e) {
-            model.addAttribute("errors", e.getErrorList());
-            model.addAttribute("course", editCourseForm);
+        } catch (CourseEditInfoNotValidException e) {
+            model.addAttribute("course", course);
+            model.addAttribute("errorList", e.getErrorList());
+            return "adminpanel/course/edit";
+
+        } catch (CourseNotFoundException e) {
+            List<String> errorList = new ArrayList<>();
+            errorList.add("Course you're trying to edit do not exist!");
+
+            model.addAttribute("course", course);
+            model.addAttribute("errorList", errorList);
             return "adminpanel/course/edit";
         }
     }
 
-    @GetMapping("/{courseId}/delete")
-    public String courseDeleteGet(
-            @PathVariable Long courseId,
-            Model model) {
+    @GetMapping("/{courseId}/activate")
+    public String courseActivateGet(@PathVariable long courseId, Model model) {
+        model.addAttribute("course", adminPanelCourseService.getCourseActivateInfo(courseId));
+        model.addAttribute("errorList", new ArrayList<>());
 
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getEditCourseForm(courseId));
+        return "adminpanel/course/activate";
+    }
+
+    @PostMapping("/{courseId}/activate")
+    public String courseActivatePost(@PathVariable long courseId) {
+        adminPanelCourseService.activateCourse(courseId);
+
+        return "redirect:/admin/course";
+    }
+
+    @GetMapping("/{courseId}/deactivate")
+    public String courseDeactivateGet(@PathVariable long courseId, Model model) {
+        model.addAttribute("course", adminPanelCourseService.getCourseDeactivateInfo(courseId));
+        model.addAttribute("errorList", new ArrayList<>());
+
+        return "adminpanel/course/deactivate";
+    }
+
+    @PostMapping("/{courseId}/deactivate")
+    public String courseDeactivatePost(@PathVariable long courseId) {
+        adminPanelCourseService.deactivateCourse(courseId);
+
+        return "redirect:/admin/course";
+    }
+
+    @GetMapping("/{courseId}/delete")
+    public String courseDeleteGet(@PathVariable long courseId, Model model) {
+        model.addAttribute("course", adminPanelCourseService.getCourseDeleteInfo(courseId));
+        model.addAttribute("errorList", new ArrayList<>());
 
         return "adminpanel/course/delete";
     }
 
     @PostMapping("/{courseId}/delete")
-    public String courseDeletePost(@PathVariable Long courseId) {
-
-        courseService.deleteCourse(courseId);
-
-        return "redirect:/admin/course";
-    }
-
-    @GetMapping("/{courseId}/activate")
-    public String courseActivateGet(
-            @PathVariable Long courseId,
-            Model model) {
-
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getCourseActiveToggleInfo(courseId));
-
-        return "adminpanel/course/active_toggle";
-    }
-
-    @GetMapping("/{courseId}/deactivate")
-    public String courseDeactivateGet(
-            @PathVariable Long courseId,
-            Model model) {
-
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getCourseActiveToggleInfo(courseId));
-
-        return "adminpanel/course/active_toggle";
-    }
-
-    @PostMapping("/{courseId}/active/toggle")
-    public String courseToggleActive(@PathVariable Long courseId) {
-
-        courseService.toggleCourseActive(courseId);
+    public String courseDeletePost(@PathVariable long courseId) {
+        adminPanelCourseService.deleteCourse(courseId);
 
         return "redirect:/admin/course";
     }
 
     @GetMapping("/{courseId}/unit")
-    public String unitList(
-            @PathVariable Long courseId,
-            Model model) {
-
-        CourseEntity course = courseService.getCourse(courseId);
-        model.addAttribute("course", course);
-        model.addAttribute("units", course.getUnitList());
+    public String courseUnitList(@PathVariable long courseId, Model model) {
+        model.addAttribute("course", adminPanelCourseService.getUnitListCourseInfo(courseId));
+        model.addAttribute("unitList", adminPanelCourseService.getUnitList(courseId));
 
         return "adminpanel/unit/list";
     }
 
     @GetMapping("/{courseId}/unit/create")
-    public String unitCreateGet(
-            @PathVariable Long courseId,
-            Model model) {
-        model.addAttribute("errors", Collections.emptyList());
-        model.addAttribute("course", courseService.getCourse(courseId));
-        model.addAttribute("unit", new CreateUnitForm());
+    public String unitCreateGet(@PathVariable long courseId, Model model) {
+        model.addAttribute("course", adminPanelCourseService.getUnitCreateCourseInfo(courseId));
+        model.addAttribute("unit", new UnitCreateInfo());
+        model.addAttribute("errorList", Collections.emptyList());
 
         return "adminpanel/unit/create";
     }
 
     @PostMapping("/{courseId}/unit/create")
-    public String unitCreatePost(
-            @PathVariable Long courseId,
-            Model model,
-            CreateUnitForm createUnitForm) {
-
+    public String unitCreatePost(@PathVariable long courseId, Model model, UnitCreateInfo unitCreateInfo) {
         try {
-            unitService.createUnit(courseId, createUnitForm);
+            adminPanelCourseService.createUnit(courseId, unitCreateInfo);
             return String.format("redirect:/admin/course/%d/unit", courseId);
 
-        } catch (CreateUnitFormNotValidException e) {
+        } catch (UnitCreateInfoNotValidException e) {
+            model.addAttribute("course", adminPanelCourseService.getUnitCreateCourseInfo(courseId));
+            model.addAttribute("unit", unitCreateInfo);
             model.addAttribute("errors", e.getErrorList());
-            model.addAttribute("course", courseService.getCourse(courseId));
-            model.addAttribute("unit", createUnitForm);
             return "adminpanel/unit/create";
         }
     }
+
 }

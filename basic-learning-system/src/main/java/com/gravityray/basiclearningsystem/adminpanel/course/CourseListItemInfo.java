@@ -1,13 +1,19 @@
 package com.gravityray.basiclearningsystem.adminpanel.course;
 
-import javax.validation.constraints.NotBlank;
+public class CourseListItemInfo {
 
-public class CreateCourseForm {
-
-    @NotBlank
+    private long id;
     private String title;
-
     private String description;
+    private boolean active;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -23,5 +29,13 @@ public class CreateCourseForm {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

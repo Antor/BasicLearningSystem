@@ -33,7 +33,7 @@
 <div class="separator"></div>
 
 <div >
-    <div th:each="unit : ${units}" class="row">
+    <div th:each="unit : ${unitList}" class="row">
         <span th:text="'id: ' + ${unit.id}" class="id">id: 01</span><br/>
         <span th:text="${unit.title}">Unit title</span><br/>
         <span th:text="${unit.description}">Unit description</span><br/>

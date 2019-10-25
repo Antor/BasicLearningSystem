@@ -1,7 +1,6 @@
 package com.gravityray.basiclearningsystem.adminpanel.unit;
 
 import com.gravityray.basiclearningsystem.adminpanel.lesson.CreateLessonForm;
-import com.gravityray.basiclearningsystem.studyitem.course.EditUnitFormNotValidException;
 import com.gravityray.basiclearningsystem.studyitem.lesson.CreateLessonFormNotValidException;
 import com.gravityray.basiclearningsystem.studyitem.lesson.LessonService;
 import com.gravityray.basiclearningsystem.studyitem.unit.UnitEntity;

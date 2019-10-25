@@ -19,7 +19,7 @@
 
 <h3>Edit Unit</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
 
 <form
         th:action="@{/admin/unit/{unitId}(unitId=${unit.id})}"

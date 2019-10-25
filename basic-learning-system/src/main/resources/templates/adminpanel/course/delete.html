@@ -5,7 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete course</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
 
@@ -23,12 +27,13 @@
 
 <h3>Delete course</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(${errorList})}"></div>
 
-<form
-        th:action="@{/admin/course/{courseId}/delete(courseId=${course.id})}"
-        method="post">
+<form th:action="@{/admin/course/{courseId}/delete(courseId=${course.id})}"
+      method="post">
+
     <p>Do you want to delete course "<span th:text="|${course.title}|">Basic Java</span>"</p>
+
     <input type="submit" value="Delete">
 </form>
 

@@ -23,7 +23,7 @@
 
 <h3>Delete lesson</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
 
 <form
         th:action="@{/admin/lesson/{lessonId}/delete(lessonId=${lesson.id})}"

@@ -1,4 +1,4 @@
-package com.gravityray.basiclearningsystem.studyitem.course;
+package com.gravityray.basiclearningsystem.adminpanel.unit;
 
 import java.util.List;
 

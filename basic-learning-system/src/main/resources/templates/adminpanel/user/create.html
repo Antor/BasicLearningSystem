@@ -23,7 +23,7 @@
 
 <h3>Create user</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
 
 <form th:action="@{/admin/user/create}" method="post">
     <div th:replace="~{fragments/user :: userFormFields(canEditRole = true, canEditPassword = true, canEditEmail = true)}"></div>

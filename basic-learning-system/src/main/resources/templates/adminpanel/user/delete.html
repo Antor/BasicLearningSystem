@@ -23,7 +23,7 @@
 
 <h3>Delete user</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
 
 <form
         th:action="@{/admin/user/{userId}/delete(userId=${userId})}"

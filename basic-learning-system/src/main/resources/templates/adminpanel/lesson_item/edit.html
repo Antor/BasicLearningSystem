@@ -25,7 +25,7 @@
 
 <h3>Edit Lesson Item</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
 
 <form
         th:action="@{/admin/lesson-item/{lessonItemId}(lessonItemId=${lessonItem.id})}"

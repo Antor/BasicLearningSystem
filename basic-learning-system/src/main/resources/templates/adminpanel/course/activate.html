@@ -4,7 +4,7 @@
         xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create course</title>
+    <title>Toggle course active status</title>
 
     <link rel="stylesheet"
           type="text/css"
@@ -25,16 +25,17 @@
     </span>
 </p>
 
-<h3>Create course</h3>
+<h3>Toggle course active status</h3>
 
 <div th:replace="~{fragments/errors :: errors(${errorList})}"></div>
 
-<form
-        th:action="@{/admin/course/create}"
-        method="post">
-    <div th:replace="~{fragments/course :: courseFormFields(form = ${course})}"></div>
+<form th:action="@{/admin/course/{courseId}/activate(courseId=${course.id})}"
+      method="post">
 
-    <input type="submit" value="Create">
+    <p>Do you want to activate course "<span th:text="|${course.title}|">Basic Java</span>"</p>
+
+    <input type="submit"
+           value="Activate">
 </form>
 
 </body>

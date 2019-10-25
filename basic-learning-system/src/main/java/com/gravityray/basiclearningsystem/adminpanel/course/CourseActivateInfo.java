@@ -1,12 +1,10 @@
 package com.gravityray.basiclearningsystem.adminpanel.course;
 
-public class CourseActiveToggleInfo {
+public class CourseActivateInfo {
 
     private Long id;
 
     private String title;
-
-    private Boolean active;
 
     public Long getId() {
         return id;
@@ -22,13 +20,5 @@ public class CourseActiveToggleInfo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 }

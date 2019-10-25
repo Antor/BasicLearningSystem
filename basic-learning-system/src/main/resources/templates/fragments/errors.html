@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div th:fragment="errors">
+<div th:fragment="errors(errors)">
     <p th:if="${not errors.isEmpty()}">
         Errors:
     <ul>

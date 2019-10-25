@@ -5,7 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Create course</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
 </head>
 <body>
 
@@ -23,12 +27,12 @@
 
 <h3>Edit course</h3>
 
-<div th:replace="~{fragments/errors :: errors}"></div>
+<div th:replace="~{fragments/errors :: errors(errors = ${errorList})}"></div>
 
 <form
         th:action="@{/admin/course/{courseId}(courseId=${course.id})}"
         method="post">
-    <div th:replace="~{fragments/course :: courseFormFields(handleId = true)}"></div>
+    <div th:replace="~{fragments/course :: courseFormFields(form = ${course})}"></div>
 
     <input type="submit" value="Save">
 </form>
