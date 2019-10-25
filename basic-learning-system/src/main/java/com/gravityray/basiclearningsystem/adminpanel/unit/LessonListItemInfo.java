@@ -1,23 +1,16 @@
 package com.gravityray.basiclearningsystem.adminpanel.unit;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+public class LessonListItemInfo {
 
-public class EditUnitForm {
-
-    @NotNull
-    private Long id;
-
-    @NotBlank
+    private long id;
     private String title;
-
     private String description;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -9,12 +9,8 @@
 <body>
 
 <div
-        th:fragment="unitFormFields(handleId)"
+        th:fragment="unitFormFields(unit)"
         th:object="${unit}">
-
-    <div th:if="${handleId}">
-        <input type="hidden" name="id" id="id" th:value="*{id}">
-    </div>
 
     <label for="title">Title:</label>
     <input type="text" name="title" id="title" th:value="*{title}">

@@ -1,13 +1,13 @@
-package com.gravityray.basiclearningsystem.studyitem.lesson;
+package com.gravityray.basiclearningsystem.adminpanel.unit;
 
 import java.util.List;
 
-public class CreateLessonFormNotValidException extends Throwable {
+public class LessonCreateInfoNotValidException extends Throwable {
 
     private List<String> errorList;
 
     @SuppressWarnings("WeakerAccess")
-    public CreateLessonFormNotValidException(List<String> errorList) {
+    public LessonCreateInfoNotValidException(List<String> errorList) {
         this.errorList = errorList;
     }
 

@@ -53,6 +53,7 @@ public class AdminPanelCourseController {
 
     @GetMapping("/{courseId}")
     public String courseEditGet(@PathVariable long courseId, Model model) {
+        model.addAttribute("courseId", courseId);
         model.addAttribute("course", adminPanelCourseService.getCourseEditInfo(courseId));
         model.addAttribute("errorList", new ArrayList<>());
 
@@ -61,12 +62,12 @@ public class AdminPanelCourseController {
 
     @PostMapping("/{courseId}")
     public String courseEditPost(@PathVariable long courseId, Model model, CourseEditInfo course) {
-        course.setId(courseId);
         try {
-            adminPanelCourseService.updateCourse(course);
+            adminPanelCourseService.updateCourse(courseId, course);
             return "redirect:/admin/course";
 
         } catch (CourseEditInfoNotValidException e) {
+            model.addAttribute("courseId", courseId);
             model.addAttribute("course", course);
             model.addAttribute("errorList", e.getErrorList());
             return "adminpanel/course/edit";

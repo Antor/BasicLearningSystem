@@ -24,12 +24,12 @@
 <h3>List of Lessons</h3>
 
 <a href="#"
-   th:href="@{/admin/unit/{unitId}/lesson/create(unitId=${unit.id})}"
+   th:href="@{/admin/unit/{unitId}/lesson/create(unitId=${unitId})}"
    class="button">Create lesson</a>
 <div class="separator"></div>
 
 <div >
-    <div th:each="lesson : ${lessons}" class="row">
+    <div th:each="lesson : ${lessonList}" class="row">
         <span th:text="'id: ' + ${lesson.id}" class="id">#01</span><br/>
         <span th:text="${lesson.title}">Lesson title</span><br/>
         <span th:text="${lesson.description}">Lesson description</span><br/>

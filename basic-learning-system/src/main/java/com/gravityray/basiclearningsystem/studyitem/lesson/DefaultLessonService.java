@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.studyitem.lesson;
 
-import com.gravityray.basiclearningsystem.adminpanel.lesson.CreateLessonForm;
+import com.gravityray.basiclearningsystem.adminpanel.unit.LessonCreateInfo;
 import com.gravityray.basiclearningsystem.adminpanel.lesson.EditLessonForm;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,26 +46,7 @@ public class DefaultLessonService implements LessonService {
         lessonDao.deleteById(id);
     }
 
-    @Transactional
-    @Override
-    public void createLesson(long unitId, CreateLessonForm createLessonForm) throws CreateLessonFormNotValidException {
-        Set<ConstraintViolation<CreateLessonForm>> constraintViolationSet =
-                validator.validate(createLessonForm);
-        if (!constraintViolationSet.isEmpty()) {
-            throw new CreateLessonFormNotValidException(
-                    constraintViolationSet.stream()
-                            .map(ConstraintViolation::getMessage)
-                            .collect(Collectors.toList()));
-        }
 
-        LessonEntity lessonEntity = new LessonEntity();
-        lessonEntity.setTitle(createLessonForm.getTitle());
-        lessonEntity.setDescription(createLessonForm.getDescription());
-        lessonEntity.setOrdinal(0);// TODO: set proper value
-        lessonEntity.setUnitId(unitId);
-
-        lessonDao.save(lessonEntity);
-    }
 
     @Transactional
     @Override

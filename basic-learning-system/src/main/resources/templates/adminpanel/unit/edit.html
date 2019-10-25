@@ -19,12 +19,12 @@
 
 <h3>Edit Unit</h3>
 
-<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
+<div th:replace="~{fragments/errors :: errors(${errorList})}"></div>
 
-<form
-        th:action="@{/admin/unit/{unitId}(unitId=${unit.id})}"
-        method="post">
-    <div th:replace="~{fragments/unit :: unitFormFields(handleId = true)}"></div>
+<form th:action="@{/admin/unit/{unitId}(unitId=${unitId})}"
+      method="post">
+
+    <div th:replace="~{fragments/unit :: unitFormFields(${unit})}"></div>
 
     <input type="submit" value="Save">
 </form>

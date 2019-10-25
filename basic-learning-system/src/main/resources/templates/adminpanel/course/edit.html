@@ -30,7 +30,7 @@
 <div th:replace="~{fragments/errors :: errors(errors = ${errorList})}"></div>
 
 <form
-        th:action="@{/admin/course/{courseId}(courseId=${course.id})}"
+        th:action="@{/admin/course/{courseId}(courseId=${courseId})}"
         method="post">
     <div th:replace="~{fragments/course :: courseFormFields(form = ${course})}"></div>
 

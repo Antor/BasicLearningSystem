@@ -2,12 +2,12 @@ package com.gravityray.basiclearningsystem.adminpanel.unit;
 
 import java.util.List;
 
-public class EditUnitFormNotValidException extends Throwable {
+public class UnitEditInfoNotValidException extends Throwable {
 
     private List<String> errorList;
 
     @SuppressWarnings("WeakerAccess")
-    public EditUnitFormNotValidException(List<String> errorList) {
+    public UnitEditInfoNotValidException(List<String> errorList) {
         this.errorList = errorList;
     }
 

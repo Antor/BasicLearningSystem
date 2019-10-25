@@ -1,6 +1,6 @@
 package com.gravityray.basiclearningsystem.studyitem.lesson;
 
-import com.gravityray.basiclearningsystem.adminpanel.lesson.CreateLessonForm;
+import com.gravityray.basiclearningsystem.adminpanel.unit.LessonCreateInfo;
 import com.gravityray.basiclearningsystem.adminpanel.lesson.EditLessonForm;
 
 public interface LessonService {
@@ -15,8 +15,7 @@ public interface LessonService {
 
     void deleteLesson(long id);
 
-    void createLesson(long unitId, CreateLessonForm createLessonForm)
-            throws CreateLessonFormNotValidException;
+
 
     void updateLesson(EditLessonForm editLessonForm)
             throws EditLessonFormNotValidException;

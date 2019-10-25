@@ -71,7 +71,6 @@ public class DefaultAdminPanelCourseService implements AdminPanelCourseService {
         return courseDao.findById(courseId)
                 .map(courseEntity -> {
                     CourseEditInfo course = new CourseEditInfo();
-                    course.setId(courseEntity.getId());
                     course.setTitle(courseEntity.getTitle());
                     course.setDescription(courseEntity.getDescription());
                     return course;
@@ -81,7 +80,7 @@ public class DefaultAdminPanelCourseService implements AdminPanelCourseService {
 
     @Transactional
     @Override
-    public void updateCourse(CourseEditInfo courseEditInfo)
+    public void updateCourse(long courseId, CourseEditInfo courseEditInfo)
             throws CourseNotFoundException, CourseEditInfoNotValidException {
         Set<ConstraintViolation<CourseEditInfo>> constraintViolationSet =
                 validator.validate(courseEditInfo);
@@ -92,7 +91,7 @@ public class DefaultAdminPanelCourseService implements AdminPanelCourseService {
                             .collect(Collectors.toList()));
         }
 
-        CourseEntity courseEntity = courseDao.findById(courseEditInfo.getId())
+        CourseEntity courseEntity = courseDao.findById(courseId)
                 .orElse(null);
         if (courseEntity == null) {
             throw new CourseNotFoundException();

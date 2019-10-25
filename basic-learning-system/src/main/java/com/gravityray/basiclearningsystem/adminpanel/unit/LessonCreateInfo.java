@@ -1,8 +1,8 @@
-package com.gravityray.basiclearningsystem.adminpanel.course;
+package com.gravityray.basiclearningsystem.adminpanel.unit;
 
 import javax.validation.constraints.NotBlank;
 
-public class CourseEditInfo {
+public class LessonCreateInfo {
 
     @NotBlank
     private String title;

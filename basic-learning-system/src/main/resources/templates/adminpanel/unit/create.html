@@ -23,7 +23,7 @@
 <form
         th:action="@{/admin/course/{courseId}/unit/create(courseId=${course.id})}"
         method="post">
-    <div th:replace="~{fragments/unit :: unitFormFields (handleId = false)}"></div>
+    <div th:replace="~{fragments/unit :: unitFormFields(${unit})}"></div>
 
     <input type="submit" value="Create">
 </form>

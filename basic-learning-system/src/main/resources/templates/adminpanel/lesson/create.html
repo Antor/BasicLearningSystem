@@ -23,10 +23,10 @@
 
 <h3>Create lesson</h3>
 
-<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
+<div th:replace="~{fragments/errors :: errors(${errorList})}"></div>
 
 <form
-        th:action="@{/admin/unit/{unitId}/lesson/create(unitId=${unit.id})}"
+        th:action="@{/admin/unit/{unitId}/lesson/create(unitId=${unitId})}"
         method="post">
     <div th:replace="~{fragments/lesson :: lessonFormFields (handleId = false)}"></div>
 

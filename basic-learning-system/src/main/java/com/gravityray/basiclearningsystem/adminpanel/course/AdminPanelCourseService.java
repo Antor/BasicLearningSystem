@@ -11,7 +11,7 @@ public interface AdminPanelCourseService {
 
     CourseEditInfo getCourseEditInfo(long courseId);
 
-    void updateCourse(CourseEditInfo courseEditInfo)
+    void updateCourse(long courseId, CourseEditInfo courseEditInfo)
             throws CourseNotFoundException, CourseEditInfoNotValidException;
 
     CourseActivateInfo getCourseActivateInfo(long courseId);

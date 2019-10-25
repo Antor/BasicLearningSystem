@@ -18,10 +18,10 @@
 <h2 th:text="${course.title}">Course name</h2>
 <h3>Delete unit</h3>
 
-<div th:replace="~{fragments/errors :: errors(${errors})}"></div>
+<div th:replace="~{fragments/errors :: errors(${errorList})}"></div>
 
 <form
-        th:action="@{/admin/unit/{unitId}/delete(unitId=${unit.id})}"
+        th:action="@{/admin/unit/{unitId}/delete(unitId=${unitId})}"
         method="post">
     <p>Do you want to delete unit "<span th:text="|${unit.title}|">Unit title</span>"</p>
     <input type="submit" value="Delete">
