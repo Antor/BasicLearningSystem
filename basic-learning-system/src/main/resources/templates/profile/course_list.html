@@ -23,6 +23,9 @@
         <span th:text="${course.description}">Course description</span><br/>
 
         <a href="#"
+           th:href="@{/study/course/{courseId}(courseId=${course.id})}"
+           class="action">Study</a>
+        <a href="#"
            th:href="@{/catalogue/course/{courseId}/leave(courseId=${course.id}, target='profile')}"
            class="action">Leave</a>
     </div>

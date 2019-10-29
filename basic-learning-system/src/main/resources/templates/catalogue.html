@@ -24,6 +24,10 @@
 
         <div th:if="${catalogue.userAuthenticated}">
             <a href="#"
+               th:if="${course.enrolled}"
+               th:href="@{/study/course/{courseId}(courseId=${course.id})}"
+               class="action">Study</a>
+            <a href="#"
                th:if="${not course.enrolled}"
                th:href="@{/catalogue/course/{courseId}/enrol(courseId=${course.id}, target='catalogue')}"
                class="action">Enrol</a>

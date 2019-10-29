@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div th:fragment="courseTree(course)">
+    <b>Course navigation:</b><br/>
+    <a href="#"
+       th:href="@{/study/course/{courseId}(courseId=${course.id})}"
+       th:text="${course.title}">Course Title</a>
+    <ul th:each="unit : ${course.unitList}">
+        <li>
+            <a href="#"
+               th:href="@{/study/unit/{unitId}(unitId=${unit.id})}"
+               th:text="${unit.title}">Unit Title</a>
+            <ul th:each="lesson : ${unit.lessonList}">
+                <li>
+                    <a href="#"
+                       th:href="@{/study/lesson/{lessonId}(lessonId=${lesson.id})}"
+                       th:text="${lesson.title}">Lesson Title</a>
+                    <ul th:each="lessonItem : ${lesson.lessonItemList}">
+                        <li>
+                            <a href="#"
+                               th:href="@{/study/lessonitem/{lessonItemId}(lessonItemId=${lessonItem.id})}"
+                               th:text="${lessonItem.title}">Lesson Item Title</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
