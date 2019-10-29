@@ -7,7 +7,10 @@ import com.gravityray.basiclearningsystem.studyitem.lessonitem.LessonItemDao;
 import com.gravityray.basiclearningsystem.studyitem.lessonitem.LessonItemEntity;
 import com.gravityray.basiclearningsystem.studyitem.unit.UnitDao;
 import com.gravityray.basiclearningsystem.studyitem.unit.UnitEntity;
+import com.gravityray.basiclearningsystem.user.UserDao;
+import com.gravityray.basiclearningsystem.user.UserEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,41 +22,44 @@ public class DefaultStudyService implements StudyService {
     private final UnitDao unitDao;
     private final LessonDao lessonDao;
     private final LessonItemDao lessonItemDao;
+    private final UserDao userDao;
 
     public DefaultStudyService(
             CourseDao courseDao,
             UnitDao unitDao,
             LessonDao lessonDao,
-            LessonItemDao lessonItemDao) {
+            LessonItemDao lessonItemDao,
+            UserDao userDao) {
         this.courseDao = courseDao;
         this.unitDao = unitDao;
         this.lessonDao = lessonDao;
         this.lessonItemDao = lessonItemDao;
+        this.userDao = userDao;
     }
 
     @Override
-    public CourseTree getCourseTreeByCourseId(long courseId) {
-        return getCourseTree(courseId);
+    public CourseTree getCourseTreeByCourseId(String email, long courseId) {
+        return getCourseTree(email, courseId);
     }
 
     @Override
-    public CourseTree getCourseTreeByUnitId(long unitId) {
+    public CourseTree getCourseTreeByUnitId(String email, long unitId) {
         return unitDao.findById(unitId)
-                .map(unitEntity -> getCourseTree(unitEntity.getCourseId()))
+                .map(unitEntity -> getCourseTree(email, unitEntity.getCourseId()))
                 .orElse(null);
     }
 
     @Override
-    public CourseTree getCourseTreeByLessonId(long lessonId) {
+    public CourseTree getCourseTreeByLessonId(String email, long lessonId) {
         return lessonDao.findById(lessonId)
-                .map(lessonEntity -> getCourseTree(lessonEntity.getUnit().getCourseId()))
+                .map(lessonEntity -> getCourseTree(email, lessonEntity.getUnit().getCourseId()))
                 .orElse(null);
     }
 
     @Override
-    public CourseTree getCourseTreeByLessonItemId(long lessonItemId) {
+    public CourseTree getCourseTreeByLessonItemId(String email, long lessonItemId) {
         return lessonItemDao.findById(lessonItemId)
-                .map(lessonItemEntity -> getCourseTree(lessonItemEntity.getLesson().getUnit().getCourseId()))
+                .map(lessonItemEntity -> getCourseTree(email, lessonItemEntity.getLesson().getUnit().getCourseId()))
                 .orElse(null);
     }
 
@@ -94,62 +100,88 @@ public class DefaultStudyService implements StudyService {
     }
 
     @Override
-    public StudyLessonItem getStudyLessonItem(long lessonItemId) {
+    public StudyLessonItem getStudyLessonItem(String email, long lessonItemId) {
+        UserEntity userEntity = userDao.findUserByEmail(email);
         return lessonItemDao.findById(lessonItemId)
                 .map(lessonItemEntity -> {
                     StudyLessonItem lessonItem = new StudyLessonItem();
+                    lessonItem.setId(lessonItemEntity.getId());
                     lessonItem.setTitle(lessonItemEntity.getTitle());
                     lessonItem.setContent(lessonItemEntity.getContent());
+                    lessonItem.setComplete(userEntity.getCompletedLessonItemSet().contains(lessonItemEntity));
                     return lessonItem;
                 })
                 .orElse(null);
     }
 
-    private CourseTree getCourseTree(long courseId) {
+    @Override
+    public CompleteLessonItemInfo getCompleteLessonItemInfo(long lessonItemId) {
+        return lessonItemDao.findById(lessonItemId)
+                .map(lessonItemEntity -> {
+                    CompleteLessonItemInfo info = new CompleteLessonItemInfo();
+                    info.setId(lessonItemEntity.getId());
+                    info.setTitle(lessonItemEntity.getTitle());
+                    return info;
+                })
+                .orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public void completeLessonItem(String email, long lessonItemId) {
+        UserEntity userEntity = userDao.findUserByEmail(email);
+        LessonItemEntity lessonItemEntity = lessonItemDao.findById(lessonItemId)
+                .orElse(null);
+        userEntity.getCompletedLessonItemSet().add(lessonItemEntity);
+    }
+
+    private CourseTree getCourseTree(String email, long courseId) {
         return courseDao.findById(courseId)
                 .map(courseEntity -> {
                     CourseTree course = new CourseTree();
                     course.setId(courseEntity.getId());
                     course.setTitle(courseEntity.getTitle());
-                    course.setUnitList(toCourseTreeUnitList(courseEntity.getUnitList()));
+                    course.setUnitList(toCourseTreeUnitList(email, courseEntity.getUnitList()));
                     return course;
                 })
                 .orElse(null);
     }
 
-    private List<CourseTreeUnit> toCourseTreeUnitList(List<UnitEntity> unitEntityList) {
+    private List<CourseTreeUnit> toCourseTreeUnitList(String email, List<UnitEntity> unitEntityList) {
         List<CourseTreeUnit> unitList = new ArrayList<>();
         unitEntityList
                 .forEach(unitEntity -> {
                     CourseTreeUnit unit = new CourseTreeUnit();
                     unit.setId(unitEntity.getId());
                     unit.setTitle(unitEntity.getTitle());
-                    unit.setLessonList(toCourseTreeLessonList(unitEntity.getLessonList()));
+                    unit.setLessonList(toCourseTreeLessonList(email, unitEntity.getLessonList()));
                     unitList.add(unit);
                 });
         return unitList;
     }
 
-    private List<CourseTreeLesson> toCourseTreeLessonList(List<LessonEntity> lessonEntityList) {
+    private List<CourseTreeLesson> toCourseTreeLessonList(String email, List<LessonEntity> lessonEntityList) {
         List<CourseTreeLesson> lessonList = new ArrayList<>();
         lessonEntityList
                 .forEach(lessonEntity -> {
                     CourseTreeLesson lesson = new CourseTreeLesson();
                     lesson.setId(lessonEntity.getId());
                     lesson.setTitle(lessonEntity.getTitle());
-                    lesson.setLessonItemList(toCourseTreeLessonItemList(lessonEntity.getLessonItems()));
+                    lesson.setLessonItemList(toCourseTreeLessonItemList(email, lessonEntity.getLessonItems()));
                     lessonList.add(lesson);
                 });
         return lessonList;
     }
 
-    private List<CourseTreeLessonItem> toCourseTreeLessonItemList(List<LessonItemEntity> lessonItemEntityList) {
+    private List<CourseTreeLessonItem> toCourseTreeLessonItemList(String email, List<LessonItemEntity> lessonItemEntityList) {
+        UserEntity userEntity = userDao.findUserByEmail(email);
         List<CourseTreeLessonItem> lessonItemList = new ArrayList<>();
         lessonItemEntityList
                 .forEach(lessonItemEntity -> {
                     CourseTreeLessonItem lessonItem = new CourseTreeLessonItem();
                     lessonItem.setId(lessonItemEntity.getId());
                     lessonItem.setTitle(lessonItemEntity.getTitle());
+                    lessonItem.setComplete(userEntity.getCompletedLessonItemSet().contains(lessonItemEntity));
                     lessonItemList.add(lessonItem);
                 });
         return lessonItemList;

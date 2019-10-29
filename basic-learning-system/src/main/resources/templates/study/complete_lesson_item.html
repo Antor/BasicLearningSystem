@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Lesson Item</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="../../static/css/main.css"
+          th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: titleHeader}"></div>
+<div th:replace="~{fragments/header :: userHeader}"></div>
+
+<form th:action="@{/study/lessonitem/{lessonItemId}/complete(lessonItemId=${lessonItem.id})}"
+      method="post">
+    <p>Do you want to complete lesson item "<span th:text="|${lessonItem.title}|">Lesson item title</span>"?</p>
+    <input type="submit" value="Complete">
+</form>
+
+</body>
+</html>

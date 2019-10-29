@@ -1,9 +1,8 @@
 package com.gravityray.basiclearningsystem.study;
 
-public class CourseTreeLessonItem {
+public class CompleteLessonItemInfo {
     private long id;
     private String title;
-    private boolean complete;
 
     public long getId() {
         return id;
@@ -19,13 +18,5 @@ public class CourseTreeLessonItem {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public boolean isComplete() {
-        return complete;
-    }
-
-    public void setComplete(boolean complete) {
-        this.complete = complete;
     }
 }

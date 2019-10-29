@@ -2,13 +2,13 @@ package com.gravityray.basiclearningsystem.study;
 
 public interface StudyService {
 
-    CourseTree getCourseTreeByCourseId(long courseId);
+    CourseTree getCourseTreeByCourseId(String email, long courseId);
 
-    CourseTree getCourseTreeByUnitId(long unitId);
+    CourseTree getCourseTreeByUnitId(String email, long unitId);
 
-    CourseTree getCourseTreeByLessonId(long lessonId);
+    CourseTree getCourseTreeByLessonId(String email, long lessonId);
 
-    CourseTree getCourseTreeByLessonItemId(long lessonItemId);
+    CourseTree getCourseTreeByLessonItemId(String email, long lessonItemId);
 
     StudyCourse getStudyCourse(long courseId);
 
@@ -16,5 +16,9 @@ public interface StudyService {
 
     StudyLesson getStudyLesson(long lessonId);
 
-    StudyLessonItem getStudyLessonItem(long lessonItemId);
+    StudyLessonItem getStudyLessonItem(String email, long lessonItemId);
+
+    CompleteLessonItemInfo getCompleteLessonItemInfo(long lessonItemId);
+
+    void completeLessonItem(String email, long lessonItemId);
 }

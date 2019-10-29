@@ -28,6 +28,7 @@
                             <a href="#"
                                th:href="@{/study/lessonitem/{lessonItemId}(lessonItemId=${lessonItem.id})}"
                                th:text="${lessonItem.title}">Lesson Item Title</a>
+                            <span th:if="${lessonItem.complete}">(completed)</span>
                         </li>
                     </ul>
                 </li>

@@ -1,9 +1,11 @@
 package com.gravityray.basiclearningsystem.user;
 
 import com.gravityray.basiclearningsystem.studyitem.course.CourseEntity;
+import com.gravityray.basiclearningsystem.studyitem.lessonitem.LessonItemEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "users")
 @Table(name = "users")
@@ -36,6 +38,14 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<CourseEntity> courseList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_completed_lesson_items",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "lesson_item_id")
+    )
+    private Set<LessonItemEntity> completedLessonItemSet;
 
     public Long getId() {
         return id;
@@ -91,5 +101,13 @@ public class UserEntity {
 
     public void setCourseList(List<CourseEntity> courseList) {
         this.courseList = courseList;
+    }
+
+    public Set<LessonItemEntity> getCompletedLessonItemSet() {
+        return completedLessonItemSet;
+    }
+
+    public void setCompletedLessonItemSet(Set<LessonItemEntity> completedLessonItemSet) {
+        this.completedLessonItemSet = completedLessonItemSet;
     }
 }

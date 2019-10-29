@@ -17,6 +17,12 @@
 <h2 th:text="${lessonItem.title}">Lesson item name</h2>
 <p th:text="${lessonItem.content}">Lesson item content</p>
 
+<a href="#"
+   th:if="${not lessonItem.complete}"
+   th:href="@{/study/lessonitem/{lessonItemId}/complete(lessonItemId=${lessonItem.id})}"
+   class="button">Complete Lesson Item</a>
+<div class="separator"></div>
+
 <div th:replace="~{fragments/course_tree :: courseTree(${courseTree})}"></div>
 
 </body>
