@@ -17,6 +17,10 @@
 <h2 th:text="${course.title}">Course name</h2>
 <p th:text="${course.description}">Course description</p>
 
+<p>
+    <a href="#"
+       th:href="@{/study/course/{courseId}/next(courseId=${course.id})}">Next</a>
+</p>
 <div th:replace="~{fragments/course_tree :: courseTree(${courseTree})}"></div>
 
 </body>

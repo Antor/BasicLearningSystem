@@ -21,4 +21,18 @@ public interface StudyService {
     CompleteLessonItemInfo getCompleteLessonItemInfo(long lessonItemId);
 
     void completeLessonItem(String email, long lessonItemId);
+
+    StudyItemNavigationInfo getNextStudyItemForCourse(long courseId);
+
+    StudyItemNavigationInfo getPrevStudyItemForUnit(long unitId);
+
+    StudyItemNavigationInfo getNextStudyItemForUnit(long unitId);
+
+    StudyItemNavigationInfo getPrevStudyItemForLesson(long lessonId);
+
+    StudyItemNavigationInfo getNextStudyItemForLesson(long lessonId);
+
+    StudyItemNavigationInfo getPrevStudyItemForLessonItem(long lessonItemId);
+
+    StudyItemNavigationInfo getNextStudyItemForLessonItem(long lessonItemId);
 }

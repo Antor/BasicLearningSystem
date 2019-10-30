@@ -1,6 +1,8 @@
 package com.gravityray.basiclearningsystem.study;
 
 public class StudyLesson {
+
+    private long id;
     private String title;
     private String description;
 
@@ -18,5 +20,13 @@ public class StudyLesson {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

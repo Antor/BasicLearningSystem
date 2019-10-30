@@ -23,6 +23,13 @@
    class="button">Complete Lesson Item</a>
 <div class="separator"></div>
 
+<p>
+    <a href="#"
+       th:href="@{/study/lessonitem/{lessonItemId}/prev(lessonItemId=${lessonItem.id})}">Prev</a>
+    <a href="#"
+       th:href="@{/study/lessonitem/{lessonItemId}/next(lessonItemId=${lessonItem.id})}">Next</a>
+</p>
+
 <div th:replace="~{fragments/course_tree :: courseTree(${courseTree})}"></div>
 
 </body>

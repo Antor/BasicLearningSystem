@@ -1,6 +1,7 @@
 package com.gravityray.basiclearningsystem.study;
 
 import com.gravityray.basiclearningsystem.studyitem.course.CourseDao;
+import com.gravityray.basiclearningsystem.studyitem.course.CourseEntity;
 import com.gravityray.basiclearningsystem.studyitem.lesson.LessonDao;
 import com.gravityray.basiclearningsystem.studyitem.lesson.LessonEntity;
 import com.gravityray.basiclearningsystem.studyitem.lessonitem.LessonItemDao;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DefaultStudyService implements StudyService {
@@ -69,6 +69,7 @@ public class DefaultStudyService implements StudyService {
         return courseDao.findById(courseId)
                 .map(courseEntity -> {
                     StudyCourse course = new StudyCourse();
+                    course.setId(courseEntity.getId());
                     course.setTitle(courseEntity.getTitle());
                     course.setDescription(courseEntity.getDescription());
                     return course;
@@ -81,6 +82,7 @@ public class DefaultStudyService implements StudyService {
         return unitDao.findById(unitId)
                 .map(unitEntity -> {
                     StudyUnit unit = new StudyUnit();
+                    unit.setId(unitEntity.getId());
                     unit.setTitle(unitEntity.getTitle());
                     unit.setDescription(unitEntity.getDescription());
                     return unit;
@@ -93,6 +95,7 @@ public class DefaultStudyService implements StudyService {
         return lessonDao.findById(lessonId)
                 .map(lessonEntity -> {
                     StudyLesson lesson = new StudyLesson();
+                    lesson.setId(lessonEntity.getId());
                     lesson.setTitle(lessonEntity.getTitle());
                     lesson.setDescription(lessonEntity.getDescription());
                     return lesson;
@@ -134,6 +137,75 @@ public class DefaultStudyService implements StudyService {
         LessonItemEntity lessonItemEntity = lessonItemDao.findById(lessonItemId)
                 .orElse(null);
         userEntity.getCompletedLessonItemSet().add(lessonItemEntity);
+    }
+
+    @Override
+    public StudyItemNavigationInfo getNextStudyItemForCourse(long courseId) {
+        return getNextStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.course(courseId));
+    }
+
+    @Override
+    public StudyItemNavigationInfo getPrevStudyItemForUnit(long unitId) {
+        long courseId = unitDao.findById(unitId).orElse(null).getCourseId();
+        return getPrevStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.unit(unitId));
+    }
+
+    @Override
+    public StudyItemNavigationInfo getNextStudyItemForUnit(long unitId) {
+        long courseId = unitDao.findById(unitId).orElse(null).getCourseId();
+        return getNextStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.unit(unitId));
+    }
+
+    @Override
+    public StudyItemNavigationInfo getPrevStudyItemForLesson(long lessonId) {
+        long courseId = lessonDao.findById(lessonId)
+                .orElse(null)
+                .getUnit()
+                .getCourseId();
+        return getPrevStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.lesson(lessonId));
+    }
+
+    @Override
+    public StudyItemNavigationInfo getNextStudyItemForLesson(long lessonId) {
+        long courseId = lessonDao.findById(lessonId)
+                .orElse(null)
+                .getUnit()
+                .getCourseId();
+        return getNextStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.lesson(lessonId));
+    }
+
+    @Override
+    public StudyItemNavigationInfo getPrevStudyItemForLessonItem(long lessonItemId) {
+        long courseId = lessonItemDao.findById(lessonItemId)
+                .orElse(null)
+                .getLesson()
+                .getUnit()
+                .getCourseId();
+        return getPrevStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.lessonItem(lessonItemId));
+    }
+
+    @Override
+    public StudyItemNavigationInfo getNextStudyItemForLessonItem(long lessonItemId) {
+        long courseId = lessonItemDao.findById(lessonItemId)
+                .orElse(null)
+                .getLesson()
+                .getUnit()
+                .getCourseId();
+        return getNextStudyItem(
+                getFlattenCourseNavigationTree(courseId),
+                StudyItemNavigationInfo.lessonItem(lessonItemId));
     }
 
     private CourseTree getCourseTree(String email, long courseId) {
@@ -221,5 +293,67 @@ public class DefaultStudyService implements StudyService {
                     lessonItemList.add(lessonItem);
                 });
         return lessonItemList;
+    }
+
+    private List<StudyItemNavigationInfo> getFlattenCourseNavigationTree(long courseId) {
+        CourseEntity course = courseDao.findById(courseId).orElse(null);
+
+        List<StudyItemNavigationInfo> navigationList = new ArrayList<>();
+        navigationList.add(StudyItemNavigationInfo.course(courseId));
+        course.getUnitList()
+                .forEach(unit -> {
+                    navigationList.addAll(getFlattenUnitNavigationTree(unit));
+                });
+        return navigationList;
+    }
+
+    private List<StudyItemNavigationInfo> getFlattenUnitNavigationTree(UnitEntity unit) {
+        List<StudyItemNavigationInfo> navigationList = new ArrayList<>();
+        navigationList.add(StudyItemNavigationInfo.unit(unit.getId()));
+        unit.getLessonList()
+                .forEach(lesson -> {
+                    navigationList.addAll(getFlattenLessonNavigationTree(lesson));
+                });
+        return navigationList;
+    }
+
+    private List<StudyItemNavigationInfo> getFlattenLessonNavigationTree(LessonEntity lesson) {
+        List<StudyItemNavigationInfo> navigationList = new ArrayList<>();
+        navigationList.add(StudyItemNavigationInfo.lesson(lesson.getId()));
+        lesson.getLessonItems()
+                .forEach(lessonItem -> {
+                    navigationList.add(StudyItemNavigationInfo.lessonItem(lessonItem.getId()));
+                });
+        return navigationList;
+    }
+
+    private StudyItemNavigationInfo getPrevStudyItem(
+            List<StudyItemNavigationInfo> navigationList,
+            StudyItemNavigationInfo currentItem) {
+
+        int currentPosition = navigationList.indexOf(currentItem);
+        StudyItemNavigationInfo nextItem;
+        if (currentPosition == 0) {
+            nextItem = currentItem;
+
+        } else {
+            nextItem = navigationList.get(currentPosition - 1);
+        }
+        return nextItem;
+    }
+
+    private StudyItemNavigationInfo getNextStudyItem(
+            List<StudyItemNavigationInfo> navigationList,
+            StudyItemNavigationInfo currentItem) {
+
+        int currentPosition = navigationList.indexOf(currentItem);
+        StudyItemNavigationInfo nextItem;
+        if (currentPosition == navigationList.size() - 1) {
+            nextItem = currentItem;
+
+        } else {
+            nextItem = navigationList.get(currentPosition + 1);
+        }
+        return nextItem;
     }
 }
