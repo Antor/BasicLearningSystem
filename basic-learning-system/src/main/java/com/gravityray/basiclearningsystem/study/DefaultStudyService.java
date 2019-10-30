@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultStudyService implements StudyService {
@@ -141,7 +142,19 @@ public class DefaultStudyService implements StudyService {
                     CourseTree course = new CourseTree();
                     course.setId(courseEntity.getId());
                     course.setTitle(courseEntity.getTitle());
-                    course.setUnitList(toCourseTreeUnitList(email, courseEntity.getUnitList()));
+
+                    List<CourseTreeUnit> unitList = toCourseTreeUnitList(email, courseEntity.getUnitList());
+                    course.setUnitList(unitList);
+
+                    course.setLessonItemCountCompleted(
+                            unitList.stream()
+                                    .mapToLong(CourseTreeUnit::getLessonItemCountCompleted)
+                                    .sum());
+                    course.setLessonItemCountTotal(
+                            unitList.stream()
+                                    .mapToLong(CourseTreeUnit::getLessonItemCountTotal)
+                                    .sum());
+
                     return course;
                 })
                 .orElse(null);
@@ -154,7 +167,20 @@ public class DefaultStudyService implements StudyService {
                     CourseTreeUnit unit = new CourseTreeUnit();
                     unit.setId(unitEntity.getId());
                     unit.setTitle(unitEntity.getTitle());
-                    unit.setLessonList(toCourseTreeLessonList(email, unitEntity.getLessonList()));
+
+                    List<CourseTreeLesson> lessonList =
+                            toCourseTreeLessonList(email, unitEntity.getLessonList());
+                    unit.setLessonList(lessonList);
+
+                    unit.setLessonItemCountCompleted(
+                            lessonList.stream()
+                                    .mapToLong(CourseTreeLesson::getLessonItemCountCompleted)
+                                    .sum());
+                    unit.setLessonItemCountTotal(
+                            lessonList.stream()
+                                    .mapToLong(CourseTreeLesson::getLessonItemCountTotal)
+                                    .sum());
+
                     unitList.add(unit);
                 });
         return unitList;
@@ -167,7 +193,17 @@ public class DefaultStudyService implements StudyService {
                     CourseTreeLesson lesson = new CourseTreeLesson();
                     lesson.setId(lessonEntity.getId());
                     lesson.setTitle(lessonEntity.getTitle());
-                    lesson.setLessonItemList(toCourseTreeLessonItemList(email, lessonEntity.getLessonItems()));
+
+                    List<CourseTreeLessonItem> lessonItemList =
+                            toCourseTreeLessonItemList(email, lessonEntity.getLessonItems());
+                    lesson.setLessonItemList(lessonItemList);
+
+                    lesson.setLessonItemCountCompleted(
+                            lessonItemList.stream()
+                                    .filter(CourseTreeLessonItem::isComplete)
+                                    .count());
+                    lesson.setLessonItemCountTotal(lessonItemList.size());
+
                     lessonList.add(lesson);
                 });
         return lessonList;

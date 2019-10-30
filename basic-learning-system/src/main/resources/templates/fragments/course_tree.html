@@ -13,16 +13,19 @@
     <a href="#"
        th:href="@{/study/course/{courseId}(courseId=${course.id})}"
        th:text="${course.title}">Course Title</a>
+    <span th:text="|(completed: ${course.lessonItemCountCompleted}/${course.lessonItemCountTotal} lesson items; | + ${#numbers.formatPercent(course.getCompletionPercent(), 1, 0)} + ')'">(completed: 2/8; 25%)</span>
     <ul th:each="unit : ${course.unitList}">
         <li>
             <a href="#"
                th:href="@{/study/unit/{unitId}(unitId=${unit.id})}"
                th:text="${unit.title}">Unit Title</a>
+            <span th:text="|(completed: ${unit.lessonItemCountCompleted}/${unit.lessonItemCountTotal} lesson items; | + ${#numbers.formatPercent(unit.getCompletionPercent(), 1, 0)} + ')'">(completed: 2/8; 25%)</span>
             <ul th:each="lesson : ${unit.lessonList}">
                 <li>
                     <a href="#"
                        th:href="@{/study/lesson/{lessonId}(lessonId=${lesson.id})}"
                        th:text="${lesson.title}">Lesson Title</a>
+                    <span th:text="|(completed: ${lesson.lessonItemCountCompleted}/${lesson.lessonItemCountTotal} lesson items; | + ${#numbers.formatPercent(lesson.getCompletionPercent(), 1, 0)} + ')'">(completed: 2/8; 25%)</span>
                     <ul th:each="lessonItem : ${lesson.lessonItemList}">
                         <li>
                             <a href="#"

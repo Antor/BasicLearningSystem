@@ -7,6 +7,9 @@ public class CourseTreeUnit {
     private String title;
     private List<CourseTreeLesson> lessonList;
 
+    private long lessonItemCountCompleted;
+    private long lessonItemCountTotal;
+
     public long getId() {
         return id;
     }
@@ -29,5 +32,27 @@ public class CourseTreeUnit {
 
     public void setLessonList(List<CourseTreeLesson> lessonList) {
         this.lessonList = lessonList;
+    }
+
+    public long getLessonItemCountCompleted() {
+        return lessonItemCountCompleted;
+    }
+
+    public void setLessonItemCountCompleted(long lessonItemCountCompleted) {
+        this.lessonItemCountCompleted = lessonItemCountCompleted;
+    }
+
+    public long getLessonItemCountTotal() {
+        return lessonItemCountTotal;
+    }
+
+    public void setLessonItemCountTotal(long lessonItemCountTotal) {
+        this.lessonItemCountTotal = lessonItemCountTotal;
+    }
+
+    public double getCompletionPercent() {
+        return lessonItemCountTotal == 0
+                ? 1
+                : ((double) lessonItemCountCompleted) / lessonItemCountTotal;
     }
 }
