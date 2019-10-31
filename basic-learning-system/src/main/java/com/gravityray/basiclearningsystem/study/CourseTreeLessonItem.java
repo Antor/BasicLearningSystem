@@ -5,6 +5,8 @@ public class CourseTreeLessonItem {
     private String title;
     private boolean complete;
 
+    private boolean currentStudyItem = false;
+
     public long getId() {
         return id;
     }
@@ -27,5 +29,13 @@ public class CourseTreeLessonItem {
 
     public void setComplete(boolean complete) {
         this.complete = complete;
+    }
+
+    public boolean isCurrentStudyItem() {
+        return currentStudyItem;
+    }
+
+    public void setCurrentStudyItem(boolean currentStudyItem) {
+        this.currentStudyItem = currentStudyItem;
     }
 }

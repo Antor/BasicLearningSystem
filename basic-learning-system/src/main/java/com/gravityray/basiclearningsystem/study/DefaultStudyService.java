@@ -40,28 +40,54 @@ public class DefaultStudyService implements StudyService {
 
     @Override
     public CourseTree getCourseTreeByCourseId(String email, long courseId) {
-        return getCourseTree(email, courseId);
+        CourseTree courseTree = getCourseTree(email, courseId);
+        courseTree.setCurrentStudyItem(true);
+        return courseTree;
     }
 
     @Override
     public CourseTree getCourseTreeByUnitId(String email, long unitId) {
-        return unitDao.findById(unitId)
+        CourseTree courseTree = unitDao.findById(unitId)
                 .map(unitEntity -> getCourseTree(email, unitEntity.getCourseId()))
                 .orElse(null);
+
+        courseTree.getUnitList()
+                .stream()
+                .filter(unit -> unitId == unit.getId())
+                .forEach(unit -> unit.setCurrentStudyItem(true));
+
+        return courseTree;
     }
 
     @Override
     public CourseTree getCourseTreeByLessonId(String email, long lessonId) {
-        return lessonDao.findById(lessonId)
+        CourseTree courseTree = lessonDao.findById(lessonId)
                 .map(lessonEntity -> getCourseTree(email, lessonEntity.getUnit().getCourseId()))
                 .orElse(null);
+
+        courseTree.getUnitList()
+                .stream()
+                .flatMap(unit -> unit.getLessonList().stream())
+                .filter(lesson -> lessonId == lesson.getId())
+                .forEach(unit -> unit.setCurrentStudyItem(true));
+
+        return courseTree;
     }
 
     @Override
     public CourseTree getCourseTreeByLessonItemId(String email, long lessonItemId) {
-        return lessonItemDao.findById(lessonItemId)
+        CourseTree courseTree =  lessonItemDao.findById(lessonItemId)
                 .map(lessonItemEntity -> getCourseTree(email, lessonItemEntity.getLesson().getUnit().getCourseId()))
                 .orElse(null);
+
+        courseTree.getUnitList()
+                .stream()
+                .flatMap(unit -> unit.getLessonList().stream())
+                .flatMap(lesson -> lesson.getLessonItemList().stream())
+                .filter(lessonItem -> lessonItemId == lessonItem.getId())
+                .forEach(unit -> unit.setCurrentStudyItem(true));
+
+        return courseTree;
     }
 
     @Override

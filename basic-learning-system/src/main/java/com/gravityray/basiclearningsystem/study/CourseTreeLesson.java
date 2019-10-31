@@ -10,6 +10,8 @@ public class CourseTreeLesson {
     private long lessonItemCountCompleted;
     private long lessonItemCountTotal;
 
+    private boolean currentStudyItem = false;
+
     public long getId() {
         return id;
     }
@@ -54,5 +56,13 @@ public class CourseTreeLesson {
         return lessonItemCountTotal == 0
                 ? 1
                 : ((double) lessonItemCountCompleted) / lessonItemCountTotal;
+    }
+
+    public boolean isCurrentStudyItem() {
+        return currentStudyItem;
+    }
+
+    public void setCurrentStudyItem(boolean currentStudyItem) {
+        this.currentStudyItem = currentStudyItem;
     }
 }
